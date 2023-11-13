@@ -11,7 +11,9 @@ spring:
       suffix: .jsp
 
   datasource:
-    url: jdbc:mysql://localhost:3306/bigdata?useSSL=false&characterEncoding=UTF-8&serverTimezone=UTC
-    username: root
-    password: 1234
     driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/com
+    username: com
+    password: com01
+    
+
