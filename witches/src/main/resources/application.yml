@@ -1,0 +1,17 @@
+server:
+  port: 8585
+
+spring:
+  main:
+    allow-circular-references: true
+  # JSP 경로 설정
+  mvc:
+    view:
+      prefix: /WEB-INF/views
+      suffix: .jsp
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/bigdata?useSSL=false&characterEncoding=UTF-8&serverTimezone=UTC
+    username: root
+    password: 1234
+    driver-class-name: com.mysql.cj.jdbc.Driver
