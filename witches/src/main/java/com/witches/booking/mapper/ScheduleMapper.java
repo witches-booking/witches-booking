@@ -13,6 +13,7 @@ public interface ScheduleMapper {
 	@Select("select * from schedule")
 	public List<Schedule> showSchedule();
 
-	
+	@Select("select * from schdule where MONTH(time)=#{month}")
+	public List<Schedule> showScheduleList();	
 	
 }

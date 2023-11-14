@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 public class Schedule {
 
 	private Integer id;			// 고유 식별 id
-	private String time;		// 작성시간
+	private String time;		// 예약날짜
 	private String start;		//시작시간
 	private String end;			// 종료시간
 	private String peopleNum;    // 사용인원수

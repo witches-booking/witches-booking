@@ -13,6 +13,10 @@ public class CalendarService {
 
 	@Autowired 
 	private ScheduleMapper scheduleMapper;
+	
+	public List<Schedule> showScheduleList(){
+		return scheduleMapper.showScheduleList();
+	}
 
 	public List<Schedule> showSchedule() {
 		return scheduleMapper.showSchedule();
