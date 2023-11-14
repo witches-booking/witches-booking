@@ -1,8 +1,10 @@
+<%@page import="com.witches.booking.entity.Schedule"%>
+<%@page import="java.util.List"%>
 <%@page import="java.util.Calendar"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-	<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -50,47 +52,49 @@
 					<tbody>
 						<!-- 날짜 및 예약 정보 동적 생성 -->
 						<%
-    // Java 코드로 날짜 및 예약 정보 생성
-    // 예시: 데이터베이스로부터 날짜와 예약 정보를 조회하여 표시
-    String currentDate = "2023-11-01"; // 현재 날짜 예시
+						// Java 코드로 날짜 및 예약 정보 생성
+						// 예시: 데이터베이스로부터 날짜와 예약 정보를 조회하여 표시
+						String currentDate = "2023-11-01"; // 현재 날짜 예시
 
-    // 날짜 정보를 파싱하여 Calendar 객체 생성
-    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-    Calendar cal = Calendar.getInstance();
-    cal.setTime(sdf.parse(currentDate));
+						// 날짜 정보를 파싱하여 Calendar 객체 생성
+						SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+						Calendar cal = Calendar.getInstance();
+						cal.setTime(sdf.parse(currentDate));
 
-    // 해당 월의 첫 날과 마지막 날을 구함
-    int startDayOfMonth = cal.getActualMinimum(Calendar.DAY_OF_MONTH);
-    int endDayOfMonth = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
+						// 해당 월의 첫 날과 마지막 날을 구함
+						int startDayOfMonth = cal.getActualMinimum(Calendar.DAY_OF_MONTH);
+						int endDayOfMonth = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
 
-    // 해당 월의 첫 날의 요일을 구함 (1: 일요일, 2: 월요일, ..., 7: 토요일)
-    int startDayOfWeek = cal.get(Calendar.DAY_OF_WEEK);
-    //int whenSaturday = cal.get(Calendar.DAY_OF_WEEK)-7;
-  // 날짜 정보 동적 생성
-out.print("<tbody><tr>");
-for (int i = 1; i < startDayOfWeek; i++) {
-    // 첫 날이 시작되기 전까지는 빈 칸으로 채움
-    out.print("<td></td>");
-}
-for (int day = startDayOfMonth; day <= endDayOfMonth; day++) {
-    // 해당 날짜의 요일을 구함 (1: 일요일, 2: 월요일, ..., 7: 토요일)
-    cal.set(Calendar.DAY_OF_MONTH, day);
-    int dayOfWeek = cal.get(Calendar.DAY_OF_WEEK);
+						// 해당 월의 첫 날의 요일을 구함 (1: 일요일, 2: 월요일, ..., 7: 토요일)
+						int startDayOfWeek = cal.get(Calendar.DAY_OF_WEEK);
 
-    // 예약 정보 표시
-    out.print("<td><a href='/schedule?date=" + cal.get(Calendar.YEAR) + "-" + (cal.get(Calendar.MONTH) + 1) + "-" + String.format("%02d", day) + "'><span>" + day + " </span></a></td>");
+						//List<Schedule> data = (List)request.getAttribute("data");
+						//out.println("data[0]:"+data.get(0));
+						// 날짜 정보 동적 생성
+						out.print("<tbody><tr>");
+						for (int i = 1; i < startDayOfWeek; i++) {
+							// 첫 날이 시작되기 전까지는 빈 칸으로 채움s
+							out.print("<td></td>");
+						}
+						for (int day = startDayOfMonth; day <= endDayOfMonth; day++) {
+							// 해당 날짜의 요일을 구함 (1: 일요일, 2: 월요일, ..., 7: 토요일)
+							cal.set(Calendar.DAY_OF_MONTH, day);
+							int dayOfWeek = cal.get(Calendar.DAY_OF_WEEK);
 
-    // 주말이거나 마지막 날이면 새로운 행(<tr>)을 시작
-    if (dayOfWeek == 7 || day == endDayOfMonth) {
-        out.print("</tr><tr>");
-    }
-}
-out.print("</tr></tbody>");
-%>
+							// 예약 정보 표시
+out.print("<td><a href='/schedule?year=" + cal.get(Calendar.YEAR) + "&month=" + (cal.get(Calendar.MONTH) + 1) + "&day=" + String.format("%02d", day) + "'><span>" + day + " </span></a></td>");
+
+							// 주말이거나 마지막 날이면 새로운 행(<tr>)을 시작
+							if (dayOfWeek == 7 || day == endDayOfMonth) {
+								out.print("</tr><tr>");
+							}
+						}
+						out.print("</tr></tbody>");
+						%>
 						<!--  <tr> -->
-							<!-- 예약 정보 표시 -->
-							<!--  <td><a href="/schedule?date=1"><span>1</span></a></td>-->
-							<!-- 나머지 날짜 정보 동적 생성 -->
+						<!-- 예약 정보 표시 -->
+						<!--  <td><a href="/schedule?date=1"><span>1</span></a></td>-->
+						<!-- 나머지 날짜 정보 동적 생성 -->
 						<!--  </tr> -->
 						<!-- 나머지 주차의 날짜 및 예약 정보 생성 -->
 					</tbody>

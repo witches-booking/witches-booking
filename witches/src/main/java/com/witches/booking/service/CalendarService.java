@@ -14,8 +14,8 @@ public class CalendarService {
 	@Autowired 
 	private ScheduleMapper scheduleMapper;
 	
-	public List<Schedule> showScheduleList(){
-		return scheduleMapper.showScheduleList();
+	public List<Schedule> showScheduleList(int month){
+		return scheduleMapper.showScheduleList(month);
 	}
 
 	public List<Schedule> showSchedule() {

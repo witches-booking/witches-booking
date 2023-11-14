@@ -14,12 +14,12 @@ public class CalendarRestController {
 	private CalendarService calendarService;
 	
 	
-	@PostMapping("/showScheduleList")
-	public List<Schedule> showScheduleList() { 
-		
-		System.out.println("조회함수 컨트롤러 도착");
-		return calendarService.showScheduleList();
-		
-	}
+//	@PostMapping("/showScheduleList")
+//	public List<Schedule> showScheduleList() { 
+//		
+//		System.out.println("조회함수 컨트롤러 도착");
+//		return calendarService.showScheduleList(month);
+//		
+//	}
 	
 }
