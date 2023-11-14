@@ -50,9 +50,13 @@ public class CalendarController {
 		// 현재 월을 구함 
 		int month = cal.get(Calendar.MONTH) + 1; // 1을 더해 실제 월을 표현
 		
-//		List<Schedule> data  =calendarService.showScheduleList(month);
-//		System.out.println("조회해온 데이터리스트"+data);
-//		model.addAttribute("data",data);
+		List<Schedule> data  =calendarService.showScheduleList(month);
+	    if(data != null && !data.isEmpty()) {
+	        System.out.println("조회해온 데이터리스트"+data);
+	        model.addAttribute("data",data);
+	    } else {
+	        System.out.println("data x");
+	    }
 		return "/CalendarMain";
 	}
 	

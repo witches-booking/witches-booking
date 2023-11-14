@@ -15,8 +15,41 @@
 <link rel="stylesheet" type="text/css" href="/food/base.css" />
 <link rel="stylesheet" type="text/css" href="/food/sub.css" />
 <link rel="stylesheet" type="text/css" href="/food/food.css" />
+
+<!-- 카카오 로그인  -->
+<script src="https://t1.kakaocdn.net/kakao_js_sdk/2.4.0/kakao.min.js"
+	integrity="sha384-mXVrIX2T/Kszp6Z0aEWaA8Nm7J6/ZeWXbL8UpGRjKwWe56Srd/iyNmWMBhcItAjH"
+	crossorigin="anonymous"></script>
+<script>
+window.onload = function() {
+    document.getElementById('kakao-login-btn').addEventListener('click', function() {
+        // SDK를 초기화 합니다. 사용할 앱의 JavaScript 키를 설정해야 합니다.
+        Kakao.init('570250ea5e6af0b22c661c29eb516746');
+
+        // SDK 초기화 여부를 판단합니다.
+        console.log(Kakao.isInitialized());
+
+        Kakao.Auth.authorize({
+            redirectUri : 'http://localhost:8585/CalendarMain',
+        });
+        
+        console.log('${ACCESS_TOKEN}')
+        Kakao.Auth.setAccessToken('${ACCESS_TOKEN}');
+        
+    });
+}
+</script>
+
 </head>
 <body>
+
+<button id="kakao-login-btn" style="position: absolute; right: 0;">
+    <img src="/img/kakao_login_medium_narrow.png" alt="Kakao Login">
+</button>
+
+
+
+
 	<h3 id="pageTit">회의실 사용</h3>
 	<div id="content">
 		<div class="contentWrap">
@@ -82,7 +115,8 @@
 							int dayOfWeek = cal.get(Calendar.DAY_OF_WEEK);
 
 							// 예약 정보 표시
-out.print("<td><a href='/schedule?year=" + cal.get(Calendar.YEAR) + "&month=" + (cal.get(Calendar.MONTH) + 1) + "&day=" + String.format("%02d", day) + "'><span>" + day + " </span></a></td>");
+							out.print("<td><a href='/schedule?year=" + cal.get(Calendar.YEAR) + "&month=" + (cal.get(Calendar.MONTH) + 1)
+							+ "&day=" + String.format("%02d", day) + "'><span>" + day + " </span></a></td>");
 
 							// 주말이거나 마지막 날이면 새로운 행(<tr>)을 시작
 							if (dayOfWeek == 7 || day == endDayOfMonth) {
