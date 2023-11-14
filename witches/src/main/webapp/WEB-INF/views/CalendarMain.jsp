@@ -2,6 +2,7 @@
 <%@page import="java.text.SimpleDateFormat"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+	<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -64,30 +65,33 @@
 
     // 해당 월의 첫 날의 요일을 구함 (1: 일요일, 2: 월요일, ..., 7: 토요일)
     int startDayOfWeek = cal.get(Calendar.DAY_OF_WEEK);
-    
-    // 날짜 정보 동적 생성
-    out.print("<tbody><tr>");
-    for (int i = 1; i < startDayOfWeek; i++) {
-        // 첫 날이 시작되기 전까지는 빈 칸으로 채움
-        out.print("<td></td>");
-    }
-    for (int day = startDayOfMonth; day <= endDayOfMonth; day++) {
-        // 예약 정보 표시
-  out.print("<td><a href='/schedule?date=" + cal.get(Calendar.YEAR) + "-" + (cal.get(Calendar.MONTH) + 1) + "-" + String.format("%02d", day) + "'><span>" + day + "</span></a></td>");
+    //int whenSaturday = cal.get(Calendar.DAY_OF_WEEK)-7;
+  // 날짜 정보 동적 생성
+out.print("<tbody><tr>");
+for (int i = 1; i < startDayOfWeek; i++) {
+    // 첫 날이 시작되기 전까지는 빈 칸으로 채움
+    out.print("<td></td>");
+}
+for (int day = startDayOfMonth; day <= endDayOfMonth; day++) {
+    // 해당 날짜의 요일을 구함 (1: 일요일, 2: 월요일, ..., 7: 토요일)
+    cal.set(Calendar.DAY_OF_MONTH, day);
+    int dayOfWeek = cal.get(Calendar.DAY_OF_WEEK);
 
+    // 예약 정보 표시
+    out.print("<td><a href='/schedule?date=" + cal.get(Calendar.YEAR) + "-" + (cal.get(Calendar.MONTH) + 1) + "-" + String.format("%02d", day) + "'><span>" + day + " </span></a></td>");
 
-        // 주말이거나 마지막 날이면 새로운 행(<tr>)을 시작
-        if (day % 7 == 0 || day == endDayOfMonth) {
-            out.print("</tr><tr>");
-        }
+    // 주말이거나 마지막 날이면 새로운 행(<tr>)을 시작
+    if (dayOfWeek == 7 || day == endDayOfMonth) {
+        out.print("</tr><tr>");
     }
-    out.print("</tr></tbody>");
+}
+out.print("</tr></tbody>");
 %>
-						<tr>
+						<!--  <tr> -->
 							<!-- 예약 정보 표시 -->
 							<!--  <td><a href="/schedule?date=1"><span>1</span></a></td>-->
 							<!-- 나머지 날짜 정보 동적 생성 -->
-						</tr>
+						<!--  </tr> -->
 						<!-- 나머지 주차의 날짜 및 예약 정보 생성 -->
 					</tbody>
 				</table>
