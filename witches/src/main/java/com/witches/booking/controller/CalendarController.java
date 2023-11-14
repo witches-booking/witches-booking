@@ -2,6 +2,7 @@ package com.witches.booking.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.witches.booking.service.CalendarService;
@@ -10,7 +11,7 @@ import com.witches.booking.service.CalendarService;
 public class CalendarController {
 
 	@Autowired
-	CalendarService calendarservice ;
+	CalendarService calendarService ;
 	
 	
 	@RequestMapping("/")
@@ -19,7 +20,12 @@ public class CalendarController {
 	}
 	
 	
-	
+//	@RequestBody()
+	public void showSchedule() {
+		
+		calendarService.showSchedule();
+		
+	}
 	
 	
 	
