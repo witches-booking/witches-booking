@@ -101,7 +101,7 @@ window.onload = function() {
 						// 해당 월의 첫 날의 요일을 구함 (1: 일요일, 2: 월요일, ..., 7: 토요일)
 						int startDayOfWeek = cal.get(Calendar.DAY_OF_WEEK);
 
-						//List<Schedule> data = (List)request.getAttribute("data");
+						List<Schedule> data = (List)request.getAttribute("data");
 						//out.println("data[0]:"+data.get(0));
 						// 날짜 정보 동적 생성
 						out.print("<tbody><tr>");
@@ -110,13 +110,27 @@ window.onload = function() {
 							out.print("<td></td>");
 						}
 						for (int day = startDayOfMonth; day <= endDayOfMonth; day++) {
-							// 해당 날짜의 요일을 구함 (1: 일요일, 2: 월요일, ..., 7: 토요일)
-							cal.set(Calendar.DAY_OF_MONTH, day);
-							int dayOfWeek = cal.get(Calendar.DAY_OF_WEEK);
+						    // 해당 날짜의 요일을 구함 (1: 일요일, 2: 월요일, ..., 7: 토요일)
+						    cal.set(Calendar.DAY_OF_MONTH, day);
+						    int dayOfWeek = cal.get(Calendar.DAY_OF_WEEK);
 
-							// 예약 정보 표시
-							out.print("<td><a href='/schedule?year=" + cal.get(Calendar.YEAR) + "&month=" + (cal.get(Calendar.MONTH) + 1)
-							+ "&day=" + String.format("%02d", day) + "'><span>" + day + " </span></a></td>");
+						    // 예약 정보 표시
+						    Schedule schedule = null;
+						    for (Schedule s : data) {
+						        if (s.getDay() == day) {
+						            schedule = s;
+						            break;
+						        }
+						    }
+
+						    if (schedule != null) {
+						        String toList = schedule.getStart() + " ~ " + schedule.getEnd();
+						        out.print("<td><div><a href='/schedule?year=" + cal.get(Calendar.YEAR) + "&month=" + (cal.get(Calendar.MONTH) + 1)
+						                + "&day=" + String.format("%02d", day) + "'><span>" + day + " </span></a> <ul><li class='state01'><a href='#?id=" + schedule + "'>" + toList + "</a></li></ul></div></td>");
+						    } else {
+						        out.print("<td><div><a href='/schedule?year=" + cal.get(Calendar.YEAR) + "&month=" + (cal.get(Calendar.MONTH) + 1)
+						                + "&day=" + String.format("%02d", day) + "'><span>" + day + " </span></a></div></td>");
+						    }
 
 							// 주말이거나 마지막 날이면 새로운 행(<tr>)을 시작
 							if (dayOfWeek == 7 || day == endDayOfMonth) {
