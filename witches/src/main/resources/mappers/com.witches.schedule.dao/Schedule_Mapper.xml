@@ -3,8 +3,35 @@
 
 <mapper namespace="com.schedule.dao.ScheduleDAO">
 
-	<insert id="">
-		
+	<!-- 예약 등록 -->
+	<insert id="scheduleInsert" parameterType="com.test.schedule.vo.ScheduleVO">
+	    INSERT INTO schedule (
+		    time,
+		    start,
+		    end,
+		    people_num,
+		    name,
+		    department,
+		    contents,
+		    is_delete
+		)
+		SELECT
+		    #{time},
+		    #{start},
+		    #{end},
+		    #{peopleNum},
+		    #{name},
+		    #{department},
+		    #{contents},
+		    'N'
+		FROM dual
+		WHERE NOT EXISTS (
+		    SELECT 1
+		    FROM schedule
+		    WHERE time = DATE_FORMAT(NOW(), '%Y-%m-%d')
+		        AND (start BETWEEN #{start} AND #{end} OR end BETWEEN #{start} AND #{end})
+		        AND is_delete = 'N'
+		)
 	</insert>
 
 
