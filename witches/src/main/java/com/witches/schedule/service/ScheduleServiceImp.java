@@ -13,14 +13,20 @@ public class ScheduleServiceImp implements ScheduleService {
 	@Autowired
 	private ScheduleDAO scheduleDao;
 
+	// 예약 등록
 	@Override
 	public ResultVO scheduleInsert(ScheduleVO scheduleVo) {
 
 		try {
-			if (scheduleVo.getName() != null && scheduleVo.getTime() != null && scheduleVo.getStart() != null
+			if (scheduleVo.getName() != null && scheduleVo.getYear() != null && scheduleVo.getStart() != null
 					&& scheduleVo.getEnd() != null && scheduleVo.getPeopleNum() != null) {
-				scheduleDao.scheduleInsert(scheduleVo);
-				return new ResultVO("00");
+				if (scheduleDao.scheduleCheck(scheduleVo) == 0) {
+					scheduleDao.scheduleInsert(scheduleVo);
+					System.out.println(scheduleVo);
+					return new ResultVO("00");
+				} else {
+					return new ResultVO("01");
+				}
 			} else {
 				return new ResultVO("02");
 			}
@@ -30,20 +36,22 @@ public class ScheduleServiceImp implements ScheduleService {
 		}
 
 	}
-	
+
+	// 예약 취소
 	@Override
 	public ResultVO scheduleDelete(ScheduleVO scheduleVo) {
 		try {
-			if(scheduleVo.getId() != null) {
+			if (scheduleVo.getId() != null && scheduleVo.getCancelReason() != null
+					&& scheduleVo.getCancelNm() != null) {
 				scheduleDao.scheduleDelete(scheduleVo);
 				return new ResultVO("00");
 			} else {
 				return new ResultVO("02");
 			}
-		}catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			return new ResultVO("99");
 		}
 	}
-	
+
 }

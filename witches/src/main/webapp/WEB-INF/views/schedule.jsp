@@ -12,6 +12,7 @@
         <link rel="stylesheet" type="text/css" href="/food/jquery.timepicker.min.css">
         <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
         <script type="text/javascript" src="/food/jquery.timepicker.min.js"></script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
         <script type="text/javascript">
             //<![CDATA[
@@ -50,6 +51,8 @@
             //]]>
 
         </script>
+        
+        
     </head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
@@ -59,7 +62,7 @@
             <div id="content">
                 <div class="contentWrap">                  
                     <div class="inputForm">
-                        <form id="actform" name="actform" method="post" action="meet_write.php">
+                        <form id="actform" name="actform" method="post" action="/schedule/success">
                             <input type="hidden" id="formtype" name="formtype" value="ing_meetWrite">
                             <h4>회의실 예약 입력</h4>
                             <div class="msgBox">
@@ -73,20 +76,24 @@
                                 <tbody>
                                     <tr>
                                         <th scope="row"><label for="meeting_date">예약일<span class="compul">필수</span></label></th>
-                                        <td colspan="4" class="date"><input id="meeting_date" name="meeting_date" value="2023-11-22" type="text" readonly="" required="required" placeholder="선택하세요"></td>
+                                        <td colspan="4" class="date"><input id="meeting_date" name="time" value='${date.getYear()}-${date.getMonth()}-${date.getDay() } ' type="text" readonly="" required="required" placeholder="선택하세요">
+                                        <input type="text" name="year" value="${date.getYear() }" style="display : none;">
+                                        <input type="text" name="month" value="${date.getMonth() }" style="display : none;">
+                                        <input type="text" name="day" value="${date.getDay() }" style="display : none;">
+                                        </td>
                                     </tr>
                                     <tr>
                                         <th scope="row"><label for="stime">예약시간<span class="compul">필수</span></label></th>
                                         <td colspan="4">
-                                            <input id="stime" name="stime" type="text" class="timepicker timepicker1" placeholder="시작시간" title="시작시간" required="required" readonly="readonly">
+                                            <input id="start" name="start" type="text" class="timepicker timepicker1" placeholder="시작시간" title="시작시간" required="required" readonly="readonly">
                                             <span class="formHyphen"></span>
-                                            <input id="etime" name="etime" type="text" class="timepicker timepicker2" placeholder="종료시간" title="종료시간" required="required" readonly="readonly">
+                                            <input id="end" name="end" type="text" class="timepicker timepicker2" placeholder="종료시간" title="종료시간" required="required" readonly="readonly">
                                         </td>
                                     </tr>
                                     <tr>
                                         <th scope="row"><label for="people">사용인원<span class="compul">필수</span></label></th>
                                         <td colspan="4">
-                                            <input id="people" name="people" type="number" required="required" placeholder="인원수"> 명
+                                            <input id="peopleNum" name="peopleNum" type="number" required="required" placeholder="인원수"> 명
                                         </td>
                                     </tr>
                                     <tr>
@@ -94,12 +101,12 @@
                                         <td class="tc"><label for="name">이름</label></td>
                                         <td><input type="text" id="name" name="name" required="required" placeholder="이름입력"></td>
                                         <td class="tc"><label for="deptname">부서</label></td>
-                                        <td><input type="text" id="deptname" name="deptname" required="required" placeholder="부서입력"></td>
+                                        <td><input type="text" id="department" name="department" required="required" placeholder="부서입력"></td>
                                     </tr>
                                     <tr>
                                         <th scope="row"><label for="etc">회의내용 및 참여인원</label></th>
                                         <td colspan="4">
-                                            <textarea id="etc" name="etc" cols="100" rows="10" placeholder="회의내용 및 참여인원을 입력하세요."></textarea>
+                                            <textarea id="contents" name="contents" cols="100" rows="10" placeholder="회의내용 및 참여인원을 입력하세요."></textarea>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -109,69 +116,121 @@
 					<!--showDialog($('#wrap'),'','poplayer')-->
                     <p class="tc"><button type="submit" class="btns02" onclick="inputAjax();" tabindex="0">확인</button></p>
                     <script>
-						function inputAjax() {
-							if($("#meeting_date").val() == "") {
-								alert("예약일은 필수입력입니다.");
-								$("#meeting_date").focus();
-								return false;
-							}
-							if($("#stime").val() == "") {
-								alert("예약 시작시간은 필수입력입니다.");
-								$("#stime").focus();
-								return false;
-							}
-							if($("#etime").val() == "") {
-								alert("예약 종료시간은 필수입력입니다.");
-								$("#etime").focus();
-								return false;
-							}
-							if($("#people").val() == "") {
-								alert("사용인원은 필수입력입니다.");
-								$("#people").focus();
-								return false;
-							}
-							if($("#name").val() == "") {
-								alert("신청인 이름은 필수입력입니다.");
-								$("#name").focus();
-								return false;
-							}
-							if($("#deptname").val() == "") {
-								alert("신청인 부서는 필수입력입니다.");
-								$("#deptname").focus();
-								return false;
-							}
-							if(confirm("회의실을 신청합니다.")) {
-								$("#actform").submit();
-							}
-							return false;
-						}
-                        $('.timepicker1').timepicker({
-                            timeFormat: 'HH:mm',
-                            interval: 30,
-                            minTime: '09',
-                            startTime: '09:00',
-                            maxTime: '21:30',
-                            //defaultTime: '11',
+                    function inputAjax() {
+                        if ($("#meeting_date").val() == "") {
+                            alert("예약일은 필수입력입니다.");
+                            $("#meeting_date").focus();
+                            return false;
+                        }
+                        if ($("#stime").val() == "") {
+                            alert("예약 시작시간은 필수입력입니다.");
+                            $("#stime").focus();
+                            return false;
+                        }
+                        if ($("#etime").val() == "") {
+                            alert("예약 종료시간은 필수입력입니다.");
+                            $("#etime").focus();
+                            return false;
+                        }
+                        if ($("#people").val() == "") {
+                            alert("사용인원은 필수입력입니다.");
+                            $("#people").focus();
+                            return false;
+                        }
+                        if ($("#name").val() == "") {
+                            alert("신청인 이름은 필수입력입니다.");
+                            $("#name").focus();
+                            return false;
+                        }
+                        if ($("#deptname").val() == "") {
+                            alert("신청인 부서는 필수입력입니다.");
+                            $("#deptname").focus();
+                            return false;
+                        }
 
-                            dynamic: false,
-                            dropdown: true,
-                            setIs24HourView : true,
-                            scrollbar: true
-                        });
-                        $('.timepicker2').timepicker({
-                            timeFormat: 'HH:mm',
-                            interval: 30,
-                            minTime: '10',
-                            startTime: '10:00',
-                            maxTime: '22:00',
-                            //defaultTime: '11',
+                        if (confirm("회의실을 신청합니다.")) {
+                            $("#actform").on("submit", function (event) {
+                                event.preventDefault(); 
+                                processAfterInput();
+                            });
+                            $("#actform").submit();
+                        }
 
-                            dynamic: false,
-                            dropdown: true,
-                            setIs24HourView : true,
-                            scrollbar: true
+                        return false;
+                    }
+
+                    function processAfterInput() {
+                        var year = "${date.getYear()}";
+                        var month = "${date.getMonth()}";
+                        var day = "${date.getDay()}";
+                        var start = $("#start").val();
+                        var end = $("#end").val();
+                        var peopleNum = $("#peopleNum").val();
+                        var name = $("#name").val();
+                        var department = $("#department").val();
+                        var contents = $("#contents").val();
+
+                        $.ajax({
+                            url: "/schedule/success",
+                            data: {
+                                "year": year,
+                                "month": month,
+                                "day": day,
+                                "start": start,
+                                "end": end,
+                                "peopleNum": peopleNum,
+                                "name": name,
+                                "department": department,
+                                "contents": contents
+                            },
+                            type: "POST",
+                            success: function (result) {
+                            	var parsedData = JSON.parse(result.reData);
+                                var message = parsedData.reMsg;
+                                if (message == "실패") {
+                                    alert("이미 이미 예약된 시간입니다.");
+                                } else if (message == "성공") {
+                                    alert("예약 등록에 성공했습니다."); 
+                                } 
+                                window.location.href = "/CalendarMain";
+                            },
+                            error: function () {
+                                alert("예약 등록에 실패했습니다.");
+                            }
                         });
+                    }
+                        
                     </script>
+                    
+                    <script type="text/javascript">
+	                    $('.timepicker1').timepicker({
+	                        timeFormat: 'HH:mm',
+	                        interval: 30,
+	                        minTime: '09',
+	                        startTime: '09:00',
+	                        maxTime: '21:30',
+	                        //defaultTime: '11',
+	
+	                        dynamic: false,
+	                        dropdown: true,
+	                        setIs24HourView : true,
+	                        scrollbar: true
+	                    });
+	                    $('.timepicker2').timepicker({
+	                        timeFormat: 'HH:mm',
+	                        interval: 30,
+	                        minTime: '10',
+	                        startTime: '10:00',
+	                        maxTime: '22:00',
+	                        //defaultTime: '11',
+	
+	                        dynamic: false,
+	                        dropdown: true,
+	                        setIs24HourView : true,
+	                        scrollbar: true
+	                    });
+                    </script>
+                    
                 </div>
             </div><div class="ui-timepicker-container ui-timepicker-hidden ui-helper-hidden" style="display: none;"><div class="ui-timepicker ui-widget ui-widget-content ui-menu ui-corner-all"><ul class="ui-timepicker-viewport"></ul></div></div>
     
