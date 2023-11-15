@@ -125,7 +125,7 @@
 								String toList = schedule.getStart() + " ~ " + schedule.getEnd();
 								out.print("<td><div><a href='/schedule?year=" + cal.get(Calendar.YEAR) + "&month="
 								+ (cal.get(Calendar.MONTH) + 1) + "&day=" + String.format("%02d", day) + "'><span>" + day
-								+ " </span></a> <ul><li class='state01'><a href='#?id=" + schedule + "'>" + toList
+								+ " </span></a> <ul><li class='state01'><a href='/detail?id=" + schedule.getId() + "'>" + toList
 								+ "<div class='calTooltip'><p>" + schedule.getDepartment() + " - " + schedule.getName()
 								+ "</p></div></a></li></ul></div></td>");
 							} else {

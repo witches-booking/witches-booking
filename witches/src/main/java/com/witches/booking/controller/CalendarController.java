@@ -42,6 +42,13 @@ public class CalendarController {
 		return "/schedule";
 	}
 	
+	@RequestMapping("detail")
+	public String moveScheduleModify(@RequestParam int id) {
+		System.out.println("id확인 : "+id);
+		return "/detail";
+	}
+	
+	
 	// 캘린더 일정 띄우기
 	@RequestMapping("/CalendarMain")
 	public String CalendarMain(Model model) {
@@ -60,5 +67,9 @@ public class CalendarController {
 		return "/CalendarMain";
 	}
 	
-	
+	@RequestMapping("/CalendarMainTest")
+	public String CalendarMainTest() {	
+		calendarService.showSchedule();
+		return "/CalendarMainTest";
+	}
 }
