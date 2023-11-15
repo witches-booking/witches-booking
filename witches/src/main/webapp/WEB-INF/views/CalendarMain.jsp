@@ -132,9 +132,11 @@ function kakaoLogin() {
 
 							// 예약 정보 표시
 							Schedule schedule = null;
-							for (Schedule s : data) {
-								if (s.getDay() == day) {
-							schedule = s;
+							if(data != null){
+								for (Schedule s : data) {
+									if (s.getDay() == day) {
+								schedule = s;
+								}
 							break;
 								}
 							}

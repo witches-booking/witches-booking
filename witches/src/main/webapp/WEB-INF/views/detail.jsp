@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -19,7 +20,7 @@
             <div id="content">
                 <div class="contentWrap">                  
                     <div class="inputForm">
-                        <form id="actform" name="actform" method="post" action="meet_cancel.php">
+                        <form id="actform" name="actform" method="post" action="/cancel">
                             <input type="hidden" id="idx" name="idx" value="16">
                             <input type="hidden" id="formtype" name="formtype" value="ing_meetCancel">
                             <h4>회의실 취소</h4>
@@ -34,43 +35,42 @@
                                 <tbody>
                                     <tr>
                                         <th scope="row"><label for="meeting_date">예약일</label></th>
-                                        <td colspan="4" class="date"></td>
+                                        <td colspan="4" class="date">${detailMap.getYear() }-${detailMap.getMonth() }-${detailMap.getDay() }</td>
                                     </tr>
                                     <tr>
                                         <th scope="row"><label for="stime">예약시간</label></th>
-                                        <td colspan="4">
-                                                                                        <span class="formHyphen"></span>
-											                                        </td>
+                                        <td colspan="4">${detailMap.getStart() }
+                                        <span class="formHyphen"></span>${detailMap.getEnd() }
+                                        </td>
                                     </tr>
                                     <tr>
                                         <th scope="row"><label for="people">사용인원</label></th>
-                                        <td colspan="4">
-                                             명
+                                        <td colspan="4">${detailMap.getPeopleNum() } 명
                                         </td>
                                     </tr>
                                     <tr>
                                         <th scope="row">신청인 이름</th>
                                         <td class="tc"><label for="name">이름</label></td>
-                                        <td></td>
+                                        <td>${detailMap.getName() }</td>
                                         <td class="tc"><label for="deptname">부서</label></td>
-                                        <td></td>
+                                        <td>${detailMap.getDepartment() }</td>
                                     </tr>
                                     <tr>
                                         <th scope="row"><label for="etc">회의내용 및 참여인원</label></th>
-                                        <td colspan="4">
+                                        <td colspan="4">${detailMap.getContents() }
                                             <br>
                                             </td>
                                     </tr>
                                     <tr>
                                         <th scope="row">취소자 이름<span class="compul">필수</span></th>
                                         <td colspan="4">
-											<input type="text" id="cancelname" name="cancelname" required="required" placeholder="이름입력">
+											<input type="text" id="cancelNm" name="cancelNm" required="required" placeholder="이름입력">
 										</td>
                                     </tr>
                                     <tr>
                                         <th scope="row"><label for="canceletc">취소 사유</label></th>
                                         <td colspan="4">
-                                            <textarea id="canceletc" name="canceletc" cols="100" rows="10" placeholder="취소 사유를 입력하세요."></textarea>
+                                            <textarea id="cancelReason" name="cancelReason" cols="100" rows="10" placeholder="취소 사유를 입력하세요."></textarea>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -79,8 +79,8 @@
                     </div>
 					<!--showDialog($('#wrap'),'','poplayer')-->
                     <p class="tc">
-						<button type="submit" class="btns02" onclick="fnList();" tabindex="0">목록보기</button>
-						<button type="submit" class="btns02 color2" onclick="inputAjax();" tabindex="1">예약취소</button>
+						<button type="submit" class="btns02" onclick="fnList()" tabindex="0">목록보기</button>
+						<button type="submit" class="btns02 color2" onclick="inputAjax()" tabindex="1">예약취소</button>
 					</p>
                     <script>
 						function inputAjax() {
@@ -90,18 +90,49 @@
 								return false;
 							}
 							if(confirm("회의실 예약을 취소합니다.")) {
-								$("#actform").submit();
-							}
-							return false;
+								$("#actform").on("submit", function (event) {
+	                                event.preventDefault(); 
+	                                processAfterInput();
+	                            });
+	                            $("#actform").submit();
+	                        }
+
+	                        return false;
 						}
+						
+						function processAfterInput(){
+							var id = "${detailMap.getId()}";
+							var cancelNm = $("#cancelNm").val();
+							var cancelReason = $("#cancelReason").val();
+							$.ajax({
+								url : "/cancel",
+								data : {
+									"id" : id,
+									"cancelNm" : cancelNm,
+									"cancelReason" : cancelReason
+								},
+								type : "POST",
+								success : function (result) {
+									var parsedData = JSON.parse(result.reData);
+	                                var message = parsedData.reMsg;
+	                                if (message == "성공") {
+	                                    alert("예약 취소에 성공했습니다.");
+	                                    window.location.href = "/CalendarMain";
+	                                } 
+	                            },
+								error : function() {
+                                	alert("예약 취소에 실패했습니다.");
+                                	location.reload();
+                                }
+							});
+						}
+						
 						function fnList() {
 							history.go(-1);
 						}
                     </script>
                 </div>
             </div>
-    
-
 
 </body>
 </html>

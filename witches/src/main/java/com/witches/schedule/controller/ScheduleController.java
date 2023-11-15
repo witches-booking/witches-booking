@@ -4,8 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -37,6 +39,24 @@ public class ScheduleController {
 	}
 
 	/**
+	 * 예약 조회
+	 * @param ScheduleVO scheduleVo
+	 * @param Model model
+	 * @param Integer id
+	 * @return ScheduleVO
+	 * ------------ 이력 ------------
+	 * 2023.11.15 / 정윤지 / 최초 적용
+	 */
+	@GetMapping("/detail")
+	public ScheduleVO scheduleSelect(@ModelAttribute ScheduleVO scheduleVo, Model model,
+			@RequestParam Integer id) {
+		ScheduleVO detailMap = scheduleService.scheduleSelect(id);
+		model.addAttribute("detailMap", detailMap);
+		System.out.println(detailMap);
+		return detailMap;
+	}
+
+	/**
 	 * 예약 취소
 	 * @param ResponseEntity<Object>
 	 * @param ScheduleVO scheduleVo
@@ -45,10 +65,10 @@ public class ScheduleController {
 	 * ------------ 이력 ------------
 	 * 2023.11.14 / 정윤지 / 최초 적용
 	 */
-	@PostMapping("/schedule/cancel")
-	public ResponseEntity<Object> scheduleCancel(@ModelAttribute ScheduleVO scheduleVo) {
+	@PostMapping("/cancel")
+	public ResponseEntity<Object> scheduleCancel(@ModelAttribute ScheduleVO scheduleVo, @RequestParam Integer id) {
 		Gson gson = new GsonBuilder().create();
-		ResultVO resultVo = scheduleService.scheduleDelete(scheduleVo);
+		ResultVO resultVo = scheduleService.scheduleCancel(scheduleVo);
 		return ResponseEntity.ok(new resultResponse(gson.toJson(resultVo)));
 	}
 
