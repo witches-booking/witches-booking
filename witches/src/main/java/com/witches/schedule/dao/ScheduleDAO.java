@@ -6,6 +6,8 @@ import com.witches.schedule.vo.ScheduleVO;
 
 @Mapper
 public interface ScheduleDAO {
+	
+	int scheduleCheck(ScheduleVO scheduleVo);
 
 	void scheduleInsert(ScheduleVO scheduleVo);
 
