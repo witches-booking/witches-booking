@@ -13,9 +13,9 @@ import lombok.ToString;
 public class ScheduleVO {
     private Integer id;
 	
-	private String year;		// db에는 타입을 year로 넣음
-	private String month;
-	private String day;
+	private int year;		// db에는 타입을 year로 넣음
+	private int month;
+	private int day;
 	private String start;
 	private String end;
 	private String peopleNum;
