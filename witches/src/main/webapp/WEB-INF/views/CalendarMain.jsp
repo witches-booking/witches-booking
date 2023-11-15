@@ -21,31 +21,32 @@
 	integrity="sha384-mXVrIX2T/Kszp6Z0aEWaA8Nm7J6/ZeWXbL8UpGRjKwWe56Srd/iyNmWMBhcItAjH"
 	crossorigin="anonymous"></script>
 <script>
-window.onload = function() {
-    document.getElementById('kakao-login-btn').addEventListener('click', function() {
-        // SDK를 초기화 합니다. 사용할 앱의 JavaScript 키를 설정해야 합니다.
-        Kakao.init('570250ea5e6af0b22c661c29eb516746');
+	window.onload = function() {
+		document.getElementById('kakao-login-btn').addEventListener('click',
+				function() {
+					// SDK를 초기화 합니다. 사용할 앱의 JavaScript 키를 설정해야 합니다.
+					Kakao.init('570250ea5e6af0b22c661c29eb516746');
 
-        // SDK 초기화 여부를 판단합니다.
-        console.log(Kakao.isInitialized());
+					// SDK 초기화 여부를 판단합니다.
+					console.log(Kakao.isInitialized());
 
-        Kakao.Auth.authorize({
-            redirectUri : 'http://localhost:8585/CalendarMain',
-        });
-        
-        console.log('${ACCESS_TOKEN}')
-        Kakao.Auth.setAccessToken('${ACCESS_TOKEN}');
-        
-    });
-}
+					Kakao.Auth.authorize({
+						redirectUri : 'http://localhost:8585/CalendarMain',
+					});
+
+					console.log('${ACCESS_TOKEN}')
+					Kakao.Auth.setAccessToken('${ACCESS_TOKEN}');
+
+				});
+	}
 </script>
 
 </head>
 <body>
 
-<button id="kakao-login-btn" style="position: absolute; right: 0;">
-    <img src="/img/kakao_login_medium_narrow.png" alt="Kakao Login">
-</button>
+	<button id="kakao-login-btn" style="position: absolute; right: 0;">
+		<img src="/img/kakao_login_medium_narrow.png" alt="Kakao Login">
+	</button>
 
 
 
@@ -54,9 +55,6 @@ window.onload = function() {
 	<div id="content">
 		<div class="contentWrap">
 			<article class="calendar">
-
-
-
 				<div class="top">
 					<div class="date">
 						<button type="button" class="prev"
@@ -101,7 +99,7 @@ window.onload = function() {
 						// 해당 월의 첫 날의 요일을 구함 (1: 일요일, 2: 월요일, ..., 7: 토요일)
 						int startDayOfWeek = cal.get(Calendar.DAY_OF_WEEK);
 
-						List<Schedule> data = (List)request.getAttribute("data");
+						List<Schedule> data = (List) request.getAttribute("data");
 						//out.println("data[0]:"+data.get(0));
 						// 날짜 정보 동적 생성
 						out.print("<tbody><tr>");
@@ -110,27 +108,31 @@ window.onload = function() {
 							out.print("<td></td>");
 						}
 						for (int day = startDayOfMonth; day <= endDayOfMonth; day++) {
-						    // 해당 날짜의 요일을 구함 (1: 일요일, 2: 월요일, ..., 7: 토요일)
-						    cal.set(Calendar.DAY_OF_MONTH, day);
-						    int dayOfWeek = cal.get(Calendar.DAY_OF_WEEK);
+							// 해당 날짜의 요일을 구함 (1: 일요일, 2: 월요일, ..., 7: 토요일)
+							cal.set(Calendar.DAY_OF_MONTH, day);
+							int dayOfWeek = cal.get(Calendar.DAY_OF_WEEK);
 
-						    // 예약 정보 표시
-						    Schedule schedule = null;
-						    for (Schedule s : data) {
-						        if (s.getDay() == day) {
-						            schedule = s;
-						            break;
-						        }
-						    }
+							// 예약 정보 표시
+							Schedule schedule = null;
+							for (Schedule s : data) {
+								if (s.getDay() == day) {
+							schedule = s;
+							break;
+								}
+							}
 
-						    if (schedule != null) {
-						        String toList = schedule.getStart() + " ~ " + schedule.getEnd();
-						        out.print("<td><div><a href='/schedule?year=" + cal.get(Calendar.YEAR) + "&month=" + (cal.get(Calendar.MONTH) + 1)
-						                + "&day=" + String.format("%02d", day) + "'><span>" + day + " </span></a> <ul><li class='state01'><a href='#?id=" + schedule + "'>" + toList + "</a></li></ul></div></td>");
-						    } else {
-						        out.print("<td><div><a href='/schedule?year=" + cal.get(Calendar.YEAR) + "&month=" + (cal.get(Calendar.MONTH) + 1)
-						                + "&day=" + String.format("%02d", day) + "'><span>" + day + " </span></a></div></td>");
-						    }
+							if (schedule != null) {
+								String toList = schedule.getStart() + " ~ " + schedule.getEnd();
+								out.print("<td><div><a href='/schedule?year=" + cal.get(Calendar.YEAR) + "&month="
+								+ (cal.get(Calendar.MONTH) + 1) + "&day=" + String.format("%02d", day) + "'><span>" + day
+								+ " </span></a> <ul><li class='state01'><a href='#?id=" + schedule + "'>" + toList
+								+ "<div class='calTooltip'><p>" + schedule.getDepartment() + " - " + schedule.getName()
+								+ "</p></div></a></li></ul></div></td>");
+							} else {
+								out.print(
+								"<td><div><a href='/schedule?year=" + cal.get(Calendar.YEAR) + "&month=" + (cal.get(Calendar.MONTH) + 1)
+										+ "&day=" + String.format("%02d", day) + "'><span>" + day + " </span></a></div></td>");
+							}
 
 							// 주말이거나 마지막 날이면 새로운 행(<tr>)을 시작
 							if (dayOfWeek == 7 || day == endDayOfMonth) {
@@ -139,12 +141,7 @@ window.onload = function() {
 						}
 						out.print("</tr></tbody>");
 						%>
-						<!--  <tr> -->
-						<!-- 예약 정보 표시 -->
-						<!--  <td><a href="/schedule?date=1"><span>1</span></a></td>-->
-						<!-- 나머지 날짜 정보 동적 생성 -->
-						<!--  </tr> -->
-						<!-- 나머지 주차의 날짜 및 예약 정보 생성 -->
+
 					</tbody>
 				</table>
 			</article>
@@ -154,7 +151,7 @@ window.onload = function() {
 
 	<script type="text/javascript">
 		function moveMonth(year, month) {
-			location.href = '/meet.jsp?pid=&year=' + year + '&month=' + month;
+			location.href = '/scheduler.jsp?pid=&year=' + year + '&month=' + month;
 		}
 	</script>
 

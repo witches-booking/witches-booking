@@ -42,7 +42,7 @@ public class CalendarController {
 		return "/schedule";
 	}
 	
-	// 캘린더 띄우기
+	// 캘린더 일정 띄우기
 	@RequestMapping("/CalendarMain")
 	public String CalendarMain(Model model) {
 		Calendar cal = Calendar.getInstance();
