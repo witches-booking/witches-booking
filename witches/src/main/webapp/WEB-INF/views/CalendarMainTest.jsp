@@ -5,7 +5,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -22,7 +23,7 @@
 	integrity="sha384-mXVrIX2T/Kszp6Z0aEWaA8Nm7J6/ZeWXbL8UpGRjKwWe56Srd/iyNmWMBhcItAjH"
 	crossorigin="anonymous"></script>
 <script>
-// 카카오 로그인 
+	// 카카오 로그인 
 	window.onload = function() {
 		document.getElementById('kakao-login-btn').addEventListener('click',
 				function() {
@@ -44,31 +45,22 @@
 </script>
 
 
-    <script type="text/javascript">
-    data = {month : '11'};
-    
-        $(document).ready(function() {
-            // REST API를 호출하여 데이터를 가져옵니다.
-            $.ajax({
-                url: '/CalendarMainTestFind',  // REST API의 URL을 입력하세요.
-                type: 'GET',
-                data: JSON.stringify(data),
-                success: function(data) {
-                    // 데이터를 가져온 후에 달력에 표시합니다.
-                    console.log("가져온 데이터 확인 :", data )
-                    var month = data.month;
-                    var day = data.day;
-                    var contents = data.contents;
-
-                    // 달력의 특정 날짜 셀을 찾습니다.
-                    var cell = $('#calendar').find(`[data-month="${month}"][data-day="${day}"]`);
-
-                    // 셀에 내용을 추가합니다.
-                    cell.text(content);
-                }
-            });
-        });
-    </script>
+<script type="text/javascript">
+	$(document).ready(function() {
+		// REST API를 호출하여 데이터를 가져옵니다.
+		$.ajax({
+			url : '/CalendarMainTestFind', // REST API의 URL을 입력하세요.
+			type : 'GET',
+			data : {
+				month : '11'
+			},
+			success : function(data) {
+				// 데이터를 가져온 후에 달력에 표시합니다.
+				console.log("가져온 데이터 확인 :", data);
+			}
+		});
+	});
+</script>
 </head>
 <body>
 
@@ -109,22 +101,96 @@
 						</tr>
 					</thead>
 					<tbody>
-				   <script>
-        $(document).ready(function() {
-            var date = new Date();
-            var month = date.getMonth() + 1;
-            var year = date.getFullYear();
+						<!-- 날짜 및 예약 정보 동적 생성 -->
+						<%
+						// Java 코드로 날짜 및 예약 정보 생성
+						// 예시: 데이터베이스로부터 날짜와 예약 정보를 조회하여 표시
+						String currentDate = "2023-11-01"; // 현재 날짜 예시
 
-            for (var i = 1; i <= 31; i++) {
-                // 각 날짜에 대한 셀을 생성합니다.
-                var cell = $('<td>').text(i).attr('data-day', i).attr('data-month', month);
+						// 날짜 정보를 파싱하여 Calendar 객체 생성
+						SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+						Calendar cal = Calendar.getInstance();
+						cal.setTime(sdf.parse(currentDate));
 
-                // 셀을 달력에 추가합니다.
-                $('#calendar').append(cell);
-            }
-        });
-    </script>
+						// 해당 월의 첫 날과 마지막 날을 구함
+						int startDayOfMonth = cal.getActualMinimum(Calendar.DAY_OF_MONTH);
+						int endDayOfMonth = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
 
+						// 해당 월의 첫 날의 요일을 구함 (1: 일요일, 2: 월요일, ..., 7: 토요일)
+						int startDayOfWeek = cal.get(Calendar.DAY_OF_WEEK);
+
+						List<Schedule> data = null;
+						%>
+					
+					<tbody>
+						<tr>
+							<%
+							for (int i = 1; i < startDayOfWeek; i++) {
+								// 첫 날이 시작되기 전까지는 빈 칸으로 채움
+							%>
+							<td></td>
+							<%
+							}
+
+							for (int day = startDayOfMonth; day <= endDayOfMonth; day++) {
+							// 해당 날짜의 요일을 구함 (1: 일요일, 2: 월요일, ..., 7: 토요일)
+							cal.set(Calendar.DAY_OF_MONTH, day);
+							int dayOfWeek = cal.get(Calendar.DAY_OF_WEEK);
+
+							// 예약 정보 표시
+							Schedule schedule = null;
+							for (Schedule s : data) {
+								if (s.getDay() == day) {
+									schedule = s;
+									break;
+								}
+							}
+
+							if (schedule != null) {
+							%>
+							<td>
+								<div>
+									<a
+										href='/schedule?year=<%=cal.get(Calendar.YEAR)%>&month=<%=(cal.get(Calendar.MONTH) + 1)%>&day=<%=String.format("%02d", day)%>'>
+										<span><%=day%></span>
+									</a>
+									<ul>
+										<li class='state01'><a
+											href='/detail?id=<%=schedule.getId()%>'><%=schedule.getStart()%>~
+												<em><%=schedule.getEnd()%></em>
+												<div class='calTooltip'>
+													<p><%=schedule.getDepartment()%>
+														-
+														<%=schedule.getName()%></p>
+												</div> </a></li>
+									</ul>
+								</div>
+							</td>
+							<%
+							} else {
+							%>
+							<td>
+								<div>
+									<a
+										href='/schedule?year=<%=cal.get(Calendar.YEAR)%>&month=<%=(cal.get(Calendar.MONTH) + 1)%>&day=<%=String.format("%02d", day)%>'>
+										<span><%=day%></span>
+									</a>
+								</div>
+							</td>
+							<%
+							}
+
+							// 주말이거나 마지막 날이면 새로운 행(<tr>)을 시작
+							if (dayOfWeek == 7 || day == endDayOfMonth) {
+							%>
+						</tr>
+						<tr>
+							<%
+							}
+							}
+							%>
+						</tr>
+					</tbody>
 					</tbody>
 				</table>
 			</article>
@@ -134,7 +200,8 @@
 
 	<script type="text/javascript">
 		function moveMonth(year, month) {
-			location.href = '/scheduler.jsp?pid=&year=' + year + '&month=' + month;
+			location.href = '/scheduler.jsp?pid=&year=' + year + '&month='
+					+ month;
 		}
 	</script>
 

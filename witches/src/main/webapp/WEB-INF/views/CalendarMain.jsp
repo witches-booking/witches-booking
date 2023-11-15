@@ -58,16 +58,15 @@ function kakaoLogin() {
 </head>
 <body>
 
-	<button type="button" id="kakao-login-btn"
-		onclick="kakaoLogin()">
-		
-			<img src="/img/kakao_login_medium_narrow.png" alt="Kakao Login">
-	
+	<button type="button" id="kakao-login-btn" onclick="kakaoLogin()">
+
+		<img src="/img/kakao_login_medium_narrow.png" alt="Kakao Login">
+
 	</button>
 
-<button type="hidden"></button>
+	<button type="hidden"></button>
 
-	
+
 
 	<h3 id="pageTit">회의실 사용</h3>
 	<div id="content">
@@ -116,51 +115,79 @@ function kakaoLogin() {
 
 						// 해당 월의 첫 날의 요일을 구함 (1: 일요일, 2: 월요일, ..., 7: 토요일)
 						int startDayOfWeek = cal.get(Calendar.DAY_OF_WEEK);
-						
+
 						List<Schedule> data = (List) request.getAttribute("data");
-						//out.println("data[0]:"+data.get(0));
-						// 날짜 정보 동적 생성
-						out.print("<tbody><tr>");
-						for (int i = 1; i < startDayOfWeek; i++) {
-							// 첫 날이 시작되기 전까지는 빈 칸으로 채움s
-							out.print("<td></td>");
-						}
-						for (int day = startDayOfMonth; day <= endDayOfMonth; day++) {
+						%>
+					
+					<tbody>
+						<tr>
+							<%
+							for (int i = 1; i < startDayOfWeek; i++) {
+								// 첫 날이 시작되기 전까지는 빈 칸으로 채움
+							%>
+							<td></td>
+							<%
+							}
+
+							for (int day = startDayOfMonth; day <= endDayOfMonth; day++) {
 							// 해당 날짜의 요일을 구함 (1: 일요일, 2: 월요일, ..., 7: 토요일)
 							cal.set(Calendar.DAY_OF_MONTH, day);
 							int dayOfWeek = cal.get(Calendar.DAY_OF_WEEK);
 
 							// 예약 정보 표시
 							Schedule schedule = null;
-							if(data != null){
-								for (Schedule s : data) {
-									if (s.getDay() == day) {
-								schedule = s;
-								}
-							break;
+							for (Schedule s : data) {
+								if (s.getDay() == day) {
+									schedule = s;
+									break;
 								}
 							}
 
 							if (schedule != null) {
-								String toList = schedule.getStart() + " ~ " + schedule.getEnd();
-								out.print("<td><div><a href='/schedule?year=" + cal.get(Calendar.YEAR) + "&month="
-								+ (cal.get(Calendar.MONTH) + 1) + "&day=" + String.format("%02d", day) + "'><span>" + day
-								+ " </span></a> <ul><li class='state01'><a href='/detail?id=" + schedule.getId() + "'>" + toList
-								+ "<div class='calTooltip'><p>" + schedule.getDepartment() + " - " + schedule.getName()
-								+ "</p></div></a></li></ul></div></td>");
+							%>
+							<td>
+								<div>
+									<a
+										href='/schedule?year=<%=cal.get(Calendar.YEAR)%>&month=<%=(cal.get(Calendar.MONTH) + 1)%>&day=<%=String.format("%02d", day)%>'>
+										<span><%=day%></span>
+									</a>
+									<ul>
+										<li class='state01'><a
+											href='/detail?id=<%=schedule.getId()%>'><%=schedule.getStart()%>~
+												<em><%=schedule.getEnd()%></em>
+												<div class='calTooltip'>
+													<p><%=schedule.getDepartment()%>
+														-
+														<%=schedule.getName()%></p>
+												</div> </a></li>
+									</ul>
+								</div>
+							</td>
+							<%
 							} else {
-								out.print(
-								"<td><div><a href='/schedule?year=" + cal.get(Calendar.YEAR) + "&month=" + (cal.get(Calendar.MONTH) + 1)
-										+ "&day=" + String.format("%02d", day) + "'><span>" + day + " </span></a></div></td>");
+							%>
+							<td>
+								<div>
+									<a
+										href='/schedule?year=<%=cal.get(Calendar.YEAR)%>&month=<%=(cal.get(Calendar.MONTH) + 1)%>&day=<%=String.format("%02d", day)%>'>
+										<span><%=day%></span>
+									</a>
+								</div>
+							</td>
+							<%
 							}
 
 							// 주말이거나 마지막 날이면 새로운 행(<tr>)을 시작
 							if (dayOfWeek == 7 || day == endDayOfMonth) {
-								out.print("</tr><tr>");
+							%>
+						</tr>
+						<tr>
+							<%
 							}
-						}
-						out.print("</tr>");
-						%>
+							}
+							%>
+						</tr>
+					</tbody>
 
 					</tbody>
 				</table>
