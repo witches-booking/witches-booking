@@ -1,4 +1,4 @@
-package com.witches.booking.controller;
+package com.witches.schedule.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.witches.booking.service.CalendarService;
+import com.witches.schedule.service.CalendarService;
 import com.witches.schedule.service.ScheduleService;
 import com.witches.schedule.vo.ResultVO;
 import com.witches.schedule.vo.ScheduleVO;

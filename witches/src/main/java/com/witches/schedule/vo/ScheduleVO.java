@@ -11,6 +11,7 @@ import lombok.ToString;
 @Getter
 @Setter
 public class ScheduleVO {
+	
     private Integer id;
 	
 	private int year;		// db에는 타입을 year로 넣음
@@ -20,6 +21,7 @@ public class ScheduleVO {
 	private String end;
 	private String peopleNum;
 	private String name;
+	private String createNm;
 	private String department;
 	private String contents;
 	private String isDelete;

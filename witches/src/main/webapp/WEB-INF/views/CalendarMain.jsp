@@ -1,4 +1,4 @@
-<%@page import="com.witches.booking.entity.Schedule"%>
+<%@page import="com.witches.schedule.vo.ScheduleVO"%>
 <%@page import="java.util.List"%>
 <%@page import="java.util.Calendar"%>
 <%@page import="java.text.SimpleDateFormat"%>
@@ -20,7 +20,7 @@
 <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.4.0/kakao.min.js"
 	integrity="sha384-mXVrIX2T/Kszp6Z0aEWaA8Nm7J6/ZeWXbL8UpGRjKwWe56Srd/iyNmWMBhcItAjH"
 	crossorigin="anonymous"></script>
-<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+
 <script type="text/javascript">
 function kakaoLogin() {
 	// SDK를 초기화 합니다. 사용할 앱의 JavaScript 키를 설정해야 합니다.
@@ -116,7 +116,7 @@ function kakaoLogin() {
 						// 해당 월의 첫 날의 요일을 구함 (1: 일요일, 2: 월요일, ..., 7: 토요일)
 						int startDayOfWeek = cal.get(Calendar.DAY_OF_WEEK);
 
-						List<Schedule> data = (List) request.getAttribute("data");
+						List<ScheduleVO> data = (List) request.getAttribute("data");
 						%>
 					
 					<tbody>
@@ -135,8 +135,8 @@ function kakaoLogin() {
 							int dayOfWeek = cal.get(Calendar.DAY_OF_WEEK);
 
 							// 예약 정보 표시
-							Schedule schedule = null;
-							for (Schedule s : data) {
+							ScheduleVO schedule = null;
+							for (ScheduleVO s : data) {
 								if (s.getDay() == day) {
 									schedule = s;
 									break;

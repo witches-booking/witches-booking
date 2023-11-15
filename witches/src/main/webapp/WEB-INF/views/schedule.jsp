@@ -62,7 +62,6 @@
             <div id="content">
                 <div class="contentWrap">                  
                     <div class="inputForm">
-                        <form id="actform" name="actform" method="post" action="/schedule/success">
                             <input type="hidden" id="formtype" name="formtype" value="ing_meetWrite">
                             <h4>회의실 예약 입력</h4>
                             <div class="msgBox">
@@ -77,9 +76,9 @@
                                     <tr>
                                         <th scope="row"><label for="meeting_date">예약일<span class="compul">필수</span></label></th>
                                         <td colspan="4" class="date"><input id="meeting_date" name="time" value='${date.getYear()}-${date.getMonth()}-${date.getDay() } ' type="text" readonly="" required="required" placeholder="선택하세요">
-                                        <input type="text" name="year" value="${date.getYear() }" style="display : none;">
-                                        <input type="text" name="month" value="${date.getMonth() }" style="display : none;">
-                                        <input type="text" name="day" value="${date.getDay() }" style="display : none;">
+                                        <input type="text" id="year" name="year" value="${date.getYear() }" style="display : none;">
+                                        <input type="text" id="month" name="month" value="${date.getMonth() }" style="display : none;">
+                                        <input type="text" id="day" name="day" value="${date.getDay() }" style="display : none;">
                                         </td>
                                     </tr>
                                     <tr>
@@ -93,7 +92,7 @@
                                     <tr>
                                         <th scope="row"><label for="people">사용인원<span class="compul">필수</span></label></th>
                                         <td colspan="4">
-                                            <input id="peopleNum" name="peopleNum" type="number" required="required" placeholder="인원수"> 명
+                                            <input id="peopleNum" name="peopleNum" type="number" required="required" placeholder="인원수" style="width:60px;"> 명
                                         </td>
                                     </tr>
                                     <tr>
@@ -111,10 +110,9 @@
                                     </tr>
                                 </tbody>
                             </table>
-                        </form>
                     </div>
 					<!--showDialog($('#wrap'),'','poplayer')-->
-                    <p class="tc"><button type="submit" class="btns02" onclick="inputAjax();" tabindex="0">확인</button></p>
+                    <p class="tc"><button id="submitBtn" type="submit" class="btns02" onclick="inputAjax();" tabindex="0">확인</button></p>
                     <script>
                     function inputAjax() {
                         if ($("#meeting_date").val() == "") {
@@ -149,11 +147,10 @@
                         }
 
                         if (confirm("회의실을 신청합니다.")) {
-                            $("#actform").on("submit", function (event) {
+                            $("#submitBtn").on("click", function (event) {
                                 event.preventDefault(); 
                                 processAfterInput();
                             });
-                            $("#actform").submit();
                         }
 
                         return false;
@@ -171,7 +168,7 @@
                         var contents = $("#contents").val();
 
                         $.ajax({
-                            url: "/schedule/success",
+                            url: "/success",
                             data: {
                                 "year": year,
                                 "month": month,
@@ -188,7 +185,7 @@
                             	var parsedData = JSON.parse(result.reData);
                                 var message = parsedData.reMsg;
                                 if (message == "실패") {
-                                    alert("이미 이미 예약된 시간입니다.");
+                                    alert("이미 예약된 시간입니다.");
                                 } else if (message == "성공") {
                                     alert("예약 등록에 성공했습니다."); 
                                 } 
@@ -196,6 +193,7 @@
                             },
                             error: function () {
                                 alert("예약 등록에 실패했습니다.");
+                                window.location.href = "/CalendarMain";
                             }
                         });
                     }

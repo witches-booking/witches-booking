@@ -20,7 +20,6 @@
             <div id="content">
                 <div class="contentWrap">                  
                     <div class="inputForm">
-                        <form id="actform" name="actform" method="post" action="/cancel">
                             <input type="hidden" id="idx" name="idx" value="16">
                             <input type="hidden" id="formtype" name="formtype" value="ing_meetCancel">
                             <h4>회의실 취소</h4>
@@ -75,12 +74,11 @@
                                     </tr>
                                 </tbody>
                             </table>
-                        </form>
                     </div>
 					<!--showDialog($('#wrap'),'','poplayer')-->
                     <p class="tc">
 						<button type="submit" class="btns02" onclick="fnList()" tabindex="0">목록보기</button>
-						<button type="submit" class="btns02 color2" onclick="inputAjax()" tabindex="1">예약취소</button>
+						<button id="cancelBtn" type="submit" class="btns02 color2" onclick="inputAjax()" tabindex="1">예약취소</button>
 					</p>
                     <script>
 						function inputAjax() {
@@ -90,11 +88,10 @@
 								return false;
 							}
 							if(confirm("회의실 예약을 취소합니다.")) {
-								$("#actform").on("submit", function (event) {
+								$("#cancelBtn").on("click", function (event) {
 	                                event.preventDefault(); 
 	                                processAfterInput();
 	                            });
-	                            $("#actform").submit();
 	                        }
 
 	                        return false;
