@@ -20,36 +20,38 @@
 <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.4.0/kakao.min.js"
 	integrity="sha384-mXVrIX2T/Kszp6Z0aEWaA8Nm7J6/ZeWXbL8UpGRjKwWe56Srd/iyNmWMBhcItAjH"
 	crossorigin="anonymous"></script>
-
+<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 <script type="text/javascript">
-	function kakaoLogin() {
-		// SDK를 초기화 합니다. 사용할 앱의 JavaScript 키를 설정해야 합니다.
-		Kakao.init('570250ea5e6af0b22c661c29eb516746');
+function kakaoLogin() {
+	// SDK를 초기화 합니다. 사용할 앱의 JavaScript 키를 설정해야 합니다.
+	Kakao.init('570250ea5e6af0b22c661c29eb516746');
 
-		// SDK 초기화 여부를 판단합니다.
-		console.log(Kakao.isInitialized());
+	// SDK 초기화 여부를 판단합니다.
+	console.log(Kakao.isInitialized());
 
-		Kakao.Auth.authorize({
-			redirectUri : 'http://localhost:8585/CalendarMain',
-		});
-
-		console.log('${ACCESS_TOKEN}')
-		Kakao.Auth.setAccessToken('${ACCESS_TOKEN}');
-		
-		Kakao.API.request({
-			  url: '/v2/user/me',
-			  data: {
-			    property_keys: ['kakao_account.email'],
-			  },
+	Kakao.Auth.login({
+		success: function(authObj) {
+			console.log(authObj.access_token);
+			Kakao.Auth.setAccessToken(authObj.access_token);
+			
+			Kakao.API.request({
+				url: '/v2/user/me',
+				data: {
+					property_keys: ['kakao_account.email'],
+				},
 			})
-			  .then(function(response) {
-			    console.log(response);
-			  })
-			  .catch(function(error) {
-			    console.log(error);
-			  });
-		
-	};
+			.then(function(response) {
+				console.log(response);
+			})
+			.catch(function(error) {
+				console.log(error);
+			});
+		},
+		fail: function(err) {
+			alert(JSON.stringify(err));
+		},
+	});
+};
 	
 
 </script>
@@ -114,7 +116,7 @@
 
 						// 해당 월의 첫 날의 요일을 구함 (1: 일요일, 2: 월요일, ..., 7: 토요일)
 						int startDayOfWeek = cal.get(Calendar.DAY_OF_WEEK);
-
+						
 						List<Schedule> data = (List) request.getAttribute("data");
 						//out.println("data[0]:"+data.get(0));
 						// 날짜 정보 동적 생성
