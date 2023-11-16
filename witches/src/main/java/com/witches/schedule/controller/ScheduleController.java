@@ -24,12 +24,7 @@ public class ScheduleController {
 	@Autowired
 	CalendarService calendarService;
 
-	// 메인 jsp 띄우기
-	@RequestMapping("/Scheduler")
-	public String welcome() {
-		calendarService.showSchedule();
-		return "/Scheduler";
-	}
+
 
 	// 날짜 클릭시 작성페이지 이동
 	@RequestMapping("/schedule")

@@ -115,42 +115,39 @@
                     <p class="tc"><button id="submitBtn" type="submit" class="btns02" onclick="inputAjax();" tabindex="0">확인</button></p>
                     <script>
                     function inputAjax() {
-                        if ($("#meeting_date").val() == "") {
-                            alert("예약일은 필수입력입니다.");
+                        if ($("#meeting_date").val() === "") {
+                            alert("예약일은 필수 입력입니다.");
                             $("#meeting_date").focus();
                             return false;
                         }
-                        if ($("#stime").val() == "") {
-                            alert("예약 시작시간은 필수입력입니다.");
+                        if ($("#stime").val() === "") {
+                            alert("예약 시작시간은 필수 입력입니다.");
                             $("#stime").focus();
                             return false;
                         }
-                        if ($("#etime").val() == "") {
-                            alert("예약 종료시간은 필수입력입니다.");
+                        if ($("#etime").val() === "") {
+                            alert("예약 종료시간은 필수 입력입니다.");
                             $("#etime").focus();
                             return false;
                         }
-                        if ($("#people").val() == "") {
-                            alert("사용인원은 필수입력입니다.");
+                        if ($("#people").val() === "") {
+                            alert("사용인원은 필수 입력입니다.");
                             $("#people").focus();
                             return false;
                         }
-                        if ($("#name").val() == "") {
-                            alert("신청인 이름은 필수입력입니다.");
+                        if ($("#name").val() === "") {
+                            alert("신청인 이름은 필수 입력입니다.");
                             $("#name").focus();
                             return false;
                         }
-                        if ($("#deptname").val() == "") {
-                            alert("신청인 부서는 필수입력입니다.");
+                        if ($("#deptname").val() === "") {
+                            alert("신청인 부서는 필수 입력입니다.");
                             $("#deptname").focus();
                             return false;
                         }
 
                         if (confirm("회의실을 신청합니다.")) {
-                            $("#submitBtn").on("click", function (event) {
-                                event.preventDefault(); 
-                                processAfterInput();
-                            });
+                            processAfterInput();
                         }
 
                         return false;
@@ -168,7 +165,7 @@
                         var contents = $("#contents").val();
 
                         $.ajax({
-                            url: "/success",
+                            url: "/api/success",
                             data: {
                                 "year": year,
                                 "month": month,
@@ -182,13 +179,14 @@
                             },
                             type: "POST",
                             success: function (result) {
-                            	var parsedData = JSON.parse(result.reData);
+                                var parsedData = JSON.parse(result.reData);
                                 var message = parsedData.reMsg;
-                                if (message == "실패") {
+                                console.log(result.msg);
+                                if (message === "실패") {
                                     alert("이미 예약된 시간입니다.");
-                                } else if (message == "성공") {
+                                } else if (message === "성공") {
                                     alert("예약 등록에 성공했습니다."); 
-                                } 
+                                }
                                 window.location.href = "/CalendarMain";
                             },
                             error: function () {

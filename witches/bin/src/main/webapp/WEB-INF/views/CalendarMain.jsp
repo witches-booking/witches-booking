@@ -22,6 +22,7 @@
 	crossorigin="anonymous"></script>
 
 <script type="text/javascript">
+let email = null;
 function kakaoLogin() {
 	// SDK를 초기화 합니다. 사용할 앱의 JavaScript 키를 설정해야 합니다.
 	Kakao.init('570250ea5e6af0b22c661c29eb516746');
@@ -148,7 +149,7 @@ function kakaoLogin() {
 							<td>
 								<div>
 									<a
-										href='/schedule?year=<%=cal.get(Calendar.YEAR)%>&month=<%=(cal.get(Calendar.MONTH) + 1)%>&day=<%=String.format("%02d", day)%>'>
+										href='/schedule?year=<%=cal.get(Calendar.YEAR)%>&month=<%=(cal.get(Calendar.MONTH) + 1)%>&day=<%=String.format("%02d", day)%>&email='>
 										<span><%=day%></span>
 									</a>
 									<ul>
