@@ -25,6 +25,7 @@ public class UserController {
 	@PostMapping("/login")
 	public ResponseEntity<Object> login(@ModelAttribute UserVO userVo, Model model
 			, @RequestParam String loginId, @RequestParam String sns) {
+		System.out.println("==========> 로그인 진입");
 		userVo.setLoginId(loginId);
 		userVo.setSns(sns);
 		Gson gson = new GsonBuilder().create();
