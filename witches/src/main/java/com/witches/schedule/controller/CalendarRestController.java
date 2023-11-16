@@ -53,10 +53,7 @@ public class CalendarRestController {
 	}
 	
 	
-//	@RequestMapping("/kakakoLogin")
-//	public void kakaoLogin (@RequestBody ) {
-//		
-//	}
+
 	
 	
 }
