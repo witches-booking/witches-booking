@@ -24,37 +24,61 @@
 <script type="text/javascript">
 let email = null;
 function kakaoLogin() {
-	// SDK를 초기화 합니다. 사용할 앱의 JavaScript 키를 설정해야 합니다.
-	Kakao.init('570250ea5e6af0b22c661c29eb516746');
+	   // SDK를 초기화 합니다. 사용할 앱의 JavaScript 키를 설정해야 합니다.
+	   Kakao.init('570250ea5e6af0b22c661c29eb516746');
 
-	// SDK 초기화 여부를 판단합니다.
-	console.log(Kakao.isInitialized());
+	   // SDK 초기화 여부를 판단합니다.
+	   console.log(Kakao.isInitialized());
 
-	Kakao.Auth.login({
-		success: function(authObj) {
-			console.log(authObj.access_token);
-			Kakao.Auth.setAccessToken(authObj.access_token);
-			
-			Kakao.API.request({
-				url: '/v2/user/me',
-				data: {
-					property_keys: ['kakao_account.email'],
-				},
-			})
-			.then(function(response) {
-				console.log(response);
-				console.log("사용자 교유식별키",response.id)
-			})
-			.catch(function(error) {
-				console.log(error);
-			});
-		},
-		fail: function(err) {
-			alert(JSON.stringify(err));
-		},
-	});
-};
-	
+	   Kakao.Auth.login({
+	      success: function(authObj) {
+	         console.log(authObj.access_token);
+	         Kakao.Auth.setAccessToken(authObj.access_token);
+	         
+	         Kakao.API.request({
+	             url: '/v2/user/me',
+	             data: {
+	                 property_keys: ['kakao_account.email'],
+	             },
+	         }).then(function(response) {
+	             console.log(response);
+	             console.log("사용자 교유식별키",response.id)
+	             var loginId = response.id;
+	             var sns = "kakao";
+	             $.ajax({
+	                 url : "/login",
+	                 data : {
+	                     "loginId" : loginId,
+	                     "sns" : sns
+	                 },
+	                 type : "POST",
+	                 success : function(result) {
+	                     var parsedData = JSON.parse(result.reData);
+	                     var message = parsedData.reMsg;
+	                     console.log(result.msg);
+	                     if (message === "성공") {
+	                         alert("로그인 되었습니다.");
+	                     } 
+	                     window.location.href = "/";
+	                 },
+	                 error: function () {
+	                     alert("로그인에 실패했습니다.");
+	                     window.location.href = "/";
+	                 }
+	             });
+	         }).catch(function(error) {
+	             console.log(error);
+	         });
+	         })
+	         .catch(function(error) {
+	            console.log(error);
+	         });
+	      },
+	      fail: function(err) {
+	         alert(JSON.stringify(err));
+	      },
+	   }
+
 
 </script>
 </head>
