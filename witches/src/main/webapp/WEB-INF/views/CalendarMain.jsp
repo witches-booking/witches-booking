@@ -43,6 +43,7 @@ function kakaoLogin() {
 			})
 			.then(function(response) {
 				console.log(response);
+				console.log("사용자 교유식별키",response.id)
 			})
 			.catch(function(error) {
 				console.log(error);
