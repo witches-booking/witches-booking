@@ -5,8 +5,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -22,52 +20,51 @@
 <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.4.0/kakao.min.js"
 	integrity="sha384-mXVrIX2T/Kszp6Z0aEWaA8Nm7J6/ZeWXbL8UpGRjKwWe56Srd/iyNmWMBhcItAjH"
 	crossorigin="anonymous"></script>
-<script>
-	// 카카오 로그인 
-	window.onload = function() {
-		document.getElementById('kakao-login-btn').addEventListener('click',
-				function() {
-					// SDK를 초기화 합니다. 사용할 앱의 JavaScript 키를 설정해야 합니다.
-					Kakao.init('570250ea5e6af0b22c661c29eb516746');
-
-					// SDK 초기화 여부를 판단합니다.
-					console.log(Kakao.isInitialized());
-
-					Kakao.Auth.authorize({
-						redirectUri : 'http://localhost:8585/CalendarMain',
-					});
-
-					console.log('${ACCESS_TOKEN}')
-					Kakao.Auth.setAccessToken('${ACCESS_TOKEN}');
-
-				});
-	}
-</script>
-
 
 <script type="text/javascript">
-	$(document).ready(function() {
-		// REST API를 호출하여 데이터를 가져옵니다.
-		$.ajax({
-			url : '/CalendarMainTestFind', // REST API의 URL을 입력하세요.
-			type : 'GET',
-			data : {
-				month : '11'
-			},
-			success : function(data) {
-				// 데이터를 가져온 후에 달력에 표시합니다.
-				console.log("가져온 데이터 확인 :", data);
-			}
-		});
+function kakaoLogin() {
+	// SDK를 초기화 합니다. 사용할 앱의 JavaScript 키를 설정해야 합니다.
+	Kakao.init('570250ea5e6af0b22c661c29eb516746');
+
+	// SDK 초기화 여부를 판단합니다.
+	console.log(Kakao.isInitialized());
+
+	Kakao.Auth.login({
+		success: function(authObj) {
+			console.log(authObj.access_token);
+			Kakao.Auth.setAccessToken(authObj.access_token);
+			
+			Kakao.API.request({
+				url: '/v2/user/me',
+				data: {
+					property_keys: ['kakao_account.email'],
+				},
+			})
+			.then(function(response) {
+				console.log(response);
+			})
+			.catch(function(error) {
+				console.log(error);
+			});
+		},
+		fail: function(err) {
+			alert(JSON.stringify(err));
+		},
 	});
+};
+	
+
 </script>
 </head>
 <body>
 
-	<button id="kakao-login-btn" style="position: absolute; right: 0;">
+	<button type="button" id="kakao-login-btn" onclick="kakaoLogin()">
+
 		<img src="/img/kakao_login_medium_narrow.png" alt="Kakao Login">
+
 	</button>
 
+	<button type="hidden"></button>
 
 
 
@@ -119,7 +116,7 @@
 						// 해당 월의 첫 날의 요일을 구함 (1: 일요일, 2: 월요일, ..., 7: 토요일)
 						int startDayOfWeek = cal.get(Calendar.DAY_OF_WEEK);
 
-						List<ScheduleVO> data = null;
+						List<ScheduleVO> data = (List) request.getAttribute("data");
 						%>
 					
 					<tbody>
@@ -191,6 +188,7 @@
 							%>
 						</tr>
 					</tbody>
+
 					</tbody>
 				</table>
 			</article>
@@ -205,36 +203,8 @@
 		}
 	</script>
 
-	<div id="divView"></div>
 
-	<script type="text/javascript">
-		//-- 버튼 클릭시 버튼을 클릭한 위치 근처에 레이어 생성 --//
-		$('.imgSelect')
-				.click(
-						function(e) {
-							var divTop = e.clientY - 40; //상단 좌표 위치 안맞을시 e.pageY
-							var divLeft = e.clientX; //좌측 좌표 위치 안맞을시 e.pageX
-							var serial = $(this).attr("serial");
-							var idx = $(this).attr("idx");
-							$('#divView')
-									.empty()
-									.append(
-											'<div style="position:absolute;top:5px;right:5px"><span id="close" style="cursor:pointer;font-size:1.5em" title="닫기">X</span> </div><br><a href="?serial='
-													+ serial
-													+ '">serial</a><BR><a href="?idx='
-													+ idx + '">idx</a>');
-							$('#divView').css({
-								"top" : divTop,
-								"left" : divLeft,
-								"position" : "absolute"
-							}).show();
-							$('#close')
-									.click(
-											function() {
-												document
-														.getElementById('divView').style.display = 'none'
-											});
-						});
-	</script>
+
+
 </body>
 </html>

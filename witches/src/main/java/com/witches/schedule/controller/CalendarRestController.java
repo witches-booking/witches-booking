@@ -21,17 +21,11 @@ public class CalendarRestController {
 	private CalendarService calendarService;
 	
 	
-//	@RequestMapping("/showScheduleList")
-//	public List<Schedule> showScheduleList() { 
-//		
-//		System.out.println("조회함수 컨트롤러 도착");
-//		return calendarService.showScheduleList(month);
-//		
-//	}
+
 
 	// 월별 조회 (jsp에서 해당 달력이 몇월인지 보내면 db에서 확인후 일정 보냄)
-	@RequestMapping("/CalendarMainTestFind")
-	public List<ScheduleVO> CalendarMainTestFind (@RequestParam int month) {
+	@RequestMapping("/FindScheduleList")
+	public List<ScheduleVO> FindScheduleList (@RequestParam int month) {
 		System.out.println("rest컨트롤러 실행");
 		System.out.println("month 확인"+month);
 		ScheduleVO schedule =new ScheduleVO();

@@ -1,0 +1,81 @@
+@charset "utf-8";
+
+html, body, div, span, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td {margin:0; padding:0; border:0; font-size:100%; vertical-align:baseline;}
+input, select, textarea, button {margin:0; padding:0; font-size:100%;}
+em, address {font-style:normal;}
+article, aside, details, figcaption, figure, footer, header, main, menu, nav, section {display:block;}
+
+html { position:relative;}
+body {font-size:1em; font-weight: 400; line-height:1.35; font-family:'Noto Sans KR','맑은 고딕','Malgun Gothic','돋움','dotum','sans-serif'; -webkit-text-size-adjust:none; word-break:keep-all;}
+article, aside, details, figcaption, figure, footer, header, main, menu, nav, section, summary, picture { display: block; }
+audio, canvas, progress, video { display: inline-block; }
+ol, ul { list-style: none; }
+legend { position:absolute; left:0; top:0; width:1px; height:1px; text-indent:-10000px; overflow:hidden; }
+button, input, select {border-radius:0;}
+h1, h2, h3, h4, h5, h6 {font-size:1em;}
+h1 img, h2 img, h3 img,	h4 img, h5 img, h6 img {margin: 0;}
+i, em {font-style: normal;}
+img, fieldset, iframe {border:0 none;}
+img {max-width: 100%;vertical-align: middle; border: 0 none; margin: 0; padding: 0; }
+hr { display: none;margin:0;padding:0;border:0 }
+button {text-transform: none; vertical-align: middle; border: 0 none; background-color: transparent; cursor: pointer; font-family:'Noto Sans KR'; }
+button, select {border-radius:0;-webkit-appearance:none; -moz-appearance:none; appearance:none;}
+select::-ms-expand {display:none}
+a {color:#000; text-decoration:none}
+a:link, a:visited {text-decoration:none}
+a:hover, a:focus, a:active {text-decoration:none}
+a img {border:0; padding:0}
+
+table { margin:0; border-collapse:collapse; border-spacing:0; }
+table caption { overflow:hidden; left:0; right:0; width:1px; height:1px; margin-left:-9999px; text-indent:-9999px; }
+
+/* clearfix */
+.clearfix:after { display: block; clear: both; content: "."; visibility: hidden; height: 0; font-size:0}
+.clearfix {display: inline-block;}
+.clearfix {display: block;}
+
+/* Other Class Style */
+ul.ClearBoth li {float:none !important;}
+ul.FloatRight {float:right;}
+ul.FloatLeft li {float:left;}
+ul.BackgroundNone li {background:none !important;}
+
+.AlignLeft {text-align:left !important;}
+.AlignCenter {text-align:center !important;}
+.AlignRight {text-align:right !important;}
+.ValignTop {vertical-align:top !important;}
+.ValignMiddle{vertical-align:middle !important;}
+.ValignBottom {vertical-align:bottom !important;}
+.DisplayBlock {display:block;}
+.DisplayNone {display:none;}
+.VisibleHidden { visibility:hidden; }
+.FloatLeft {float:left;}
+.FloatRight {float:right;}
+.ClearBoth {clear:both;}
+.BackgroundNone {background:none !important;}
+.BorderNone {border:none !important;}
+.BorderRightNone {border-right:none !important;}
+.BorderTopNone {border-top:none !important;}
+.PaddingNone {padding:0 !important;}
+.MarginNone {margin:0 !important;}
+.FontWeightNormal {font-weight:normal !important;}
+.FontWeightBold {font-weight:bold !important;}
+.nowrap {white-space:nowrap;}
+
+/* SKIP NAVIGATION */
+.skipNav {position:absolute; width:100%; z-index:999;}
+.skipNav a {position:absolute; display:block; left:0; top:0; width:1px; height:1px; margin:-10000px 0 0 -10000px; padding:0; background-color:#033477; text-align:center; overflow:hidden; color:#fff; font-weight:bold;}
+.skipNav a:hover,
+.skipNav a:active,
+.skipNav a:focus {margin:0; width:100%; height:auto; padding:10px;}
+
+/* HIDDEN TEXT */
+.blind { position:absolute; left:-10000px; width:1px; height:1px; overflow:hidden; margin-left:-1px; border:0; }

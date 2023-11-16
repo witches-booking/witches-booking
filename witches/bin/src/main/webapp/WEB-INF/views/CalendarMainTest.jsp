@@ -1,4 +1,4 @@
-<%@page import="com.witches.schedule.vo.ScheduleVO"%>
+<%@page import="com.witches.booking.entity.Schedule"%>
 <%@page import="java.util.List"%>
 <%@page import="java.util.Calendar"%>
 <%@page import="java.text.SimpleDateFormat"%>
@@ -119,7 +119,7 @@
 						// 해당 월의 첫 날의 요일을 구함 (1: 일요일, 2: 월요일, ..., 7: 토요일)
 						int startDayOfWeek = cal.get(Calendar.DAY_OF_WEEK);
 
-						List<ScheduleVO> data = null;
+						List<Schedule> data = null;
 						%>
 					
 					<tbody>
@@ -138,8 +138,8 @@
 							int dayOfWeek = cal.get(Calendar.DAY_OF_WEEK);
 
 							// 예약 정보 표시
-							ScheduleVO schedule = null;
-							for (ScheduleVO s : data) {
+							Schedule schedule = null;
+							for (Schedule s : data) {
 								if (s.getDay() == day) {
 									schedule = s;
 									break;

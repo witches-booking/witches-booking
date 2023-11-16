@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.witches.schedule.dao.ScheduleDAO">
+
+	<!-- 중복 체크 -->
+	<select id="scheduleCheck" parameterType="com.witches.schedule.vo.ScheduleVO">
+		SELECT COUNT(*)
+		FROM schedule
+		WHERE EXISTS (
+    		SELECT 1
+    		FROM schedule
+    		WHERE year = #{year}
+        	AND month = #{month}
+        	AND day = #{day}
+        	AND (start BETWEEN #{start} AND #{end} OR end BETWEEN #{start} AND #{end})
+        	AND is_delete = 'N'
+		)
+	</select>
+
+	<!-- 예약 등록 -->
+	<insert id="scheduleInsert" parameterType="com.witches.schedule.vo.ScheduleVO">
+	    INSERT INTO schedule (
+		    start
+		    , end
+		    , people_num
+		    , name
+		    , department
+		    , contents
+		    , is_delete
+		    , year
+		    , month
+		    , day
+			)VALUES(
+			#{start}
+		    , #{end}
+		    , #{peopleNum}
+		    , #{name}
+		    , #{department}
+		    , #{contents}
+		    , 'N'
+		    , #{year}
+		    , #{month}
+		    , #{day}
+		)
+	</insert>
+	
+	<!-- 예약 조회 -->
+	<select id="scheduleSelect" parameterType="com.witches.schedule.vo.ScheduleVO" resultType="com.witches.schedule.vo.ScheduleVO">
+		SELECT *
+		FROM schedule
+		WHERE id = #{id}
+	</select>
+	
+	<update id="scheduleCancel" parameterType="com.witches.schedule.vo.ScheduleVO">
+		UPDATE schedule SET
+		is_delete = 'Y'
+		<if test="cancelReason != null and cancelReason != ''">
+		, cancle_reason = #{cancelReason}
+		</if>
+		<if test="cancelNm != null and cancelNm != ''">
+		, cancle_name = #{cancelNm}
+		</if>
+	</update>
+
+
+
+</mapper>

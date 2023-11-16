@@ -24,7 +24,7 @@ public class ScheduleController {
 	CalendarService calendarService;
 
 	// 메인 jsp 띄우기
-	@RequestMapping("/")
+	@RequestMapping("/Scheduler")
 	public String welcome() {
 		calendarService.showSchedule();
 		return "/Scheduler";
@@ -40,7 +40,7 @@ public class ScheduleController {
 	}
 
 	// 캘린더 일정 띄우기
-	@RequestMapping("/CalendarMain")
+	@RequestMapping("/")
 	public String CalendarMain(Model model) {
 		Calendar cal = Calendar.getInstance();
 
