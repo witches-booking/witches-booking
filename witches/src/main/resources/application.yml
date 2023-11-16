@@ -16,3 +16,7 @@ spring:
     username: meet
     password: ghldmltlf2023!@
     
+mybatis:
+  mapper-locations: mappers/**/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
