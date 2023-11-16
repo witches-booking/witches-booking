@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -54,6 +55,24 @@ public class ScheduleRestController {
 		Gson gson = new GsonBuilder().create();
 		ResultVO resultVo = scheduleService.scheduleInsert(scheduleVo);
 		return ResponseEntity.ok(new resultResponse(gson.toJson(resultVo)));
+	}
+	
+	/**
+	 * 예약 조회
+	 * @param ScheduleVO scheduleVo
+	 * @param Model model
+	 * @param Integer id
+	 * @return ScheduleVO
+	 * ------------ 이력 ------------
+	 * 2023.11.15 / 정윤지 / 최초 적용
+	 */
+	@RequestMapping(value="/detail", method = { RequestMethod.GET, RequestMethod.POST })
+	public ScheduleVO scheduleSelect(@ModelAttribute ScheduleVO scheduleVo, Model model,
+			@RequestParam Integer id) {
+		ScheduleVO detailMap = scheduleService.scheduleSelect(id);
+		model.addAttribute("detailMap", detailMap);
+		System.out.println(detailMap);
+		return detailMap;
 	}
 
 	/**
