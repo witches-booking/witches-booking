@@ -1,9 +1,9 @@
 server:
   port: 8449
-#  tomcat:
-#    ajp:
-#      enabled: true
-#      port: 8021
+  tomcat:
+    ajp:
+      enabled: true
+      port: 8021
 
 spring:
   main:
