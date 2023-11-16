@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.witches.schedule.service.CalendarService;
@@ -62,6 +63,24 @@ public class ScheduleController {
 	public String CalendarMainTest() {
 		calendarService.showSchedule();
 		return "/CalendarMainTest";
+	}
+	
+	/**
+	 * 예약 조회
+	 * @param ScheduleVO scheduleVo
+	 * @param Model model
+	 * @param Integer id
+	 * @return ScheduleVO
+	 * ------------ 이력 ------------
+	 * 2023.11.15 / 정윤지 / 최초 적용
+	 */
+	@RequestMapping(value="/detail", method = { RequestMethod.GET, RequestMethod.POST })
+	public String scheduleSelect(@ModelAttribute ScheduleVO scheduleVo, Model model,
+			@RequestParam Integer id) {
+		ScheduleVO detailMap = scheduleService.scheduleSelect(id);
+		model.addAttribute("detailMap", detailMap);
+		System.out.println(detailMap);
+		return "/detail";
 	}
 
 }

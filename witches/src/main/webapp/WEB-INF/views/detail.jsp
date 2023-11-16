@@ -81,48 +81,50 @@
 						<button id="cancelBtn" type="submit" class="btns02 color2" onclick="inputAjax()" tabindex="1">예약취소</button>
 					</p>
                     <script>
-						function inputAjax() {
-							if($("#cancelname").val() == "") {
-								alert("취소자 이름은 필수입력입니다.");
-								$("#cancelname").focus();
-								return false;
-							}
-							if(confirm("회의실 예약을 취소합니다.")) {
-								$("#cancelBtn").on("click", function (event) {
-	                                event.preventDefault(); 
-	                                processAfterInput();
-	                            });
-	                        }
+                    function inputAjax() {
+                        var cancelName = $("#cancelNm").val();
+                        var cancelReason = $("#cancelReason").val();
 
-	                        return false;
-						}
-						
-						function processAfterInput(){
-							var id = "${detailMap.getId()}";
-							var cancelNm = $("#cancelNm").val();
-							var cancelReason = $("#cancelReason").val();
-							$.ajax({
-								url : "/cancel",
-								data : {
-									"id" : id,
-									"cancelNm" : cancelNm,
-									"cancelReason" : cancelReason
-								},
-								type : "POST",
-								success : function (result) {
-									var parsedData = JSON.parse(result.reData);
-	                                var message = parsedData.reMsg;
-	                                if (message == "성공") {
-	                                    alert("예약 취소에 성공했습니다.");
-	                                    window.location.href = "/CalendarMain";
-	                                } 
-	                            },
-								error : function() {
-                                	alert("예약 취소에 실패했습니다.");
-                                	location.reload();
+                        if (cancelName === "") {
+                            alert("취소자 이름은 필수 입력입니다.");
+                            $("#cancelNm").focus();
+                            return false;
+                        }
+
+                        if (confirm("회의실 예약을 취소합니다.")) {
+                            processAfterInput(); // 예약 취소 작업을 수행하는 함수 호출
+                        }
+
+                        return false;
+                    }
+
+                    function processAfterInput() {
+                        var id = "${detailMap.getId()}";
+                        var cancelNm = $("#cancelNm").val();
+                        var cancelReason = $("#cancelReason").val();
+
+                        $.ajax({
+                            url: "/api/cancel",
+                            data: {
+                                "id": id,
+                                "cancelNm": cancelNm,
+                                "cancelReason": cancelReason
+                            },
+                            type: "POST",
+                            success: function(result) {
+                                var parsedData = JSON.parse(result.reData);
+                                var message = parsedData.reMsg;
+                                if (message === "성공") {
+                                    alert("예약 취소에 성공했습니다.");
+                                    window.location.href = "/CalendarMain";
                                 }
-							});
-						}
+                            },
+                            error: function() {
+                                alert("예약 취소에 실패했습니다.");
+                                location.reload();
+                            }
+                        });
+                    }
 						
 						function fnList() {
 							history.go(-1);
