@@ -43,29 +43,7 @@ function kakaoLogin() {
 			})
 			.then(function(response) {
 				console.log(response);
-				var loginId = response.id;
-				var sns = "kakao";
-				$.ajax({
-					url : "/login",
-					data : {
-						"loginId" : loginId,
-						"sns" : sns
-					},
-					type : "POST",
-					success : function(result)
-					var parsedData = JSON.parse(result.reData);
-                    var message = parsedData.reMsg;
-                    console.log(result.msg);
-                    if (message === "성공") {
-                        alert("로그인 되었습니다.");
-                    } 
-                    window.location.href = "/";
-                },
-                error: function () {
-                    alert("로그인에 실패했습니다.");
-                    window.location.href = "/";
-                }
-				})
+				console.log("사용자 교유식별키",response.id)
 			})
 			.catch(function(error) {
 				console.log(error);

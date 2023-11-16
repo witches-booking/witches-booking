@@ -27,4 +27,9 @@ public class CalendarService {
 		
 	}
 
+	public List<ScheduleVO> showScheduleListAll() {
+		return scheduleMapper.showSchduleAll();
+		
+	}
+
 }
