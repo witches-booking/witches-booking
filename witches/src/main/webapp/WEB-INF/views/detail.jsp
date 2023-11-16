@@ -11,7 +11,7 @@
         <link rel="stylesheet" type="text/css" href="/food/sub.css">
         <link rel="stylesheet" type="text/css" href="/food/food.css">
         <link rel="stylesheet" type="text/css" href="/food/jquery.timepicker.min.css">
-        <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
+        <script type="text/javascript" src="https://code.jquery.com/jquery-latest.js"></script>
         <script type="text/javascript" src="/food/jquery.timepicker.min.js"></script>
 
     </head>
