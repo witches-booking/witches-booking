@@ -3,6 +3,7 @@ package com.witches.schedule.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,6 +19,7 @@ import com.witches.schedule.vo.ResultVO;
 import com.witches.schedule.vo.ScheduleVO;
 import com.witches.schedule.vo.resultResponse;
 
+@CrossOrigin(origins ="*")
 @RestController
 public class ScheduleRestController {
 	
