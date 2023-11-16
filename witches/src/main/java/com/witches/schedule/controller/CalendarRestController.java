@@ -46,7 +46,7 @@ public class CalendarRestController {
 		System.out.println("rest컨트롤러 실행");
 		ScheduleVO schedule =new ScheduleVO();
 		
-		System.out.println("엔티티 속 month확인"+schedule.getMonth());
+		
 		List<ScheduleVO> data  =calendarService.showScheduleListAll();
 
 		return data;
