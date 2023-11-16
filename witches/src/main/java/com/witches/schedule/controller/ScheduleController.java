@@ -35,6 +35,7 @@ public class ScheduleController {
 	public String moveSchedule(@ModelAttribute ScheduleVO scheduleVo, @RequestParam int year, int month, int day,
 			Model model) {
 		System.out.println("날짜 확인" + year + month + day);
+//		System.out.println("email확인 : "+email);
 		model.addAttribute("date", scheduleVo);
 		return "/schedule";
 	}
