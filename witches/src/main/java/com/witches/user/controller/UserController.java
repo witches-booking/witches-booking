@@ -93,7 +93,7 @@ public class UserController {
 		System.out.println("id 값 확인 : "+ id);
 		session.setAttribute("createNm", id);
 
-		// TODO: DB에서 사용자 데이터 확인 및 저장하는 코드를 추가하세요.
+		//DB에서 사용자 데이터 확인 및 저장
 		UserVO userVo =new UserVO();
 		
 		userVo.setLoginId(id);
@@ -107,6 +107,12 @@ public class UserController {
 
 		ModelAndView mav = new ModelAndView("redirect:/CalendarMain");
 		mav.addObject("createNm", id);
+		if(id !=null) {
+			mav.addObject("message", "로그인 성공");			
+		}else {
+			mav.addObject("message", "로그인에 실패하셨습니다");
+		}
+		
 		// JSP 페이지 이름 반환
 		return mav; // 여기에 원하는 JSP 페이지 이름을 입력하세요.
 	} // kakaoLogin함수 끝
