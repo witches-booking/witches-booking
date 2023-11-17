@@ -60,11 +60,12 @@
 		, is_delete
 		, cancle_reason
 		, cancle_name
-		, email
+		, create_nm
 		FROM schedule
 		WHERE id = #{id}
 	</select>
 	
+	<!-- 예약 취소 -->
 	<update id="scheduleCancel" parameterType="com.witches.schedule.vo.ScheduleVO">
 		UPDATE schedule SET
 		is_delete = 'Y'
