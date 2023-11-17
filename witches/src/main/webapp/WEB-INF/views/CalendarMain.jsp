@@ -15,7 +15,7 @@
 <link rel="stylesheet" type="text/css" href="/food/base.css" />
 <link rel="stylesheet" type="text/css" href="/food/sub.css" />
 <link rel="stylesheet" type="text/css" href="/food/food.css" />
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <!-- 카카오 로그인  -->
 <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.4.0/kakao.min.js"
 	integrity="sha384-mXVrIX2T/Kszp6Z0aEWaA8Nm7J6/ZeWXbL8UpGRjKwWe56Srd/iyNmWMBhcItAjH"
@@ -54,7 +54,6 @@ function kakaoLogin() {
 		},
 	});
 };
-	
 
 </script>
 </head>
@@ -66,7 +65,7 @@ function kakaoLogin() {
 
 	</button>
 
-	<button type="hidden"></button>
+	<button onclick="kakao()"> 카카오rest로그인</button>
 
 
 

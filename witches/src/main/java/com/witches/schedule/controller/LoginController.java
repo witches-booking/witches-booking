@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class LoginController {
 
 //	@RequestMapping("/kakakoLogin")
-//	public void kakaoLogin (@RequestBody ) {
+//	public void kakaoLogin (@RequestBody  ) {
 //		
 //	}
-	
+//	
 }
