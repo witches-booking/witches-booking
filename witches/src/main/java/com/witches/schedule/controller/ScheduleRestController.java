@@ -66,14 +66,14 @@ public class ScheduleRestController {
 	 * ------------ 이력 ------------
 	 * 2023.11.15 / 정윤지 / 최초 적용
 	 */
-	@RequestMapping(value="/detail", method = { RequestMethod.GET, RequestMethod.POST })
-	public ScheduleVO scheduleSelect(@ModelAttribute ScheduleVO scheduleVo, Model model,
-			@RequestParam Integer id) {
-		ScheduleVO detailMap = scheduleService.scheduleSelect(id);
-		model.addAttribute("detailMap", detailMap);
-		System.out.println(detailMap);
-		return detailMap;
-	}
+//	@RequestMapping(value="/detail", method = { RequestMethod.GET, RequestMethod.POST })
+//	public ScheduleVO scheduleSelect(@ModelAttribute ScheduleVO scheduleVo, Model model,
+//			@RequestParam Integer id) {
+//		ScheduleVO detailMap = scheduleService.scheduleSelect(id);
+//		model.addAttribute("detailMap", detailMap);
+//		System.out.println(detailMap);
+//		return detailMap;
+//	}
 
 	/**
 	 * 예약 취소
