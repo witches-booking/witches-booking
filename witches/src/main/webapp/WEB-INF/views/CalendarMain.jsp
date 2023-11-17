@@ -99,8 +99,6 @@ function kakao(){
 
     
 };
- 
-	
 </script>
 </head>
 <body>
@@ -111,11 +109,11 @@ function kakao(){
 
 	</button>
 
-	<button type='hidden' onclick="kakao()"> 카카오rest로그인</button>
+	<button onclick="kakao()"> 카카오rest로그인</button>
 
 
 
-	<h3 id="pageTit">회의실 사용</h3>
+	<h3 id="pageTit">회의실 사용 ${loginId.getLoginId() }</h3>
 	<div id="content">
 		<div class="contentWrap">
 			<article class="calendar">
@@ -194,8 +192,8 @@ function kakao(){
 							%>
 							<td>
 								<div>
-									<a onclick="write();" 
-										href='/schedule?year=<%=cal.get(Calendar.YEAR)%>&month=<%=(cal.get(Calendar.MONTH) + 1)%>&day=<%=String.format("%02d", day)%>&id=${id.getId()}'>
+									<a
+										href='/schedule?year=<%=cal.get(Calendar.YEAR)%>&month=<%=(cal.get(Calendar.MONTH) + 1)%>&day=<%=String.format("%02d", day)%>&id=${loginId}'>
 										<span><%=day%></span>
 									</a>
 									<ul>
@@ -216,7 +214,7 @@ function kakao(){
 							<td>
 								<div>
 									<a
-										href='/schedule?year=<%=cal.get(Calendar.YEAR)%>&month=<%=(cal.get(Calendar.MONTH) + 1)%>&day=<%=String.format("%02d", day)%>'>
+										href='/schedule?year=<%=cal.get(Calendar.YEAR)%>&month=<%=(cal.get(Calendar.MONTH) + 1)%>&day=<%=String.format("%02d", day)%>&id=${loginId}'>
 										<span><%=day%></span>
 									</a>
 								</div>

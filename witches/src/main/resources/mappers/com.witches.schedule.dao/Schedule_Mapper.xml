@@ -31,6 +31,7 @@
 		    , year
 		    , month
 		    , day
+		    , create_nm
 			)VALUES(
 			#{start}
 		    , #{end}
@@ -42,15 +43,13 @@
 		    , #{year}
 		    , #{month}
 		    , #{day}
+		    , #{createNm}
 		)
 	</insert>
 	
 	<!-- 예약 조회 -->
 	<select id="scheduleSelect" parameterType="com.witches.schedule.vo.ScheduleVO" resultType="com.witches.schedule.vo.ScheduleVO">
 		SELECT id
-		, year
-		, month
-		, day
 		, DATE_FORMAT(start, '%H:%i') as start
 		, DATE_FORMAT(end, '%H:%i') as end
 		, people_num
@@ -60,6 +59,9 @@
 		, is_delete
 		, cancle_reason
 		, cancle_name
+		, year
+		, month
+		, day
 		, create_nm
 		FROM schedule
 		WHERE id = #{id}

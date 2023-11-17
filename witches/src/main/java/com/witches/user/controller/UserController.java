@@ -49,12 +49,14 @@ public class UserController {
 	 * 2023.11.17 / 정윤지 / 최초 적용
 	 */
 	@PostMapping("/login")
-	public ResponseEntity<Object> login(@ModelAttribute UserVO userVo
+	public ResponseEntity<Object> login(@ModelAttribute UserVO userVo, Model model
 			, @RequestParam String loginId, @RequestParam String sns) {
+
 		userVo.setLoginId(loginId);
 		userVo.setSns(sns);
 		System.out.println("로그인 id:::::::::"+userVo.getLoginId());
 		System.out.println("로그인 sns:::::::::"+userVo.getSns());
+		model.addAttribute("loginId", userVo.getLoginId());
 		Gson gson = new GsonBuilder().create();
 		ResultVO resultVo = userService.login(userVo);
 		return ResponseEntity.ok(new resultResponse(gson.toJson(resultVo)));
@@ -78,8 +80,6 @@ public class UserController {
 	            .retrieve()
 	            .bodyToMono(String.class);
 
-	    
-	    
 	    return tokenResponse.flatMap(response -> {
 	        // JSON 데이터 파싱
 	        JsonParser jsonParser = new JsonParser();
@@ -100,9 +100,9 @@ public class UserController {
 	            JsonObject userJson = jsonParser.parse(userResponseStr).getAsJsonObject();
 
 	            String id = userJson.get("id").getAsString();
+	            
 	            session.setAttribute("createNm", id);
 
-	            
 	            // TODO: DB에서 사용자 데이터 확인 및 저장하는 코드를 추가하세요.
 	            // ModelAndView 객체 생성
 	            ModelAndView mav = new ModelAndView();
