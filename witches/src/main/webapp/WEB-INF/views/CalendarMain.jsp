@@ -22,58 +22,20 @@
 	crossorigin="anonymous"></script>
 <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    // JSP 페이지에서 EL(Expression Language)을 사용하여 createNm 값을 가져옵니다.
+    var createNm = '${createNm}';
+
+    // 값이 존재하는 경우에만 sessionStorage에 저장합니다.
+    if (createNm) {
+        localStorage.setItem('createNm', createNm);
+    	console.log("로컬스토리지 값확인용"+localStorage.getItem('createNm'));
+    }
+</script>
+
 <script type="text/javascript">
 
-function kakaoLogin() {
-    // SDK를 초기화합니다. 사용할 앱의 JavaScript 키를 설정해야 합니다.
-    Kakao.init('570250ea5e6af0b22c661c29eb516746');
 
-    // SDK 초기화 여부를 판단합니다.
-    console.log(Kakao.isInitialized());
-
-
-    Kakao.Auth.login({
-        success: function(authObj) {
-            console.log(authObj.access_token);
-            Kakao.Auth.setAccessToken(authObj.access_token);
-
-            Kakao.API.request({
-                url: '/v2/user/me',
-                data: {
-                    property_keys: ['kakao_account.email'],
-                },
-            }).then(function(response) {
-                console.log(response);
-                var loginId = response.id;
-                var sns = "kakao";
-                $.ajax({
-                    url: "/login",
-                    data: {
-                        "loginId": loginId,
-                        "sns": sns
-                    },
-                    type: "POST",
-                    success: function(result) {
-                        var parsedData = JSON.parse(result.reData);
-                        var message = parsedData.reMsg;
-                        console.log(result.msg);
-                        if (message === "성공") {
-                            alert("로그인 되었습니다.");
-                        }
-                    },
-                    error: function() {
-                        alert("로그인에 실패했습니다.");
-                        window.location.href = "/";
-                    }
-                });
-            }).catch(function(error) {
-                console.log(error);
-            });
-        }
-    }).catch(function(error) {
-        console.log(error);
-    });
-}
 
 function kakao(){
     const restApiKey = "02b86e71e0895cda12a9361c1cdb773a";
@@ -82,20 +44,6 @@ function kakao(){
     //인가 코드 요청
     const codeUrl ='https://kauth.kakao.com/oauth/authorize?response_type=code&client_id='+restApiKey+'&redirect_uri='+redirectUri;
     window.location.href=codeUrl;
-/*
-    $.ajax({
-	url : codeUrl,
-	type : "get",
-	success : function(res){
-		console.log(res)
-		location.reload();
-	},
-	error : function(){
-		console.log("통신 실패")
-	}
-    }); 
- */
- 
 
     
 };
@@ -103,13 +51,11 @@ function kakao(){
 </head>
 <body>
 
-	<button type="button" id="kakao-login-btn" onclick="kakaoLogin();">
+	<button type="button" id="kakao-login-btn" onclick="kakao()">
 
 		<img src="/img/kakao_login_medium_narrow.png" alt="Kakao Login">
 
-	</button>
 
-	<button onclick="kakao()"> 카카오rest로그인</button>
 
 
 
