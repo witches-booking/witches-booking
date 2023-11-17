@@ -63,25 +63,16 @@ public class UserController {
 	}
 
 	// 카카오 로그인 restApi
-<<<<<<< HEAD
-	@RequestMapping("/kakaoLogin")
-	public Mono<String> kakaoLogin(Model model) {
-=======
 	@RequestMapping("/kakaoLogin")
 	public Mono<String> kakaoLogin(@RequestParam String code,HttpSession session ) {
 
->>>>>>> branch 'master' of https://github.com/witches-booking/witches-booking.git
 		System.out.println("rest카카오로그인 컨트롤러 실행");
 	    String restApiKey = "02b86e71e0895cda12a9361c1cdb773a";
 	    String redirectUri = "http://localhost:8449/kakaoLogin";
 
 	    // WebClient 인스턴스 생성
 	    WebClient webClient = WebClient.create();
-<<<<<<< HEAD
-	    String code= null;
-=======
 
->>>>>>> branch 'master' of https://github.com/witches-booking/witches-booking.git
 	    // 토큰 받아오기
 	    String tokenUrl = "https://kauth.kakao.com/oauth/token?grant_type=authorization_code&client_id=" + restApiKey + "&redirect_uri=" + redirectUri + "&code=" + code;
 	    Mono<String> tokenResponse = webClient.get()
@@ -89,8 +80,6 @@ public class UserController {
 	            .retrieve()
 	            .bodyToMono(String.class);
 
-	    
-	    
 	    return tokenResponse.flatMap(response -> {
 	        // JSON 데이터 파싱
 	        JsonParser jsonParser = new JsonParser();
@@ -111,13 +100,9 @@ public class UserController {
 	            JsonObject userJson = jsonParser.parse(userResponseStr).getAsJsonObject();
 
 	            String id = userJson.get("id").getAsString();
-<<<<<<< HEAD
-
-=======
+	            
 	            session.setAttribute("createNm", id);
 
-	            
->>>>>>> branch 'master' of https://github.com/witches-booking/witches-booking.git
 	            // TODO: DB에서 사용자 데이터 확인 및 저장하는 코드를 추가하세요.
 	            // ModelAndView 객체 생성
 	            ModelAndView mav = new ModelAndView();

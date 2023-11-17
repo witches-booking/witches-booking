@@ -74,8 +74,6 @@ function kakaoLogin() {
         console.log(error);
     });
 }
-<<<<<<< HEAD
-=======
 
 function kakao(){
     const restApiKey = "02b86e71e0895cda12a9361c1cdb773a";
@@ -101,9 +99,6 @@ function kakao(){
 
     
 };
- 
-	
->>>>>>> branch 'master' of https://github.com/witches-booking/witches-booking.git
 </script>
 </head>
 <body>
