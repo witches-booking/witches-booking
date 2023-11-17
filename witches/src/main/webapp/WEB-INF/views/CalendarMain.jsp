@@ -75,6 +75,20 @@ function kakaoLogin() {
         console.log(error);
     });
 }
+
+function kakao(){
+	$.ajax({
+		url : "/kakaoLogin",
+		type : "get",
+		success : function(res){
+			console.log(res)
+			location.reload();
+		},
+		error : function(){
+			console.log("통신 실패")
+		}
+	});
+};
 </script>
 </head>
 <body>

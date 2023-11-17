@@ -54,14 +54,14 @@ public class UserController {
 
 	// 카카오 로그인 restApi
 	@RequestMapping("/kakaoLogin")
-	public Mono<String> kakaoLogin() {
+	public Mono<String> kakaoLogin(@RequestParam(required = false) String code) {
 		System.out.println("rest카카오로그인 컨트롤러 실행");
 	    String restApiKey = "02b86e71e0895cda12a9361c1cdb773a";
 	    String redirectUri = "http://localhost:8449/kakaoLogin";
 
 	    // WebClient 인스턴스 생성
 	    WebClient webClient = WebClient.create();
-	    String code= null;
+//	    String code =null;
 	    // 토큰 받아오기
 	    String tokenUrl = "https://kauth.kakao.com/oauth/token?grant_type=authorization_code&client_id=" + restApiKey + "&redirect_uri=" + redirectUri + "&code=" + code;
 	    Mono<String> tokenResponse = webClient.get()
