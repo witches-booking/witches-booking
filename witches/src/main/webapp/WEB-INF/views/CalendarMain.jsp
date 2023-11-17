@@ -76,17 +76,28 @@ function kakaoLogin() {
 }
 
 function kakao(){
-	$.ajax({
-		url : "/kakaoLogin",
-		type : "get",
-		success : function(res){
-			console.log(res)
-			location.reload();
-		},
-		error : function(){
-			console.log("통신 실패")
-		}
-	});
+    const restApiKey = "02b86e71e0895cda12a9361c1cdb773a";
+    const redirectUri = "http://localhost:8449/kakaoLogin";
+
+    //인가 코드 요청
+    const codeUrl ='https://kauth.kakao.com/oauth/authorize?response_type=code&client_id='+restApiKey+'&redirect_uri='+redirectUri;
+    window.location.href=codeUrl;
+/*
+    $.ajax({
+	url : codeUrl,
+	type : "get",
+	success : function(res){
+		console.log(res)
+		location.reload();
+	},
+	error : function(){
+		console.log("통신 실패")
+	}
+    }); 
+ */
+ 
+
+    
 };
 </script>
 </head>
@@ -98,11 +109,11 @@ function kakao(){
 
 	</button>
 
-	<button type='hidden' onclick="kakao()"> 카카오rest로그인</button>
+	<button onclick="kakao()"> 카카오rest로그인</button>
 
 
 
-	<h3 id="pageTit">회의실 사용</h3>
+	<h3 id="pageTit">회의실 사용 ${loginId.getLoginId() }</h3>
 	<div id="content">
 		<div class="contentWrap">
 			<article class="calendar">
@@ -181,8 +192,8 @@ function kakao(){
 							%>
 							<td>
 								<div>
-									<a onclick="write();" 
-										href='/schedule?year=<%=cal.get(Calendar.YEAR)%>&month=<%=(cal.get(Calendar.MONTH) + 1)%>&day=<%=String.format("%02d", day)%>&id=${id.getId()}'>
+									<a
+										href='/schedule?year=<%=cal.get(Calendar.YEAR)%>&month=<%=(cal.get(Calendar.MONTH) + 1)%>&day=<%=String.format("%02d", day)%>&id=${loginId}'>
 										<span><%=day%></span>
 									</a>
 									<ul>
@@ -203,7 +214,7 @@ function kakao(){
 							<td>
 								<div>
 									<a
-										href='/schedule?year=<%=cal.get(Calendar.YEAR)%>&month=<%=(cal.get(Calendar.MONTH) + 1)%>&day=<%=String.format("%02d", day)%>'>
+										href='/schedule?year=<%=cal.get(Calendar.YEAR)%>&month=<%=(cal.get(Calendar.MONTH) + 1)%>&day=<%=String.format("%02d", day)%>&id=${loginId}'>
 										<span><%=day%></span>
 									</a>
 								</div>
