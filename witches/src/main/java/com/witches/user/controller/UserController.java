@@ -111,7 +111,7 @@ public class UserController {
 	            mav.setViewName("/"); // 여기에 원하는 JSP 페이지 이름을 입력하세요.
 	            
 	            // 토큰 값과 ID 값을 반환
-	            return "redirect:Calendar";
+	            return "Calendar.jsp";
 	        });
 	    });
 	
