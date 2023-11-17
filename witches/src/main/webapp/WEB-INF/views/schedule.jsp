@@ -10,7 +10,7 @@
         <link rel="stylesheet" type="text/css" href="/food/sub.css">
         <link rel="stylesheet" type="text/css" href="/food/food.css">
         <link rel="stylesheet" type="text/css" href="/food/jquery.timepicker.min.css">
-        <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
+        <script type="text/javascript" src="//code.jquery.com/jquery-latest.js"></script>
         <script type="text/javascript" src="/food/jquery.timepicker.min.js"></script>
         <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 

@@ -4,7 +4,7 @@
 <mapper namespace="com.witches.user.dao.UserDAO">
 
 	<!-- 회원 체크 -->
-	<select id="userCheck" parameterType="com.witches.user.vo.UserVO" resultType="com.witches.user.vo.UserVO">
+	<select id="userCheck" parameterType="com.witches.user.vo.UserVO" resultType="int">
 	SELECT COUNT(*)
 	FROM USER
 	WHERE id = #{loginId}

@@ -28,12 +28,17 @@ public class ScheduleController {
 
 	// 날짜 클릭시 작성페이지 이동
 	@RequestMapping("/schedule")
-	public String moveSchedule(@ModelAttribute ScheduleVO scheduleVo, @RequestParam int year, int month, int day,
-			Model model) {
+	public String moveSchedule(@ModelAttribute ScheduleVO scheduleVo, 
+			@RequestParam int year, int month, int day,
+			Model model, @RequestParam String loginId) {
+		if(loginId != null) {
 		System.out.println("날짜 확인" + year + month + day);
 //		System.out.println("email확인 : "+email);
 		model.addAttribute("date", scheduleVo);
 		return "/schedule";
+		} else {
+			return "redirect:/";
+		}
 	}
 
 	// 캘린더 일정 띄우기
