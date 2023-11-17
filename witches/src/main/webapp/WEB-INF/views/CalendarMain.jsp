@@ -148,8 +148,8 @@
                      %>
                      <td>
                         <div>
-                           <a 
-                              href='/schedule?year=<%=cal.get(Calendar.YEAR)%>&month=<%=(cal.get(Calendar.MONTH) + 1)%>&day=<%=String.format("%02d", day)%>&id=${loginId}'>
+                           <a onclick="scheduleWrite();"
+                              href='/scheduleWrite?year=<%=cal.get(Calendar.YEAR)%>&month=<%=(cal.get(Calendar.MONTH) + 1)%>&day=<%=String.format("%02d", day)%>'>
                               <span><%=day%></span>
                            </a>
                            <ul>
@@ -170,7 +170,7 @@
                      <td>
                         <div>
                            <a onclick="scheduleWrite();"
-                              href='/schedule?year=<%=cal.get(Calendar.YEAR)%>&month=<%=(cal.get(Calendar.MONTH) + 1)%>&day=<%=String.format("%02d", day)%>&id=${loginId}'>
+                              href='/scheduleWrite?year=<%=cal.get(Calendar.YEAR)%>&month=<%=(cal.get(Calendar.MONTH) + 1)%>&day=<%=String.format("%02d", day)%>'>
                               <span><%=day%></span>
                            </a>
                         </div>
@@ -205,27 +205,31 @@
    </script>
 
    <script type="text/javascript">
-      function scheduleWrite(){
-         var createNm = localStorage.getItem("createNm");
-         $.ajax({
-            url : "/schedule",
-            data : {
-               "createNm" : createNm
-            },
-            type : "POST",
-            success : function(result){
-               var parsedData = JSON.parse(result.reData);
-                    var message = parsedData.reMsg;
-                    if (message === "성공") {
-                  window.location.href = "/scheduleWrite"                       
-                    }
-                },
-                error: function() {
-                    alert("로그인 후 이용해주세요.");
-                    location.reload();
-                }
-            });
-      }
+   function scheduleWrite() {
+	    var createNm = localStorage.getItem('createNm');
+	    $.ajax({
+	        url: "/schedule",
+	        data: JSON.stringify({ "createNm": createNm }), // 데이터를 JSON 형식으로 변환하여 전송
+	        type: "POST",
+	        contentType: "application/json", // 컨텐츠 타입 설정
+	        success: function (result) {
+	        	var year = cal.get(Calendar.YEAR);
+	        	var month = (cal.get(Calendar.MONTH) + 1);
+	        	var day = String.format("%02d", day);
+	            var message = result.message;
+	            if (message === "성공") {
+	                window.location.href = "/scheduleWrite";
+	            } else if (message === "실패") {
+	                alert("로그인 후 이용해주세요.");
+	                location.reload();
+	            }
+	        },
+	        error: function () {
+	            alert("에러 발생");
+	            location.reload();
+	        }
+	    });
+	}
    </script>
 
 

@@ -1,6 +1,7 @@
 package com.witches.schedule.controller;
 
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -8,12 +9,15 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.witches.schedule.service.CalendarService;
 import com.witches.schedule.service.ScheduleService;
@@ -33,14 +37,19 @@ public class ScheduleController {
 	private UserDTO userDto;
 	
 	// 로그인 여부 확인
-	@PostMapping("/schedule")
-	public String scheduleEnter(@RequestBody String createNm, Model model) {
+	@CrossOrigin
+	@ResponseBody
+	@RequestMapping("/schedule")
+	public ModelAndView scheduleEnter(@ModelAttribute HashMap<String, Object> createNm,
+			@RequestParam int year, int month, int day) {
+		ModelAndView mav = new ModelAndView("redirect:/scheduleWrite?year="+year+"&month="+month+"&day="+day);
+		mav.addObject("createNm", createNm);
 		if (createNm != null) {
-			model.addAttribute("msg", "성공");
-			return "msg";
+			mav.addObject("message", "성공");	
+			return mav;
 		}else {
-			model.addAttribute("msg", "실패");
-			return "msg";
+			mav.addObject("message", "실패");
+			return mav;
 		}
 	}
 
