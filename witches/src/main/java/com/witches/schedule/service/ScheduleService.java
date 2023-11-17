@@ -11,7 +11,7 @@ public interface ScheduleService {
 	ResultVO scheduleInsert(ScheduleVO scheduleVo);
 
 	// 예약 조회
-	ResultVO scheduleSelect(Integer id);
+	ScheduleVO scheduleSelect(Integer id);
 
 	// 예약 취소
 	ResultVO scheduleCancel(ScheduleVO scheduleVo);

@@ -67,15 +67,12 @@ public class ScheduleRestController {
 	 * 2023.11.15 / 정윤지 / 최초 적용
 	 */
 	@RequestMapping(value="/detail", method = { RequestMethod.GET, RequestMethod.POST })
-	public ResponseEntity<Object> scheduleSelect(@ModelAttribute ScheduleVO scheduleVo, Model model, @RequestParam Integer id) {
-		ResultVO detailMap = scheduleService.scheduleSelect(id);
+	public ScheduleVO scheduleSelect(@ModelAttribute ScheduleVO scheduleVo, Model model,
+			@RequestParam Integer id) {
+		ScheduleVO detailMap = scheduleService.scheduleSelect(id);
 		model.addAttribute("detailMap", detailMap);
-	
 		System.out.println(detailMap);
-		
-		Gson gson = new GsonBuilder().create();
-		ResultVO resultVo = scheduleService.scheduleSelect(id);
-		return ResponseEntity.ok(new resultResponse(gson.toJson(resultVo)));
+		return detailMap;
 	}
 
 	/**
