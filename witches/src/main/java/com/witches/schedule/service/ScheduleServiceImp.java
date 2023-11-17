@@ -33,7 +33,6 @@ public class ScheduleServiceImp implements ScheduleService {
 				return new ResultVO("02");
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
 			return new ResultVO("99");
 		}
 
@@ -58,7 +57,6 @@ public class ScheduleServiceImp implements ScheduleService {
 				return new ResultVO("02");
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
 			return new ResultVO("99");
 		}
 	}

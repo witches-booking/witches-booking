@@ -47,8 +47,7 @@ public class ScheduleController {
 	// 날짜 클릭시 작성페이지 이동
 	@RequestMapping("/scheduleWrite")
 	public String scheduleWrite(@ModelAttribute ScheduleVO scheduleVo, 
-			@RequestParam int year, int month, int day,
-			Model model, HttpSession session) {
+			@RequestParam int year, int month, int day, Model model) {
 		System.out.println("날짜 확인" + year + month + day);
 		model.addAttribute("date", scheduleVo);
 		return "/schedule";
