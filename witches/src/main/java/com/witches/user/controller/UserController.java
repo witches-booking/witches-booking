@@ -55,6 +55,7 @@ public class UserController {
 	// 카카오 로그인 restApi
 	@RequestMapping("/kakaoLogin")
 	public Mono<String> kakaoLogin(@RequestParam(required = false) String code) {
+
 		System.out.println("rest카카오로그인 컨트롤러 실행");
 	    String restApiKey = "02b86e71e0895cda12a9361c1cdb773a";
 	    String redirectUri = "http://localhost:8449/kakaoLogin";
@@ -89,6 +90,8 @@ public class UserController {
 	            JsonObject userJson = jsonParser.parse(userResponseStr).getAsJsonObject();
 
 	            String id = userJson.get("id").getAsString();
+	            
+//	            model.addAttribute("id", id);
 
 	            // TODO: DB에서 사용자 데이터 확인 및 저장하는 코드를 추가하세요.
 

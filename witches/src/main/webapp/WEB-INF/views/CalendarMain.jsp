@@ -24,7 +24,6 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script type="text/javascript">
 
-let email = null;
 function kakaoLogin() {
     // SDK를 초기화합니다. 사용할 앱의 JavaScript 키를 설정해야 합니다.
     Kakao.init('570250ea5e6af0b22c661c29eb516746');
@@ -99,7 +98,7 @@ function kakao(){
 
 	</button>
 
-	<button onclick="kakao()"> 카카오rest로그인</button>
+	<button type='hidden' onclick="kakao()"> 카카오rest로그인</button>
 
 
 
@@ -183,7 +182,7 @@ function kakao(){
 							<td>
 								<div>
 									<a onclick="write();" 
-										href='/schedule?year=<%=cal.get(Calendar.YEAR)%>&month=<%=(cal.get(Calendar.MONTH) + 1)%>&day=<%=String.format("%02d", day)%>&email='>
+										href='/schedule?year=<%=cal.get(Calendar.YEAR)%>&month=<%=(cal.get(Calendar.MONTH) + 1)%>&day=<%=String.format("%02d", day)%>&id=${id.getId()}'>
 										<span><%=day%></span>
 									</a>
 									<ul>

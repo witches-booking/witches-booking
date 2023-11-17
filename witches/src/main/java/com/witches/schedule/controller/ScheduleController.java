@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.witches.schedule.service.CalendarService;
 import com.witches.schedule.service.ScheduleService;
 import com.witches.schedule.vo.ScheduleVO;
+import com.witches.user.dto.UserDTO;
 
 @Controller
 public class ScheduleController {
@@ -24,21 +25,17 @@ public class ScheduleController {
 	@Autowired
 	CalendarService calendarService;
 
-
+	@Autowired
+	private UserDTO userDto;
 
 	// 날짜 클릭시 작성페이지 이동
 	@RequestMapping("/schedule")
 	public String moveSchedule(@ModelAttribute ScheduleVO scheduleVo, 
 			@RequestParam int year, int month, int day,
-			Model model, @RequestParam String loginId) {
-		if(loginId != null) {
+			Model model) {
 		System.out.println("날짜 확인" + year + month + day);
-//		System.out.println("email확인 : "+email);
 		model.addAttribute("date", scheduleVo);
 		return "/schedule";
-		} else {
-			return "redirect:/";
-		}
 	}
 
 	// 캘린더 일정 띄우기

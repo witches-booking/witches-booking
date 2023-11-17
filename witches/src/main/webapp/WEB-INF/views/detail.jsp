@@ -116,7 +116,7 @@
                                 var message = parsedData.reMsg;
                                 if (message === "성공") {
                                     alert("예약 취소에 성공했습니다.");
-                                    window.location.href = "/CalendarMain";
+                                    window.location.href = "/";
                                 }
                             },
                             error: function() {

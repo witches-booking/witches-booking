@@ -187,11 +187,11 @@
                                 } else if (message === "성공") {
                                     alert("예약 등록에 성공했습니다."); 
                                 }
-                                window.location.href = "/CalendarMain";
+                                window.location.href = "/";
                             },
                             error: function () {
                                 alert("예약 등록에 실패했습니다.");
-                                window.location.href = "/CalendarMain";
+                                window.location.href = "/";
                             }
                         });
                     }
