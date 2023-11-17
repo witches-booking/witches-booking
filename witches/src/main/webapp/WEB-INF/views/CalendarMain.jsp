@@ -88,7 +88,7 @@ function kakaoLogin() {
 
 
 
-	<h3 id="pageTit">회의실 사용</h3>
+	<h3 id="pageTit">회의실 사용 ${loginId.getLoginId() }</h3>
 	<div id="content">
 		<div class="contentWrap">
 			<article class="calendar">
@@ -167,8 +167,8 @@ function kakaoLogin() {
 							%>
 							<td>
 								<div>
-									<a onclick="write();" 
-										href='/schedule?year=<%=cal.get(Calendar.YEAR)%>&month=<%=(cal.get(Calendar.MONTH) + 1)%>&day=<%=String.format("%02d", day)%>&id=${id.getId()}'>
+									<a
+										href='/schedule?year=<%=cal.get(Calendar.YEAR)%>&month=<%=(cal.get(Calendar.MONTH) + 1)%>&day=<%=String.format("%02d", day)%>&id=${loginId}'>
 										<span><%=day%></span>
 									</a>
 									<ul>
@@ -189,7 +189,7 @@ function kakaoLogin() {
 							<td>
 								<div>
 									<a
-										href='/schedule?year=<%=cal.get(Calendar.YEAR)%>&month=<%=(cal.get(Calendar.MONTH) + 1)%>&day=<%=String.format("%02d", day)%>'>
+										href='/schedule?year=<%=cal.get(Calendar.YEAR)%>&month=<%=(cal.get(Calendar.MONTH) + 1)%>&day=<%=String.format("%02d", day)%>&id=${loginId}'>
 										<span><%=day%></span>
 									</a>
 								</div>
