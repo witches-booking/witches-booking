@@ -102,13 +102,15 @@
                         var id = "${detailMap.getId()}";
                         var cancelNm = $("#cancelNm").val();
                         var cancelReason = $("#cancelReason").val();
+                        var createNm = localStorage.getItem("createNm");
 
                         $.ajax({
                             url: "/api/cancel",
                             data: {
                                 "id": id,
                                 "cancelNm": cancelNm,
-                                "cancelReason": cancelReason
+                                "cancelReason": cancelReason,
+                                "createNm" : createNm
                             },
                             type: "POST",
                             success: function(result) {

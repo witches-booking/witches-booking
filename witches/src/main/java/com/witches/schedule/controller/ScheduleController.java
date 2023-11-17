@@ -3,10 +3,14 @@ package com.witches.schedule.controller;
 import java.util.Calendar;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -27,12 +31,23 @@ public class ScheduleController {
 
 	@Autowired
 	private UserDTO userDto;
+	
+	// 로그인 여부 확인
+	@PostMapping("/schedule")
+	public String scheduleEnter(@RequestBody String createNm, Model model) {
+		if (createNm != null) {
+			model.addAttribute("msg", "성공");
+			return "msg";
+		}else {
+			model.addAttribute("msg", "실패");
+			return "msg";
+		}
+	}
 
 	// 날짜 클릭시 작성페이지 이동
-	@RequestMapping("/schedule")
-	public String moveSchedule(@ModelAttribute ScheduleVO scheduleVo, 
-			@RequestParam int year, int month, int day,
-			Model model) {
+	@RequestMapping("/scheduleWrite")
+	public String scheduleWrite(@ModelAttribute ScheduleVO scheduleVo, 
+			@RequestParam int year, int month, int day, Model model) {
 		System.out.println("날짜 확인" + year + month + day);
 		model.addAttribute("date", scheduleVo);
 		return "/schedule";

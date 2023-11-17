@@ -163,6 +163,7 @@
                         var name = $("#name").val();
                         var department = $("#department").val();
                         var contents = $("#contents").val();
+                        var createNm = sessionStorage.getItem("createNm");
 
                         $.ajax({
                             url: "/api/success",
@@ -175,7 +176,8 @@
                                 "peopleNum": peopleNum,
                                 "name": name,
                                 "department": department,
-                                "contents": contents
+                                "contents": contents,
+                                "createNm" : createNm
                             },
                             type: "POST",
                             success: function (result) {
