@@ -74,6 +74,36 @@ function kakaoLogin() {
         console.log(error);
     });
 }
+<<<<<<< HEAD
+=======
+
+function kakao(){
+    const restApiKey = "02b86e71e0895cda12a9361c1cdb773a";
+    const redirectUri = "http://localhost:8449/kakaoLogin";
+
+    //인가 코드 요청
+    const codeUrl ='https://kauth.kakao.com/oauth/authorize?response_type=code&client_id='+restApiKey+'&redirect_uri='+redirectUri;
+    window.location.href=codeUrl;
+/*
+    $.ajax({
+	url : codeUrl,
+	type : "get",
+	success : function(res){
+		console.log(res)
+		location.reload();
+	},
+	error : function(){
+		console.log("통신 실패")
+	}
+    }); 
+ */
+ 
+
+    
+};
+ 
+	
+>>>>>>> branch 'master' of https://github.com/witches-booking/witches-booking.git
 </script>
 </head>
 <body>
