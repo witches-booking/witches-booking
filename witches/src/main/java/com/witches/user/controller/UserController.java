@@ -67,7 +67,7 @@ public class UserController {
 	    System.out.println("rest카카오로그인 컨트롤러 실행");
 	    String restApiKey = "02b86e71e0895cda12a9361c1cdb773a";
 	    String redirectUri = "http://localhost:8449/kakaoLogin";
-	    System.out.println("code 값 확인: "+code);
+
 	    // WebClient 인스턴스 생성
 	    WebClient webClient = WebClient.create();
 
@@ -81,7 +81,7 @@ public class UserController {
 	    JsonObject jsonObject = jsonParser.parse(tokenResponse).getAsJsonObject();
 
 	    String accessToken = jsonObject.get("access_token").getAsString();
-	    System.out.println("엑세스 토큰 값 확인 ;"+ accessToken);
+
 	    // 사용자 정보 받아오기
 	    String userUrl = "https://kapi.kakao.com/v2/user/me";
 	    String userResponse = webClient.get().uri(userUrl)
@@ -90,13 +90,12 @@ public class UserController {
 	    // JSON 데이터 파싱
 	    JsonObject userJson = jsonParser.parse(userResponse).getAsJsonObject();
 	    String id = userJson.get("id").getAsString();
-	    System.out.println("아이디값 확인 : "+ id);
 	    session.setAttribute("createNm", id);
 
 	    // TODO: DB에서 사용자 데이터 확인 및 저장하는 코드를 추가하세요.
 
 	    // JSP 페이지 이름 반환
-	    return "redirect:/Calendar"; // 여기에 원하는 JSP 페이지 이름을 입력하세요.
+	    return "redirect:/"; // 여기에 원하는 JSP 페이지 이름을 입력하세요.
 	} // kakaoLogin함수 끝
 
 }

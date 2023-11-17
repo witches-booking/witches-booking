@@ -71,7 +71,7 @@ public class ScheduleController {
 	 * ------------ 이력 ------------
 	 * 2023.11.15 / 정윤지 / 최초 적용
 	 */
-	@RequestMapping(value="/detail", method = { RequestMethod.GET, RequestMethod.POST })
+	@RequestMapping(value="/api/detail", method = { RequestMethod.GET, RequestMethod.POST })
 	public String scheduleSelect(@ModelAttribute ScheduleVO scheduleVo, Model model,
 			@RequestParam Integer id) {
 		ScheduleVO detailMap = scheduleService.scheduleSelect(id);

@@ -198,7 +198,7 @@ function kakao(){
 									</a>
 									<ul>
 										<li class='state01'><a
-											href='/detail?id=<%=schedule.getId()%>'><%=schedule.getStart()%>~
+											href='/api/detail?id=<%=schedule.getId()%>'><%=schedule.getStart()%>~
 												<em><%=schedule.getEnd()%></em>
 												<div class='calTooltip'>
 													<p><%=schedule.getDepartment()%>
