@@ -18,7 +18,6 @@ public class UserServiceImp implements UserService {
 	public ResultVO login(UserVO userVo) {
 		try {
 			if (userVo.getLoginId() != null && userVo.getSns() != null) {
-				System.out.println("==========> 로그인 서비스 진입");
 				if (userDao.userCheck(userVo) == 1) {
 					userDao.userSelect(userVo);
 					return new ResultVO("00");

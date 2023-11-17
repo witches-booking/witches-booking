@@ -21,13 +21,23 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 	
-	// 로그인
+	/**
+	 * 로그인
+	 * @param UserVO userVo
+	 * @param String loginId
+	 * @param String sns
+	 * @param ResultVO resultVo
+	 * @return Gson gson
+	 * ------------ 이력 ------------
+	 * 2023.11.17 / 정윤지 / 최초 적용
+	 */
 	@PostMapping("/login")
-	public ResponseEntity<Object> login(@ModelAttribute UserVO userVo, Model model
+	public ResponseEntity<Object> login(@ModelAttribute UserVO userVo
 			, @RequestParam String loginId, @RequestParam String sns) {
-		System.out.println("==========> 로그인 진입");
 		userVo.setLoginId(loginId);
 		userVo.setSns(sns);
+		System.out.println("로그인 id:::::::::"+userVo.getLoginId());
+		System.out.println("로그인 sns:::::::::"+userVo.getSns());
 		Gson gson = new GsonBuilder().create();
 		ResultVO resultVo = userService.login(userVo);
 		return ResponseEntity.ok(new resultResponse(gson.toJson(resultVo)));
