@@ -1,5 +1,7 @@
 package com.witches.schedule.controller;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
@@ -40,6 +42,7 @@ public class ScheduleRestController {
 			calendarService.showSchedule();
 			
 	}
+	
 
 	/**
 	* 예약 등록
@@ -51,29 +54,13 @@ public class ScheduleRestController {
 	* 2023.11.13 / 정윤지 / 최초 적용
 	*/
 	@PostMapping("/success")
-	public ResponseEntity<Object> scheduleInsert(@ModelAttribute ScheduleVO scheduleVo) {
+	public ResponseEntity<Object> scheduleInsert(@ModelAttribute ScheduleVO scheduleVo, HttpSession session) {
+		String login = (String) session.getAttribute("createNm");
+		scheduleVo.setCreateNm(login);
 		Gson gson = new GsonBuilder().create();
 		ResultVO resultVo = scheduleService.scheduleInsert(scheduleVo);
 		return ResponseEntity.ok(new resultResponse(gson.toJson(resultVo)));
 	}
-	
-	/**
-	 * 예약 조회
-	 * @param ScheduleVO scheduleVo
-	 * @param Model model
-	 * @param Integer id
-	 * @return ScheduleVO
-	 * ------------ 이력 ------------
-	 * 2023.11.15 / 정윤지 / 최초 적용
-	 */
-//	@RequestMapping(value="/detail", method = { RequestMethod.GET, RequestMethod.POST })
-//	public ScheduleVO scheduleSelect(@ModelAttribute ScheduleVO scheduleVo, Model model,
-//			@RequestParam Integer id) {
-//		ScheduleVO detailMap = scheduleService.scheduleSelect(id);
-//		model.addAttribute("detailMap", detailMap);
-//		System.out.println(detailMap);
-//		return detailMap;
-//	}
 
 	/**
 	 * 예약 취소

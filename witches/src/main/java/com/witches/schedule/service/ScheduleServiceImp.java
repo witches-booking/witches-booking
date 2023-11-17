@@ -21,7 +21,7 @@ public class ScheduleServiceImp implements ScheduleService {
 
 		try {
 			if (scheduleVo.getName() != null && scheduleVo.getYear() != 0 && scheduleVo.getStart() != null
-					&& scheduleVo.getEnd() != null && scheduleVo.getPeopleNum() != null) {
+					&& scheduleVo.getEnd() != null && scheduleVo.getPeopleNum() != null && scheduleVo.getCreateNm() != null) {
 				if (scheduleDao.scheduleCheck(scheduleVo) == 0) {
 					scheduleDao.scheduleInsert(scheduleVo);
 					System.out.println(scheduleVo);

@@ -82,6 +82,8 @@ function kakao(){
     //인가 코드 요청
     const codeUrl ='https://kauth.kakao.com/oauth/authorize?response_type=code&client_id='+restApiKey+'&redirect_uri='+redirectUri;
     window.location.href=codeUrl;
+    
+    processAfterInput();
 /*
     $.ajax({
 	url : codeUrl,
@@ -95,10 +97,44 @@ function kakao(){
 	}
     }); 
  */
- 
-
     
 };
+
+function processAfterInput(){
+	var createNm = sessionStorage.getItem("createNm");
+    var sns = "kakao";
+    $.ajax({
+        url: "/login",
+        data: {
+            "createNm": createNm,
+            "sns": sns
+        },
+        type: "POST",
+        success: function(result) {
+            var parsedData = JSON.parse(result.reData);
+            var message = parsedData.reMsg;
+            console.log(result.msg);
+            if (message === "성공") {
+                alert("로그인 되었습니다.");
+            }
+        },
+        error: function() {
+            alert("로그인에 실패했습니다.");
+            window.location.href = "/";
+        }
+    });
+}
+</script>
+<script type="text/javascript">
+	function(){
+		var parsedData = JSON.parse(result.reData);
+        var message = parsedData.reMsg;
+        console.log(result.msg);
+		if(message === "실패"){
+			alert("로그인 후 이용해주세요.")
+			window.location.href = "/";
+		}
+	}
 </script>
 </head>
 <body>
@@ -192,7 +228,7 @@ function kakao(){
 							%>
 							<td>
 								<div>
-									<a
+									<a 
 										href='/schedule?year=<%=cal.get(Calendar.YEAR)%>&month=<%=(cal.get(Calendar.MONTH) + 1)%>&day=<%=String.format("%02d", day)%>&id=${loginId}'>
 										<span><%=day%></span>
 									</a>
@@ -213,7 +249,7 @@ function kakao(){
 							%>
 							<td>
 								<div>
-									<a
+									<a onclick="scheduleWrite();"
 										href='/schedule?year=<%=cal.get(Calendar.YEAR)%>&month=<%=(cal.get(Calendar.MONTH) + 1)%>&day=<%=String.format("%02d", day)%>&id=${loginId}'>
 										<span><%=day%></span>
 									</a>
@@ -248,7 +284,29 @@ function kakao(){
 		}
 	</script>
 
-
+	<script type="text/javascript">
+		function scheduleWrite(){
+			var createNm = localStorage.getItem("createNm");
+			$.ajax({
+				url : "/schedule",
+				data {
+					"createNm" : createNm
+				},
+				type : "POST",
+				success : function(result){
+					var parsedData = JSON.parse(result.reData);
+                    var message = parsedData.reMsg;
+                    if (message === "성공") {
+						window.location.href = "/scheduleWrite"                    	
+                    }
+                },
+                error: function() {
+                    alert("로그인 후 이용해주세요.");
+                    location.reload();
+                }
+            });
+		}
+	</script>
 
 
 </body>
