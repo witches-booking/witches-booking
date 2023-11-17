@@ -44,7 +44,6 @@ function kakao(){
     //인가 코드 요청
     const codeUrl ='https://kauth.kakao.com/oauth/authorize?response_type=code&client_id='+restApiKey+'&redirect_uri='+redirectUri;
     window.location.href=codeUrl;
-<<<<<<< HEAD
     
     processAfterInput();
 /*
@@ -60,9 +59,6 @@ function kakao(){
 	}
     }); 
  */
-=======
-
->>>>>>> branch 'master' of https://github.com/witches-booking/witches-booking.git
     
 };
 
@@ -91,17 +87,6 @@ function processAfterInput(){
     });
 }
 </script>
-<script type="text/javascript">
-	function(){
-		var parsedData = JSON.parse(result.reData);
-        var message = parsedData.reMsg;
-        console.log(result.msg);
-		if(message === "실패"){
-			alert("로그인 후 이용해주세요.")
-			window.location.href = "/";
-		}
-	}
-</script>
 </head>
 <body>
 
@@ -109,11 +94,11 @@ function processAfterInput(){
 
 		<img src="/img/kakao_login_medium_narrow.png" alt="Kakao Login">
 
+	</button>
 
 
 
-
-	<h3 id="pageTit">회의실 사용 ${loginId.getLoginId() }</h3>
+	<h3 id="pageTit">회의실 사용</h3>
 	<div id="content">
 		<div class="contentWrap">
 			<article class="calendar">
@@ -253,7 +238,7 @@ function processAfterInput(){
 			var createNm = localStorage.getItem("createNm");
 			$.ajax({
 				url : "/schedule",
-				data {
+				data : {
 					"createNm" : createNm
 				},
 				type : "POST",
