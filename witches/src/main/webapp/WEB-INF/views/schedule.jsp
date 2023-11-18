@@ -163,7 +163,7 @@
                         var name = $("#name").val();
                         var department = $("#department").val();
                         var contents = $("#contents").val();
-                        var createNm = sessionStorage.getItem("createNm");
+                        var createNm =localStorage.getItem("createNm");
 
                         $.ajax({
                             url: "/api/success",
