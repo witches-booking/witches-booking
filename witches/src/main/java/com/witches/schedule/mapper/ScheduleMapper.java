@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import com.witches.schedule.vo.ScheduleVO;
 
@@ -23,6 +24,12 @@ public interface ScheduleMapper {
 
 	@Insert("INSERT INTO schedule (start, end, people_num, name, department, is_delete, contents, year, month, day, create_nm) VALUES (#{start}, #{end}, #{peopleNum}, #{name}, #{department}, #{isDelete}, #{contents}, #{year}, #{month}, #{day}, #{createNm})")
 	public void insertSchedule(ScheduleVO schedulevo);
+
+
+	@Select("SELECT COUNT(*) from USER where id= #{createNm}")
+	public int checkCreateNm(String createNm);
 	
+	@Update("UPDATE schedule SET is_delete = 'Y', cancle_name=#{cancelNm}, cancle_reason=#{cancelReason} WHERE id = #{id} ")
+	public void cancleSchedule(ScheduleVO scheduleVO);
 	
 }

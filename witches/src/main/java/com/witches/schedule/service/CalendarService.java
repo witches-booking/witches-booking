@@ -36,7 +36,7 @@ public class CalendarService {
 		
 	}
 
-	public void insertSchdule(CalendarDTO calendarDTO) {
+	public void insertSchedule(CalendarDTO calendarDTO) {
 	
 		ScheduleVO schedulevo = new ScheduleVO();
 		schedulevo.setStart(calendarDTO.getStart());
@@ -53,6 +53,29 @@ public class CalendarService {
 		
 		
 		scheduleMapper.insertSchedule(schedulevo);
+		
+	}
+
+	
+	public String cancleSchedule(CalendarDTO calendarDTO) {
+		
+		ScheduleVO schedulevo = new ScheduleVO();
+		schedulevo.setId(calendarDTO.getId());
+		schedulevo.setCreateNm(calendarDTO.getCreateNm());
+		schedulevo.setCancelNm(calendarDTO.getCancleName());
+		schedulevo.setCancelReason(calendarDTO.getCancleReason());
+				
+		// 회원 확인
+		int ox = scheduleMapper.checkCreateNm(schedulevo.getCreateNm());
+		String message = null;
+		if(ox >0) {			
+			scheduleMapper.cancleSchedule(schedulevo);
+			message = "예약 취소 완료";
+		}else {
+			message = "예약 취소 실패";
+		}
+		
+		return message;
 		
 	}
 

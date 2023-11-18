@@ -17,6 +17,9 @@ import lombok.Setter;
 @Data
 public class CalendarDTO implements Serializable{
 
+	private int id;
+	private String cancleName;
+	private String cancleReason;
 	private String start;
 	private String end;
 	private String peopleNum;
