@@ -29,8 +29,8 @@
 	var createNm = '${createNm}';
 	var message = '${message}';
 	console.log("메세지",message);
-	if (message === "로그인에 실패하셨습니다") {
-		alert(message);
+	if (message === "fail") {
+		alert("로그인에 실패하셨습니다.");
 	
 		// 값이 존재하는 경우에만 sessionStorage에 저장
 		}else{

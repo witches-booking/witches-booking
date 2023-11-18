@@ -12,8 +12,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.witches.schedule.dto.CalendarDTO;
 import com.witches.schedule.service.CalendarService;
 import com.witches.schedule.vo.ScheduleVO;
+
+import lombok.RequiredArgsConstructor;
+
 
 @CrossOrigin(origins ="*")
 @RequestMapping("/api")
@@ -53,7 +57,15 @@ public class CalendarRestController {
 	}
 	
 	
-
+	@RequestMapping("/insertSchedule")
+	public String insertSchdule (@RequestBody CalendarDTO calendarDTO) {
+		System.out.println("rest컨트롤러 실행 예약 저장");
+		
+		calendarService.insertSchdule(calendarDTO);
+		
+		
+		return "예약 성공";
+	}
 	
 	
 }
