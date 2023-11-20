@@ -110,7 +110,7 @@
 													<c:when
 														test="${year * 10000 + month * 100 + daysOfMonth[index] >= today}">
 														<a onclick="scheduleWrite();"
-															href="/scheduleWrite?year=${item.year}&month=${item.month}&day=${daysOfMonth[index]}">
+															href="/scheduleWrite?year=${year}&month=${month}&day=${daysOfMonth[index]}">
 															<span>${daysOfMonth[index]}</span>
 														</a>
 													</c:when>
