@@ -130,13 +130,7 @@ window.onload = function() {
     var loginBtn = document.getElementById('kakao-login-btn');
     var logoutBtn = document.getElementById('logout-btn');
 
-    if (createNm) {
-    	        loginBtn.style.visibility = 'hidden';
-    	        logoutBtn.style.visibility = 'visible';
-    	    } else {
-    	        loginBtn.style.visibility = 'visible';
-    	        logoutBtn.style.visibility = 'hidden';
-    	    }
+
 }
 </script>
 
@@ -148,18 +142,65 @@ window.onload = function() {
 #logout-btn img {
     width: 183px;
     height: 35px;
+}
 
+.scheduleScroll{
+	 margin-top:-100px;
+	 height: 100px;
+	 overflow-y: scroll;
+	 -ms-overflow-style: none;
+}
+::-webkit-scrollbar {
+  display: none;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.delayed-fade-in {
+  opacity: 0; /* 초기 상태는 투명하게 */
+  animation-name: fadeIn; /* 애니메이션 이름 지정 */
+  animation-duration: 1s; /* 애니메이션 지속 시간 */
+  animation-fill-mode: forwards; /* 애니메이션 종료 후 상태 유지 */
+  animation-delay: 0.5s; /* 애니메이션 시작 전 지연 시간 */
+}
 </style>
 </head>
 <body>
+<%
+String loginId = (String)session.getAttribute("createNm");
+%>
 
-<div style="position: relative;">
-	<button type="button" id="kakao-login-btn" onclick="kakao()" style="position: absolute" >
-		<img src="/img/kakao_login_medium_narrow.png" alt="Kakao Login" >
-	</button>
-	<button  id="logout-btn" onclick=logout() style="position: absolute" >
-		<img alt="로그아웃" src="/img/kakao_logout2.png" >
-	</button>
+
+<div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var createNm = localStorage.getItem('createNm');
+            if (createNm === null) {
+                // 로그인되지 않은 경우
+                document.getElementById('kakao-login-btn').style.display = 'block';
+                document.getElementById('logout-btn').style.display = 'none';
+            } else {
+                // 로그인된 경우
+                document.getElementById('kakao-login-btn').style.display = 'none';
+                document.getElementById('logout-btn').style.display = 'block';
+            }
+        });
+    </script>
+
+    <button type="button" id="kakao-login-btn" onclick="kakao()">
+        <img src="/img/kakao_login_medium_narrow.png" alt="Kakao Login">
+    </button>
+
+    <button id="logout-btn" onclick="logout()" style="display: none;">
+        <img alt="로그아웃" src="/img/kakao_logout2.png">
+    </button>
 </div>
 
 
