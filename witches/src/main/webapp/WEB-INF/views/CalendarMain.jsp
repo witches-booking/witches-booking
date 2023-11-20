@@ -131,12 +131,12 @@ window.onload = function() {
     var logoutBtn = document.getElementById('logout-btn');
 
     if (createNm) {
-        loginBtn.style.display = 'none';
-        logoutBtn.style.display = 'block';
-    } else {
-        loginBtn.style.display = 'block';
-        logoutBtn.style.display = 'none';
-    }
+    	        loginBtn.style.visibility = 'hidden';
+    	        logoutBtn.style.visibility = 'visible';
+    	    } else {
+    	        loginBtn.style.visibility = 'visible';
+    	        logoutBtn.style.visibility = 'hidden';
+    	    }
 }
 </script>
 
@@ -153,16 +153,14 @@ window.onload = function() {
 </head>
 <body>
 
-<div>
-
-</div>
-
-	<button type="button" id="kakao-login-btn" onclick="kakao()">
-		<img src="/img/kakao_login_medium_narrow.png" alt="Kakao Login">
+<div style="position: relative;">
+	<button type="button" id="kakao-login-btn" onclick="kakao()" style="position: absolute" >
+		<img src="/img/kakao_login_medium_narrow.png" alt="Kakao Login" >
 	</button>
-	<button  id="logout-btn" onclick=logout() >
+	<button  id="logout-btn" onclick=logout() style="position: absolute" >
 		<img alt="로그아웃" src="/img/kakao_logout2.png" >
 	</button>
+</div>
 
 
 	<h3 id="pageTit">회의실 사용</h3>
