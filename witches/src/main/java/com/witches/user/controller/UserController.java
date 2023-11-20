@@ -64,6 +64,7 @@ public class UserController {
 		ResultVO resultVo = userService.login(userVo);
 		return ResponseEntity.ok(new resultResponse(gson.toJson(resultVo)));
 	}
+	
 
 	// 카카오 로그인 restApi - jsp전용
 	@RequestMapping("/api/kakaoLogin")

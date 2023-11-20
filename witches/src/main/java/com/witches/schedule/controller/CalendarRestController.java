@@ -92,7 +92,16 @@ public class CalendarRestController {
 	public String cancleSchedule(@RequestBody CalendarDTO calendarDTO  ) {
 		System.out.println("rest컨트롤러 실행 예약 취소");
 		
-		String message = calendarService.cancleSchedule(calendarDTO);
+		int id = calendarDTO.getId();
+		String createNm = calendarDTO.getCreateNm();
+		String cancleName = calendarDTO.getCancleName();
+		String cancleReason = calendarDTO.getCancleReason();
+		String message =null;
+		if(id == 0 || createNm == null || createNm.isEmpty() || cancleName == null || cancleName.isEmpty()) {
+			message = "필수 값이 누락되었습니다.";
+		}else {
+			message = calendarService.cancleSchedule(calendarDTO);			
+		}
 		
 		return message;
 	}
