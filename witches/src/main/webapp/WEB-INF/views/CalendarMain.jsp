@@ -109,13 +109,14 @@
 												<c:choose>
 													<c:when
 														test="${year * 10000 + month * 100 + daysOfMonth[index] >= today}">
-														<a onclick="scheduleWrite();"
-															href="/scheduleWrite?year=${year}&month=${month}&day=${daysOfMonth[index]}">
+														<button onclick="scheduleWrite();">
 															<span>${daysOfMonth[index]}</span>
-														</a>
+														</button>
 													</c:when>
 													<c:otherwise>
 														<span>${daysOfMonth[index]}</span>
+														<div id="calendarData" data-day="${daysOfMonth[index]}">
+														</div>
 													</c:otherwise>
 												</c:choose>
 											</div>
@@ -157,36 +158,36 @@
 
 	<script type="text/javascript">
    function scheduleWrite() {
-	    var createNm = localStorage.getItem('
-															createNm');
+	    var createNm = localStorage.getItem('createNm');
+	    var year = "${year}";
+	    var month = "${month}";
+	    var calendarData = document.getElementById('calendarData');
+	    var day = calendarData.getAttribute('data-day');
+
+	    console.log(year + month + day);
+
 	    $.ajax({
 	        url: "/schedule",
-	        data:
-															JSON.stringify({ "createNm": createNm }), // 데이터를 JSON
-															형식으로 변환하여 전송
-															type: "POST",
-	        contentType: "application/json", // 컨텐츠
-															타입 설정 success: function (result) {
-	        	var
-															year=cal.get(Calendar.YEAR); var
-															month=(cal.get(Calendar.MONTH) + 1);
-	        	var
-															day=String.format( "%02d", day);
-	            var
-															message=result.message; if (message===
-															"성공") {
-	                window.location.href="/scheduleWrite"
-															;
-	            } else if (message===
-															"실패") {
-	                alert("로그인 후
-															이용해주세요.");
+	        data: JSON.stringify({
+	            "createNm": createNm,
+	            "year": year,
+	            "month": month,
+	            "day": day
+	        }),
+	        type: "POST",
+	        contentType: "application/json",
+	        dataType: "json", // 데이터 형식을 JSON으로 지정
+	        success: function (result) {
+	            var message = result.message;
+	            if (message === "성공") {
+	                window.location.href = "/scheduleWrite?year="+year+"&month="+month+"&day="+day;
+	            } else if (message === "실패") {
+	                alert("로그인 후 이용해주세요.");
 	                location.reload();
 	            }
 	        },
-	        error:
-															function () {
-	            alert("에러발생");
+	        error: function () {
+	            alert("에러 발생");
 	            location.reload();
 	        }
 	    });
