@@ -27,7 +27,14 @@
 <script>
 	// ModelAndView로 보낸 값 JSP 페이지에서 createNm 값을 가져옴
 	var createNm = '${createNm}';
-	var message = '${message}';
+//	var message = '${message}';
+	// 현재 페이지의 URL을 가져옵니다.
+	var url = window.location.href;
+
+	var urlParams = new URLSearchParams(url);
+
+	var message = urlParams.get('message');
+	
 	console.log("메세지 : ", message);
 	
     function getCookie(name) {
@@ -37,20 +44,15 @@
     }
 
     const accessToken = getCookie('accessToken');
-	
+	console.log('accessToken',accessToken);
 	if (message === "fail") {
 		alert("로그인에 실패하셨습니다.");
 
 		// 값이 존재하는 경우에만 sessionStorage에 저장
 	} else {
-		if (createNm) {
-			if(localStorage.getItem('createNm')){
-				
-			}else{
+		if (accessToken) {
 				localStorage.setItem('createNm', createNm);
 				console.log("로컬스토리지 값확인용" + localStorage.getItem('createNm'));
-				
-			}
 
 		}
 	}
@@ -112,7 +114,8 @@
 	        var name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
 	        document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/;";
 	    }
-		//window.location.href = 'http://localhost:8449/CalendarMain ;
+	    location.reload();
+
 		
 		
 	}
@@ -138,24 +141,27 @@ window.onload = function() {
 </script>
 
 <style type="text/css">
-.scheduleScroll{
- margin-top:-100px;
- height: 100px;
- overflow-y: scroll;
- -ms-overflow-style: none;
-}
-::-webkit-scrollbar {
-  display: none;
-}
+#logout-btn {
+    width: 183px;
+    height: 35px;
+},
+#logout-btn img {
+    width: 183px;
+    height: 35px;
+
 </style>
 </head>
 <body>
+
+<div>
+
+</div>
 
 	<button type="button" id="kakao-login-btn" onclick="kakao()">
 		<img src="/img/kakao_login_medium_narrow.png" alt="Kakao Login">
 	</button>
 	<button  id="logout-btn" onclick=logout() >
-		로그아웃
+		<img alt="로그아웃" src="/img/kakao_logout2.png" >
 	</button>
 
 
