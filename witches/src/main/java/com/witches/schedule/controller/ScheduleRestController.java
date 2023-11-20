@@ -1,4 +1,8 @@
+
 package com.witches.schedule.controller;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -15,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -43,6 +48,8 @@ public class ScheduleRestController {
 			calendarService.showSchedule();
 			
 	}
+	
+	
 
 	/**
 	* 예약 등록
@@ -54,7 +61,9 @@ public class ScheduleRestController {
 	* 2023.11.13 / 정윤지 / 최초 적용
 	*/
 	@PostMapping("/success")
-	public ResponseEntity<Object> scheduleInsert(@RequestBody ScheduleVO scheduleVo) {
+	public ResponseEntity<Object> scheduleInsert(@ModelAttribute HashMap<String, Object> createNm,
+			@RequestBody ScheduleVO scheduleVo) {
+		System.out.println(createNm);
 		Gson gson = new GsonBuilder().create();
 		ResultVO resultVo = scheduleService.scheduleInsert(scheduleVo);
 		return ResponseEntity.ok(new resultResponse(gson.toJson(resultVo)));

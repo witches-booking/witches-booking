@@ -3,6 +3,7 @@ package com.witches.schedule.controller;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -36,22 +37,7 @@ public class ScheduleController {
 	@Autowired
 	private UserDTO userDto;
 	
-	// 로그인 여부 확인
-	@CrossOrigin
-	@ResponseBody
-	@RequestMapping("/schedule")
-	public ModelAndView scheduleEnter(@ModelAttribute HashMap<String, Object> createNm,
-			@RequestParam int year, int month, int day) {
-		ModelAndView mav = new ModelAndView("redirect:/scheduleWrite?year="+year+"&month="+month+"&day="+day);
-		mav.addObject("createNm", createNm);
-		if (createNm != null) {
-			mav.addObject("message", "성공");	
-			return mav;
-		}else {
-			mav.addObject("message", "실패");
-			return mav;
-		}
-	}
+	
 
 	// 날짜 클릭시 작성페이지 이동
 	@RequestMapping("/scheduleWrite")

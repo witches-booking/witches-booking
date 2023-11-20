@@ -163,11 +163,11 @@
                         var name = $("#name").val();
                         var department = $("#department").val();
                         var contents = $("#contents").val();
-                        var createNm =localStorage.getItem("createNm");
+                        var createNm = localStorage.getItem('createNm');
 
                         $.ajax({
                             url: "/api/success",
-                            data: {
+                            data: JSON.stringify({
                                 "year": year,
                                 "month": month,
                                 "day": day,
@@ -178,7 +178,8 @@
                                 "department": department,
                                 "contents": contents,
                                 "createNm" : createNm
-                            },
+                            }),
+                            contentType: 'application/json',
                             type: "POST",
                             success: function (result) {
                                 var parsedData = JSON.parse(result.reData);
@@ -192,6 +193,7 @@
                                 window.location.href = "/";
                             },
                             error: function () {
+                            	console.log(error);
                                 alert("예약 등록에 실패했습니다.");
                                 window.location.href = "/";
                             }
