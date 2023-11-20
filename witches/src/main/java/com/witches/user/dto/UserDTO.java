@@ -13,5 +13,6 @@ import lombok.NoArgsConstructor;
 public class UserDTO {
 
 	private String createNm ;
+	private String sns;
 	
 }
