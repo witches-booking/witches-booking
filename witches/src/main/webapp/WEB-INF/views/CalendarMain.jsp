@@ -56,15 +56,44 @@
 	
 
 </script>
+
+<script type="text/javascript">
+
+	function logout() {
+		localStorage.removeItem('createNm');
+		
+		
+		
+	}
+
+
+</script>
+
+<script>
+// 로그인 여부에 따른 버튼 활성화
+window.onload = function() {
+    var createNm = localStorage.getItem('createNm');
+    var loginBtn = document.getElementById('kakao-login-btn');
+    var logoutBtn = document.getElementById('logout-btn');
+
+    if (createNm) {
+        loginBtn.style.display = 'none';
+        logoutBtn.style.display = 'block';
+    } else {
+        loginBtn.style.display = 'block';
+        logoutBtn.style.display = 'none';
+    }
+}
+</script>
 </head>
 <body>
 
 	<button type="button" id="kakao-login-btn" onclick="kakao()">
-
 		<img src="/img/kakao_login_medium_narrow.png" alt="Kakao Login">
-
 	</button>
-
+	<button  id="logout-btn">
+		로그아웃
+	</button>
 
 
 	<h3 id="pageTit">회의실 사용</h3>
