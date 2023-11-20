@@ -109,13 +109,15 @@
 												<c:choose>
 													<c:when
 														test="${year * 10000 + month * 100 + daysOfMonth[index] >= today}">
-														<button onclick="scheduleWrite();">
-															<span>${daysOfMonth[index]}</span>
-														</button>
+														<div id="calendarData" class="calendarData" data-day="${daysOfMonth[index]}" onclick="scheduleWrite(event)">
+														    <button>
+														        <span>${daysOfMonth[index]}</span>
+														    </button>
+														</div>
 													</c:when>
 													<c:otherwise>
-														<span>${daysOfMonth[index]}</span>
-														<div id="calendarData" data-day="${daysOfMonth[index]}">
+														<div>
+															<span>${daysOfMonth[index]}</span>
 														</div>
 													</c:otherwise>
 												</c:choose>
@@ -161,8 +163,7 @@
 	    var createNm = localStorage.getItem('createNm');
 	    var year = "${year}";
 	    var month = "${month}";
-	    var calendarData = document.getElementById('calendarData');
-	    var day = calendarData.getAttribute('data-day');
+	    var day = event.currentTarget.getAttribute('data-day');
 
 	    console.log(year + month + day);
 
