@@ -136,10 +136,14 @@
 
 	<script type="text/javascript">
       function moveMonth(year, month) {
-         location.href = '
-															/scheduler.jsp?pid=&year=
-															' + year + '&month='
-               + month;
+    	  if(month > 12){
+    		  month = month-12;
+    		  year = year+1;
+    	  }else if(month == 0){
+    		  month =12;
+    		  year= year-1
+    	  }
+         location.href = '/CalendarMain?year=' + year + '&month='+ month;
       }
    </script>
 

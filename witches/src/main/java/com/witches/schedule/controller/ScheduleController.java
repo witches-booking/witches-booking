@@ -118,13 +118,48 @@ public class ScheduleController {
 	}
 
 	@RequestMapping("/CalendarMain")
-	public String CalendarMain2(Model model) {
-		Calendar cal = Calendar.getInstance();
+	public String CalendarMain2(Model model, @RequestParam(name = "year", defaultValue = "0") int year,
+			@RequestParam(name = "month", defaultValue = "0") int month) {
+		LocalDate currentDate;
 
-		// 현재 월을 구함
-		int month = cal.get(Calendar.MONTH) + 1; // 1을 더해 실제 월을 표현
+		if (year == 0 || month == 0) {
+// URL에 year 또는 month가 없을 경우, 현재 날짜 기준으로 설정
+			currentDate = LocalDate.now();
+		} else {
+			currentDate = LocalDate.of(year, month, 1);
+		}
 
-		List<ScheduleVO> data = calendarService.showScheduleList(month);
+		int currentYear = currentDate.getYear();
+		int currentMonth = currentDate.getMonthValue();
+
+// 해당 월의 시작일과 마지막 날짜 계산
+		LocalDate firstDayOfMonth = currentDate.withDayOfMonth(1);
+		LocalDate lastDayOfMonth = currentDate.withDayOfMonth(currentDate.lengthOfMonth());
+
+// 달력에 출력할 날짜 리스트 생성
+		List<Integer> daysOfMonth = new ArrayList<>();
+		int dayValue = 1;
+		int maxDays = lastDayOfMonth.getDayOfMonth();
+
+		for (int i = 1; i <= 42; i++) { // 6주를 표시하기 위해 최대 42일까지 고려
+			if (i >= firstDayOfMonth.getDayOfWeek().getValue() + 1 && dayValue <= maxDays) {
+				daysOfMonth.add(dayValue);
+				dayValue++;
+			} else {
+				daysOfMonth.add(null); // 빈 셀 처리
+			}
+		}
+
+		model.addAttribute("year", currentYear);
+		model.addAttribute("month", currentMonth);
+		model.addAttribute("currentDate", currentDate);
+		model.addAttribute("daysOfMonth", daysOfMonth); // 달력에 출력할 날짜 리스트 추가
+
+		LocalDate today = LocalDate.now();
+	    int todayNumber = today.getYear() * 10000 + today.getMonthValue() * 100 + today.getDayOfMonth();
+	    model.addAttribute("today", todayNumber);
+		System.out.println("몇월? "+month);
+	    List<ScheduleVO> data = calendarService.showScheduleList(month);
 		if (data != null && !data.isEmpty()) {
 			System.out.println("조회해온 데이터리스트" + data);
 			model.addAttribute("data", data);
