@@ -53,6 +53,8 @@
 		window.location.href = codeUrl;
 
 	};
+	
+
 </script>
 </head>
 <body>
@@ -101,20 +103,21 @@
 						<c:forEach var="i" begin="1" end="6">
 							<tr>
 								<c:forEach var="j" begin="0" end="6">
+
 									<td><c:if test="${not empty daysOfMonth[index]}">
-											<a onclick="scheduleWrite();"
-												href="/scheduleWrite?year=${item.year}&month=${item.month}&day=${dayOfMonth[index]}  ">
-												<span> ${daysOfMonth[index]}</span>
-											</a>
+											<div>
+												<a onclick="scheduleWrite();"
+													href="/scheduleWrite?year=${year}&month=${month}&day=${dayOfMonth[index]}">
+													<span>${daysOfMonth[index]}</span>
+												</a>
+											</div>
 											<ul>
 												<c:forEach var="item" items="${data}">
 													<c:if test="${item.day == daysOfMonth[index]}">
-
 														<li class='state01'><a
-															href='/api/detail?id=${item.id}'> ${item.start} ~ <em>
-																	${item.end} </em>
+															href='/api/detail?id=${item.id}'> ${item.start} ~ <em>${item.end}</em>
 																<div class='calTooltip'>
-																	<p>${item.department}- ${item.name}</p>
+																	<p>${item.department}-${item.name}</p>
 																</div>
 														</a></li>
 													</c:if>
@@ -122,15 +125,8 @@
 											</ul>
 										</c:if> <c:set var="index" value="${index + 1}" /></td>
 								</c:forEach>
-									</tr>
-								</c:forEach>
-
-								</div>
-								</td>
-
-						
-					</tbody>
-
+							</tr>
+						</c:forEach>
 					</tbody>
 				</table>
 			</article>

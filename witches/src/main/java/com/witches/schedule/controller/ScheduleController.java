@@ -103,7 +103,11 @@ public class ScheduleController {
 		model.addAttribute("currentDate", currentDate);
 		model.addAttribute("daysOfMonth", daysOfMonth); // 달력에 출력할 날짜 리스트 추가
 
-		List<ScheduleVO> data = calendarService.showScheduleList(month);
+		LocalDate today = LocalDate.now();
+	    int todayNumber = today.getYear() * 10000 + today.getMonthValue() * 100 + today.getDayOfMonth();
+	    model.addAttribute("today", todayNumber);
+		System.out.println("몇월? "+month);
+	    List<ScheduleVO> data = calendarService.showScheduleList(month);
 		if (data != null && !data.isEmpty()) {
 			System.out.println("조회해온 데이터리스트" + data);
 			model.addAttribute("data", data);
