@@ -139,6 +139,7 @@ window.onload = function() {
     }
 }
 </script>
+
 <style type="text/css">
 #logout-btn {
     width: 183px;
@@ -147,7 +148,7 @@ window.onload = function() {
 #logout-btn img {
     width: 183px;
     height: 35px;
-}
+
 </style>
 </head>
 <body>
@@ -207,19 +208,43 @@ window.onload = function() {
 													<c:when
 														test="${year * 10000 + month * 100 + daysOfMonth[index] >= today}">
 														<div id="calendarData" class="calendarData" data-day="${daysOfMonth[index]}" onclick="scheduleWrite(event)">
-														    <button>
-														        <span>${daysOfMonth[index]}</span>
-														    </button>
+														    <c:if test="${j eq 0 }">
+															    <button style="color:red;">
+															        <span>${daysOfMonth[index]}</span>
+															    </button>
+														    </c:if>
+														    <c:if test="${j eq 6 }">
+														    	<button style="color:blue;">
+															        <span>${daysOfMonth[index]}</span>
+															    </button>
+														    </c:if>
+														    <c:if test="${j ne 0 && j ne 6 }">
+														    	<button style="color:black;">
+															        <span>${daysOfMonth[index]}</span>
+															    </button>
+														    </c:if>
 														</div>
 													</c:when>
 													<c:otherwise>
-														<div>
-															<span>${daysOfMonth[index]}</span>
-														</div>
+														<c:if test="${j eq 0 }">
+															    <button style="color:red;">
+															        <span>${daysOfMonth[index]}</span>
+															    </button>
+														    </c:if>
+														    <c:if test="${j eq 6 }">
+														    	<button style="color:blue;">
+															        <span>${daysOfMonth[index]}</span>
+															    </button>
+														    </c:if>
+														    <c:if test="${j ne 0 && j ne 6 }">
+														    	<button style="color:black;">
+															        <span>${daysOfMonth[index]}</span>
+															    </button>
+														    </c:if>
 													</c:otherwise>
 												</c:choose>
 											</div>
-											<ul>
+											<ul class="scheduleScroll">
 												<c:forEach var="item" items="${data}">
 													<c:if test="${item.day == daysOfMonth[index]}">
 														<li class='state01'><a

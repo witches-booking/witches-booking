@@ -27,7 +27,7 @@
 #location .locList .lkList div ul li a:hover,
 #location .locList .lkList div ul li a:focus,
 #location .locList .lkList div ul li a:active,
-#location .locList .lkList div ul li.on a {color:#1044af}
+#location .locList .lkList div ul li.on button {color:#1044af}
 #location .locList .lkList div ul li .moDeath3 {display:none}
 #location .locRight {position:absolute; top:0; right:3%}
 #location .locRight .share {display:inline-block; position:relative}
