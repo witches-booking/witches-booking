@@ -72,7 +72,7 @@ public class UserController {
 	public ModelAndView kakaoLogin(@RequestParam String code, HttpSession session, Model model, HttpServletResponse response) {
 		System.out.println("rest카카오로그인 컨트롤러 실행");
 		String restApiKey = "02b86e71e0895cda12a9361c1cdb773a";
-		String redirectUri = "http://localhost:8449/api/kakaoLogin";
+		String redirectUri = "http://meet.witches.co.kr/api/kakaoLogin";
 
 		// WebClient 인스턴스 생성
 		WebClient webClient = WebClient.create();
@@ -145,8 +145,8 @@ public class UserController {
     public ResponseEntity<Map<String, String>> kakaoLogin(@RequestParam String code, HttpSession session) {
 		System.out.println("rest카카오로그인 컨트롤러 실행");
 		String restApiKey = "02b86e71e0895cda12a9361c1cdb773a";
-		String redirectUri = "http://localhost:8449/api/kakaoLoginApp";
-
+//		String redirectUri = "http://localhost:8449/api/kakaoLoginApp"; // 로컬 일떄
+		String redirectUri = "http://meet.witches.co.kr/api/kakaoLoginApp"; // 배포 할떄
 		// WebClient 인스턴스 생성
 		WebClient webClient = WebClient.create();
 
