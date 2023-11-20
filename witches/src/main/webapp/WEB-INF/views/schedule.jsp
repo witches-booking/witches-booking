@@ -179,8 +179,9 @@
                                 "contents": contents,
                                 "createNm" : createNm
                             }),
-                            contentType: 'application/json',
                             type: "POST",
+                            contentType: "application/json",
+                            dataType: "json",
                             success: function (result) {
                                 var parsedData = JSON.parse(result.reData);
                                 var message = parsedData.reMsg;
@@ -193,7 +194,6 @@
                                 window.location.href = "/";
                             },
                             error: function () {
-                            	console.log(error);
                                 alert("예약 등록에 실패했습니다.");
                                 window.location.href = "/";
                             }

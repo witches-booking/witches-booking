@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.witches.schedule.dao.ScheduleDAO;
 import com.witches.schedule.vo.ResultVO;
 import com.witches.schedule.vo.ScheduleVO;
+import com.witches.user.vo.UserVO;
 
 @Service
 public class ScheduleServiceImp implements ScheduleService {
@@ -18,6 +19,8 @@ public class ScheduleServiceImp implements ScheduleService {
 	// 예약 등록
 	@Override
 	public ResultVO scheduleInsert(ScheduleVO scheduleVo) {
+		
+		System.out.println(scheduleVo);
 
 		try {
 			if (scheduleVo.getName() != null && scheduleVo.getYear() != 0 && scheduleVo.getStart() != null
@@ -50,7 +53,7 @@ public class ScheduleServiceImp implements ScheduleService {
 	public ResultVO scheduleCancel(ScheduleVO scheduleVo) {
 		try {
 			if (scheduleVo.getId() != null && scheduleVo.getCancelReason() != null
-					&& scheduleVo.getCancelNm() != null) {
+					&& scheduleVo.getCancelNm() != null && scheduleVo.getCreateNm().equals(scheduleVo.getLoginId())) {
 				scheduleDao.scheduleCancel(scheduleVo);
 				return new ResultVO("00");
 			} else {

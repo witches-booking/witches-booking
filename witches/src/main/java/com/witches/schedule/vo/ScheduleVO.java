@@ -5,11 +5,12 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
+@Getter
+@Setter
 public class ScheduleVO {
 	
     private Integer id;
@@ -27,6 +28,6 @@ public class ScheduleVO {
 	private int day;
 	private String createNm;
 	
-	
+	private String loginId;
 
 }

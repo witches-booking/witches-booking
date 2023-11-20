@@ -13,9 +13,11 @@
         <link rel="stylesheet" type="text/css" href="/food/jquery.timepicker.min.css">
         <script type="text/javascript" src="https://code.jquery.com/jquery-latest.js"></script>
         <script type="text/javascript" src="/food/jquery.timepicker.min.js"></script>
-
     </head>
-<body>            
+<body>
+<%
+String loginId = (String)session.getAttribute("createNm");
+%>
 			<h3 id="pageTit">회의실 사용</h3>
             <div id="content">
                 <div class="contentWrap">                  
@@ -60,6 +62,7 @@
                                             <br>
                                             </td>
                                     </tr>
+                                    <c:if test='${detailMap.getCreateNm() == createNm }'>
                                     <tr>
                                         <th scope="row">취소자 이름<span class="compul">필수</span></th>
                                         <td colspan="4">
@@ -72,13 +75,16 @@
                                             <textarea id="cancelReason" name="cancelReason" cols="100" rows="10" placeholder="취소 사유를 입력하세요."></textarea>
                                         </td>
                                     </tr>
+                                    </c:if>
                                 </tbody>
                             </table>
                     </div>
 					<!--showDialog($('#wrap'),'','poplayer')-->
                     <p class="tc">
 						<button type="submit" class="btns02" onclick="fnList()" tabindex="0">목록보기</button>
+						<c:if test='${detailMap.getCreateNm() == createNm }'>
 						<button id="cancelBtn" type="submit" class="btns02 color2" onclick="inputAjax()" tabindex="1">예약취소</button>
+						</c:if>
 					</p>
                     <script>
                     function inputAjax() {
@@ -102,17 +108,21 @@
                         var id = "${detailMap.getId()}";
                         var cancelNm = $("#cancelNm").val();
                         var cancelReason = $("#cancelReason").val();
-                        var createNm = localStorage.getItem("createNm");
+                        var createNm = "${detailMap.getCreateNm()}";
+                        var loginId = <%= loginId %>;
 
                         $.ajax({
                             url: "/api/cancel",
-                            data: {
+                            data: JSON.stringify({
                                 "id": id,
                                 "cancelNm": cancelNm,
                                 "cancelReason": cancelReason,
-                                "createNm" : createNm
-                            },
+                                "createNm" : createNm,
+                                "loginId" : loginId
+                            }),
                             type: "POST",
+                            contentType: "application/json",
+                            dataType: "json",
                             success: function(result) {
                                 var parsedData = JSON.parse(result.reData);
                                 var message = parsedData.reMsg;

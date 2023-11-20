@@ -61,13 +61,11 @@ public class ScheduleRestController {
 	* 2023.11.13 / 정윤지 / 최초 적용
 	*/
 	@PostMapping("/success")
-	public ResponseEntity<Object> scheduleInsert(@ModelAttribute HashMap<String, Object> requestData,
-			@RequestBody ScheduleVO scheduleVo) {
-		String createNm = requestData.get("createNm");
-		scheduleVo.setCreateNm(createNm);
-		Gson gson = new GsonBuilder().create();
-		ResultVO resultVo = scheduleService.scheduleInsert(scheduleVo);
-		return ResponseEntity.ok(new resultResponse(gson.toJson(resultVo)));
+	public ResponseEntity<Object> scheduleInsert(@RequestBody ScheduleVO scheduleVo) {
+	    Map<String, Object> response = new HashMap<>();
+	    Gson gson = new GsonBuilder().create();
+	    ResultVO resultVo = scheduleService.scheduleInsert(scheduleVo);
+	    return ResponseEntity.ok(new resultResponse(gson.toJson(resultVo)));
 	}
 
 	/**
@@ -80,7 +78,8 @@ public class ScheduleRestController {
 	 * 2023.11.14 / 정윤지 / 최초 적용
 	 */
 	@PostMapping("/cancel")
-	public ResponseEntity<Object> scheduleCancel(@ModelAttribute ScheduleVO scheduleVo, @RequestParam Integer id) {
+	public ResponseEntity<Object> scheduleCancel(@RequestBody ScheduleVO scheduleVo) {
+		Map<String, Object> response = new HashMap<>();
 		Gson gson = new GsonBuilder().create();
 		ResultVO resultVo = scheduleService.scheduleCancel(scheduleVo);
 		return ResponseEntity.ok(new resultResponse(gson.toJson(resultVo)));
