@@ -1,5 +1,6 @@
 package com.witches.user.controller;
 
+import java.time.LocalDate;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
@@ -118,8 +119,13 @@ public class UserController {
 		Gson gson = new GsonBuilder().create();
 		ResultVO resultVo = userService.login(userVo);
 		
-
+		LocalDate currentDate = LocalDate.now();
+		int currentYear = currentDate.getYear();
+		int currentMonth = currentDate.getMonthValue();
+		
 		ModelAndView mav = new ModelAndView("redirect:/CalendarMain");
+		mav.addObject("year", currentYear);
+		mav.addObject("month", currentMonth);
 		mav.addObject("createNm", id);
 		if(id !=null) {
 			mav.addObject("message", "success");			
