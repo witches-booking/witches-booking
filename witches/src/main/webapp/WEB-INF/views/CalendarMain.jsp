@@ -139,14 +139,28 @@ window.onload = function() {
     }
 }
 </script>
+<style type="text/css">
+#logout-btn {
+    width: 183px;
+    height: 35px;
+},
+#logout-btn img {
+    width: 183px;
+    height: 35px;
+}
+</style>
 </head>
 <body>
+
+<div>
+
+</div>
 
 	<button type="button" id="kakao-login-btn" onclick="kakao()">
 		<img src="/img/kakao_login_medium_narrow.png" alt="Kakao Login">
 	</button>
 	<button  id="logout-btn" onclick=logout() >
-		로그아웃
+		<img alt="로그아웃" src="/img/kakao_logout2.png" >
 	</button>
 
 
