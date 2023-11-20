@@ -106,10 +106,18 @@
 
 									<td><c:if test="${not empty daysOfMonth[index]}">
 											<div>
-												<a onclick="scheduleWrite();"
-													href="/scheduleWrite?year=${year}&month=${month}&day=${dayOfMonth[index]}">
-													<span>${daysOfMonth[index]}</span>
-												</a>
+												<c:choose>
+													<c:when
+														test="${year * 10000 + month * 100 + daysOfMonth[index] >= today}">
+														<a onclick="scheduleWrite();"
+															href="/scheduleWrite?year=${item.year}&month=${item.month}&day=${daysOfMonth[index]}">
+															<span>${daysOfMonth[index]}</span>
+														</a>
+													</c:when>
+													<c:otherwise>
+														<span>${daysOfMonth[index]}</span>
+													</c:otherwise>
+												</c:choose>
 											</div>
 											<ul>
 												<c:forEach var="item" items="${data}">
