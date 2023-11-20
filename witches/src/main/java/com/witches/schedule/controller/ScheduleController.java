@@ -93,7 +93,17 @@ public class ScheduleController {
 	    int todayNumber = today.getYear() * 10000 + today.getMonthValue() * 100 + today.getDayOfMonth();
 	    model.addAttribute("today", todayNumber);
 		System.out.println("몇월? "+month);
-	    List<ScheduleVO> data = calendarService.showScheduleList(month);
+		
+		List<ScheduleVO> data ;
+		
+		if(month==0) {
+			data = calendarService.showScheduleList(currentMonth);
+			
+		}else {
+			data = calendarService.showScheduleList(month);
+			
+		}
+		
 		if (data != null && !data.isEmpty()) {
 			System.out.println("조회해온 데이터리스트" + data);
 			model.addAttribute("data", data);
@@ -145,7 +155,17 @@ public class ScheduleController {
 	    int todayNumber = today.getYear() * 10000 + today.getMonthValue() * 100 + today.getDayOfMonth();
 	    model.addAttribute("today", todayNumber);
 		System.out.println("몇월? "+month);
-	    List<ScheduleVO> data = calendarService.showScheduleList(month);
+		
+		List<ScheduleVO> data ;
+		
+		if(month==0) {
+			data = calendarService.showScheduleList(currentMonth);
+			
+		}else {
+			data = calendarService.showScheduleList(month);
+			
+		}
+		
 		if (data != null && !data.isEmpty()) {
 			System.out.println("조회해온 데이터리스트" + data);
 			model.addAttribute("data", data);
