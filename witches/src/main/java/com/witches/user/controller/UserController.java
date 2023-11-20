@@ -127,10 +127,12 @@ public class UserController {
 		mav.addObject("year", currentYear);
 		mav.addObject("month", currentMonth);
 		mav.addObject("createNm", id);
+		String success = "success";
+		String fail = "fail";
 		if(id !=null) {
-			mav.addObject("message", "success");			
+			mav.addObject("message", success);			
 		}else {
-			mav.addObject("message", "fail");
+			mav.addObject("message", fail);
 		}
 		
 		

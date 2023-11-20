@@ -28,15 +28,29 @@
 	// ModelAndView로 보낸 값 JSP 페이지에서 createNm 값을 가져옴
 	var createNm = '${createNm}';
 	var message = '${message}';
-	console.log("메세지", message);
+	console.log("메세지 : ", message);
+	
+    function getCookie(name) {
+        var value = "; " + document.cookie;
+        var parts = value.split("; " + name + "=");
+        if (parts.length == 2) return parts.pop().split(";").shift();
+    }
+
+    const accessToken = getCookie('accessToken');
+	
 	if (message === "fail") {
 		alert("로그인에 실패하셨습니다.");
 
 		// 값이 존재하는 경우에만 sessionStorage에 저장
 	} else {
 		if (createNm) {
-			localStorage.setItem('createNm', createNm);
-			console.log("로컬스토리지 값확인용" + localStorage.getItem('createNm'));
+			if(localStorage.getItem('createNm')){
+				
+			}else{
+				localStorage.setItem('createNm', createNm);
+				console.log("로컬스토리지 값확인용" + localStorage.getItem('createNm'));
+				
+			}
 
 		}
 	}
@@ -60,8 +74,45 @@
 <script type="text/javascript">
 
 	function logout() {
-		localStorage.removeItem('createNm');
-		
+		// 1. 로컬스토리지에 createNm 제거
+		//localStorage.removeItem('createNm');
+		localStorage.clear();
+
+		// 2. 쿠키 속 토큰 제거
+		// 2-1 토큰 조회
+
+	    function getCookie(name) {
+	        var value = "; " + document.cookie;
+	        var parts = value.split("; " + name + "=");
+	        if (parts.length == 2) return parts.pop().split(";").shift();
+	    }
+
+	    const accessToken = getCookie('accessToken');
+	    
+	    // 2-2 카카오에 토큰 만료 요청
+	    $.ajax({
+	        url: 'https://kapi.kakao.com/v1/user/logout',
+	        type: 'POST',
+	        beforeSend: function(xhr) {
+	            xhr.setRequestHeader('Authorization', 'Bearer ' +accessToken);
+	        },
+	        success: function(data) {
+	            console.log("로그아웃 성공 :",data);
+	        },
+	        error: function(error) {
+	            console.log(error);
+	        }
+	    });
+	    
+	    var cookies = document.cookie.split(";");
+
+	    for (var i = 0; i < cookies.length; i++) {
+	        var cookie = cookies[i];
+	        var eqPos = cookie.indexOf("=");
+	        var name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+	        document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/;";
+	    }
+		//window.location.href = 'http://localhost:8449/CalendarMain ;
 		
 		
 	}
@@ -91,7 +142,7 @@ window.onload = function() {
 	<button type="button" id="kakao-login-btn" onclick="kakao()">
 		<img src="/img/kakao_login_medium_narrow.png" alt="Kakao Login">
 	</button>
-	<button  id="logout-btn">
+	<button  id="logout-btn" onclick=logout() >
 		로그아웃
 	</button>
 
