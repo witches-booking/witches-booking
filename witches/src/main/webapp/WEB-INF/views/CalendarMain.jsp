@@ -134,6 +134,7 @@ window.onload = function() {
 }
 </script>
 
+
 <style type="text/css">
 #logout-btn {
     width: 183px;
@@ -145,7 +146,9 @@ window.onload = function() {
 }
 
 .scheduleScroll{
-	 margin-top:-100px;
+	 margin-top:-110px;
+	 margin-bottom:10px;
+	 width:100px;
 	 height: 100px;
 	 overflow-y: scroll;
 	 -ms-overflow-style: none;
@@ -248,17 +251,17 @@ String loginId = (String)session.getAttribute("createNm");
 														test="${year * 10000 + month * 100 + daysOfMonth[index] >= today}">
 														<div id="calendarData" class="calendarData" data-day="${daysOfMonth[index]}" onclick="scheduleWrite(event)">
 														    <c:if test="${j eq 0 }">
-															    <button style="color:red;">
-															        <span>${daysOfMonth[index]}</span>
-															    </button>
+															    <button style="color:red; font-weight:bolder;" onclick="prevSchedule()">
+																	<span>${daysOfMonth[index]}</span>
+																</button>
 														    </c:if>
 														    <c:if test="${j eq 6 }">
-														    	<button style="color:blue;">
+														    	<button style="color:blue; font-weight:bolder;" onclick="prevSchedule()">
 															        <span>${daysOfMonth[index]}</span>
 															    </button>
 														    </c:if>
 														    <c:if test="${j ne 0 && j ne 6 }">
-														    	<button style="color:black;">
+														    	<button style="color:black; font-weight:bolder;" onclick="prevSchedule()">
 															        <span>${daysOfMonth[index]}</span>
 															    </button>
 														    </c:if>
@@ -304,7 +307,12 @@ String loginId = (String)session.getAttribute("createNm");
 			</article>
 		</div>
 	</div>
-
+	
+	<script type="text/javascript">
+		function prevSchedule() {
+			alert("지난 날짜는 예약이 불가능합니다.");
+		}
+	</script>
 
 	<script type="text/javascript">
       function moveMonth(year, month) {
