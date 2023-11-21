@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.witches.schedule.vo.ScheduleVO;
+import com.witches.user.vo.UserVO;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -30,9 +31,9 @@ public class CalendarDTO implements Serializable{
 	private int month;
 	private int day;
 	private String createNm;
+	private String loginId;
 	
-	
-    public static CalendarDTO toCalendarDTO(ScheduleVO schedulevo) {
+    public static CalendarDTO toCalendarDTO(ScheduleVO schedulevo, UserVO uservo) {
     	CalendarDTO calendarDTO =new CalendarDTO();
     	
     	calendarDTO.setStart(schedulevo.getStart());
@@ -44,7 +45,7 @@ public class CalendarDTO implements Serializable{
     	calendarDTO.setMonth(schedulevo.getMonth());
     	calendarDTO.setDay(schedulevo.getDay());
     	calendarDTO.setCreateNm(schedulevo.getCreateNm());
-    	
+    	calendarDTO.setLoginId(uservo.getLoginId());
     	
         return calendarDTO;
     }

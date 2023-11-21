@@ -94,13 +94,19 @@ public class ScheduleController {
 	    model.addAttribute("today", todayNumber);
 		System.out.println("몇월? "+month);
 		
+		ScheduleVO schedulevo = new ScheduleVO();
+		
 		List<ScheduleVO> data ;
 		
 		if(month==0) {
-			data = calendarService.showScheduleList(currentMonth);
+			schedulevo.setMonth(currentMonth);
+			schedulevo.setYear(currentYear);
+			data = calendarService.showScheduleList(schedulevo);
 			
 		}else {
-			data = calendarService.showScheduleList(month);
+			schedulevo.setMonth(month);
+			schedulevo.setYear(year);
+			data = calendarService.showScheduleList(schedulevo);
 			
 		}
 		
@@ -156,13 +162,19 @@ public class ScheduleController {
 	    model.addAttribute("today", todayNumber);
 		System.out.println("몇월? "+month);
 		
+		ScheduleVO schedulevo = new ScheduleVO();
+		
 		List<ScheduleVO> data ;
 		
 		if(month==0) {
-			data = calendarService.showScheduleList(currentMonth);
+			schedulevo.setMonth(currentMonth);
+			schedulevo.setYear(currentYear);
+			data = calendarService.showScheduleList(schedulevo);
 			
 		}else {
-			data = calendarService.showScheduleList(month);
+			schedulevo.setMonth(month);
+			schedulevo.setYear(year);
+			data = calendarService.showScheduleList(schedulevo);
 			
 		}
 		
