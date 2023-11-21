@@ -60,6 +60,7 @@ public class AdminDTO {
     }
     
     // only 스케쥴
+    // vo -> dto (DTO화 시키기)
     public static AdminDTO toAdminDTOS(ScheduleVO schedulevo) {
     	AdminDTO adminDTO =new AdminDTO();
     	
@@ -83,7 +84,33 @@ public class AdminDTO {
         return adminDTO;
     }
 	
+    // dto -> vo (VO화 시키기)
+    public static ScheduleVO toScheduleVO(AdminDTO adminDTO) {
+    	ScheduleVO schedulevo =new ScheduleVO();
+    	
+    	// 스케쥴
+    	schedulevo.setId(adminDTO.getId());
+    	schedulevo.setStart(adminDTO.getStart());
+    	schedulevo.setEnd(adminDTO.getEnd());
+    	schedulevo.setPeopleNum(adminDTO.getPeopleNum());
+    	schedulevo.setName(adminDTO.getName());
+    	schedulevo.setDepartment(adminDTO.getDepartment());
+    	schedulevo.setContents(adminDTO.getContents());
+    	schedulevo.setIsDelete(adminDTO.getIsDelete());
+    	schedulevo.setCancelNm(adminDTO.getCancelNm());
+    	schedulevo.setCancelReason(adminDTO.getCancelReason());
+    	schedulevo.setYear(adminDTO.getYear());
+    	schedulevo.setMonth(adminDTO.getMonth());
+    	schedulevo.setDay(adminDTO.getDay());
+    	schedulevo.setCreateNm(adminDTO.getCreateNm());
+    	
+    	
+        return schedulevo;
+    }
+    
+    
     // only 유저
+    // vo -> dto
     public static AdminDTO toAdminDTOU(UserVO uservo) {
     	AdminDTO adminDTO =new AdminDTO();
  	
@@ -93,4 +120,18 @@ public class AdminDTO {
     	
         return adminDTO;
     }
+    
+    // dto -> vo
+    public static UserVO toUserVO(AdminDTO adminDTO) {
+    	UserVO uservo = new UserVO();
+ 	
+    	//  유저
+    	uservo.setLoginId(adminDTO.getLoginId());
+    	uservo.setSns(adminDTO.getSns());
+    	
+        return uservo;
+    }
+    
+    
+    
 }

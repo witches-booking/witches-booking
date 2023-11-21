@@ -19,7 +19,11 @@ public interface AdminMapper {
 	@Select("select * from USER")
 	public List<UserVO> showUserTable();
 
-//	@Delete()
-//	public List<ScheduleVO> DeleteScheduleData();
-//	
+	// table 데이터 삭제
+	@Delete("<script> DELETE FROM schedule WHERE id IN <foreach item='item' collection='list' open='(' separator=',' close=')'> #{item.id} </foreach> </script>")
+	public int DeleteScheduleData(List<ScheduleVO> schedulevo);
+	
+	@Delete("<script> DELETE FROM USER WHERE id IN <foreach item='item' collection='list' open='(' separator=',' close=')'> #{item.id} </foreach> </script>")
+	public int DeleteUserData(List<UserVO> uservo);
+	
 }
