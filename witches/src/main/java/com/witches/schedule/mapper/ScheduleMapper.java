@@ -25,7 +25,6 @@ public interface ScheduleMapper {
 	@Insert("INSERT INTO schedule (start, end, people_num, name, department, is_delete, contents, year, month, day, create_nm) VALUES (#{start}, #{end}, #{peopleNum}, #{name}, #{department}, #{isDelete}, #{contents}, #{year}, #{month}, #{day}, #{createNm})")
 	public void insertSchedule(ScheduleVO schedulevo);
 
-
 	@Select("SELECT COUNT(*) from USER where id= #{createNm}")
 	public int checkCreateNm(String createNm);
 	
