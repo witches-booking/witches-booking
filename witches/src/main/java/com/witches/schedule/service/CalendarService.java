@@ -5,8 +5,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.witches.schedule.dao.ScheduleDAO;
 import com.witches.schedule.dto.CalendarDTO;
 import com.witches.schedule.mapper.ScheduleMapper;
+import com.witches.schedule.vo.ResultVO;
 import com.witches.schedule.vo.ScheduleVO;
 
 import lombok.RequiredArgsConstructor;
@@ -14,6 +16,9 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 public class CalendarService {
+	
+	@Autowired
+	private ScheduleDAO scheduleDao;
 	
 	@Autowired
 	private ScheduleMapper scheduleMapper;
@@ -51,9 +56,11 @@ public class CalendarService {
 		schedulevo.setDay(calendarDTO.getDay());
 		schedulevo.setCreateNm(calendarDTO.getCreateNm());
 		
+		ScheduleVO scheduleVo = new ScheduleVO();
 		
+		if (scheduleDao.scheduleCheck(scheduleVo) == 0) {
 		scheduleMapper.insertSchedule(schedulevo);
-		
+		}
 	}
 
 	

@@ -246,25 +246,27 @@ String loginId = (String)session.getAttribute("createNm");
 												<c:choose>
 													<c:when
 														test="${year * 10000 + month * 100 + daysOfMonth[index] >= today}">
-														<div id="calendarData" class="calendarData" data-day="${daysOfMonth[index]}" onclick="scheduleWrite(event)">
+														<div id="calendarData" class="calendarData" data-day="${daysOfMonth[index]}" onclick="scheduleWrite(event)"
+														style="margin-top:-20px; margin-left:-10px;">
 														    <c:if test="${j eq 0 }">
-															    <button style="color:red; font-weight:bolder;" onclick="prevSchedule()">
+															    <button style="color:red; font-weight:bolder;">
 																	<span>${daysOfMonth[index]}</span>
 																</button>
 														    </c:if>
 														    <c:if test="${j eq 6 }">
-														    	<button style="color:blue; font-weight:bolder;" onclick="prevSchedule()">
+														    	<button style="color:blue; font-weight:bolder;">
 															        <span>${daysOfMonth[index]}</span>
 															    </button>
 														    </c:if>
 														    <c:if test="${j ne 0 && j ne 6 }">
-														    	<button style="color:black; font-weight:bolder;" onclick="prevSchedule()">
+														    	<button style="color:black; font-weight:bolder;">
 															        <span>${daysOfMonth[index]}</span>
 															    </button>
 														    </c:if>
 														</div>
 													</c:when>
 													<c:otherwise>
+													<div style="margin-top:-20px; margin-left:-10px;"  onclick="prevSchedule()">
 														<c:if test="${j eq 0 }">
 															    <button style="color:red;">
 															        <span>${daysOfMonth[index]}</span>
@@ -280,6 +282,7 @@ String loginId = (String)session.getAttribute("createNm");
 															        <span>${daysOfMonth[index]}</span>
 															    </button>
 														    </c:if>
+														    </div>
 													</c:otherwise>
 												</c:choose>
 											</div>

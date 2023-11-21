@@ -190,6 +190,8 @@
                                     alert("이미 예약된 시간입니다.");
                                 } else if (message === "성공") {
                                     alert("예약 등록에 성공했습니다."); 
+                                } else if (message === "지난 날짜"){
+                                	alert("지난 날짜는 예약이 불가능합니다.");
                                 }
                                 window.location.href = "/";
                             },

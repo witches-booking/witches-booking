@@ -105,7 +105,6 @@ public class ScheduleController {
 		}
 		
 		if (data != null && !data.isEmpty()) {
-			System.out.println("조회해온 데이터리스트" + data);
 			model.addAttribute("data", data);
 		} else {
 			System.out.println("data x");
@@ -167,7 +166,6 @@ public class ScheduleController {
 		}
 		
 		if (data != null && !data.isEmpty()) {
-			System.out.println("조회해온 데이터리스트" + data);
 			model.addAttribute("data", data);
 		} else {
 			System.out.println("data x");

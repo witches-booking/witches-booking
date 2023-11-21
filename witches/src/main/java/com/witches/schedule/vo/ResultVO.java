@@ -25,6 +25,8 @@ public class ResultVO {
                 return "실패";
             case "02":
                 return "필수값 오류";
+            case "03":
+                return "지난 날짜";
             case "99":
                 return "관리자 확인 필요";
             default:
