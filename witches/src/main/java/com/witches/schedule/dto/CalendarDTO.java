@@ -39,7 +39,8 @@ public class CalendarDTO implements Serializable{
     	calendarDTO.setStart(schedulevo.getStart());
     	calendarDTO.setEnd(schedulevo.getEnd());
     	calendarDTO.setPeopleNum(schedulevo.getPeopleNum());
-    	calendarDTO.setName(schedulevo.getDepartment());
+    	calendarDTO.setName(schedulevo.getName());
+    	calendarDTO.setDepartment(schedulevo.getDepartment());
     	calendarDTO.setContents(schedulevo.getContents());
     	calendarDTO.setYear(schedulevo.getYear());
     	calendarDTO.setMonth(schedulevo.getMonth());

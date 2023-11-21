@@ -35,7 +35,7 @@ public class ScheduleController {
 	private ScheduleService scheduleService;
 
 	@Autowired
-	CalendarService calendarService;
+	private CalendarService calendarService;
 
 	@Autowired
 	private UserDTO userDto;

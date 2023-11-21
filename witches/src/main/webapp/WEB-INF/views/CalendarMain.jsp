@@ -63,8 +63,8 @@
 
 		const restApiKey = "${kakaoRestApiKey}";
 		const redirectUri = "${kakaoRedirectUrl}";
-		console.log('apikey env용', restApiKey2)
-		console.log('apikey env용', redirectUri2)
+		console.log('apikey env용', restApiKey)
+		console.log('apikey env용', redirectUri)
 		//인가 코드 요청
 		const codeUrl = 'https://kauth.kakao.com/oauth/authorize?response_type=code&client_id='
 				+ restApiKey + '&redirect_uri=' + redirectUri;

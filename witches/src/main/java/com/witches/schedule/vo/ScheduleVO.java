@@ -9,8 +9,6 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-@Getter
-@Setter
 public class ScheduleVO {
 	
     private Integer id;
