@@ -192,6 +192,10 @@
                                     alert("예약 등록에 성공했습니다."); 
                                 } else if (message === "지난 날짜"){
                                 	alert("지난 날짜는 예약이 불가능합니다.");
+                                } else if (message === "필수값 오류"){
+                                	alert("예약 등록에 실패했습니다.");
+                                } else if (message === "관리자 확인 필요"){
+                                	alert("예약 등록에 실패했습니다.");
                                 }
                                 window.location.href = "/";
                             },

@@ -29,15 +29,19 @@ public class ScheduleServiceImp implements ScheduleService {
 		int hour = time.getHour();
 
 		try {
+			int people = Integer.parseInt(scheduleVo.getPeopleNum());
+			int start = Integer.parseInt(scheduleVo.getStart().substring(0, 2));
+			int end = Integer.parseInt(scheduleVo.getEnd().substring(0, 2));
+			
 			if (scheduleVo.getName() != null && scheduleVo.getYear() != 0 && scheduleVo.getStart() != null
-					&& scheduleVo.getEnd() != null && scheduleVo.getPeopleNum() != null
+					&& scheduleVo.getEnd() != null && people > 0 && start <= end
 					&& scheduleVo.getCreateNm() != null) {
 
-				int start = Integer.parseInt(scheduleVo.getStart().substring(0, 2));
-
 				if ((nowYear <= scheduleVo.getYear() && nowMonth <= scheduleVo.getMonth()
-						&& nowDay <= scheduleVo.getDay() && hour <= start)
-						|| (nowYear <= scheduleVo.getYear() && nowMonth < scheduleVo.getMonth() && hour <= start)) {
+						&& nowDay <= scheduleVo.getDay())
+						|| (nowYear <= scheduleVo.getYear() && nowMonth < scheduleVo.getMonth())
+						|| (nowYear == scheduleVo.getYear() && nowMonth == scheduleVo.getMonth()
+						&& nowDay == scheduleVo.getDay() && hour <= start)) {
 					
 					if (scheduleDao.scheduleCheck(scheduleVo) == 0) {
 						scheduleDao.scheduleInsert(scheduleVo);

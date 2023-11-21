@@ -5,17 +5,20 @@
 
 	<!-- 중복 체크 -->
 	<select id="scheduleCheck" parameterType="com.witches.schedule.vo.ScheduleVO">
-		SELECT COUNT(*)
-		FROM schedule
-		WHERE EXISTS (
-    		SELECT 1
-    		FROM schedule
-    		WHERE year = #{year}
-        	AND month = #{month}
-        	AND day = #{day}
-        	AND (start BETWEEN #{start} AND #{end} OR end BETWEEN #{start} AND #{end})
-        	AND is_delete = 'N'
-		)
+	 <![CDATA[
+			SELECT COUNT(*)
+			FROM schedule
+			WHERE EXISTS (
+	    		SELECT 1
+	    		FROM schedule
+	    		WHERE year = #{year}
+	        	AND month = #{month}
+	        	AND day = #{day}
+	        	AND end <= #{start}
+	        	AND start >= #{end}
+	        	AND is_delete = 'N'
+			)
+		]]>
 	</select>
 
 	<!-- 예약 등록 -->
