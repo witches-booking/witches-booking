@@ -98,12 +98,13 @@ public class CalendarRestController {
 		String cancleName = calendarDTO.getCancleName();
 		String cancleReason = calendarDTO.getCancleReason();
 		String loginId = calendarDTO.getLoginId();
+		System.out.println(loginId);
 		String message =null;
 		if(id == 0 || createNm == null || createNm.isEmpty() || cancleName == null || cancleName.isEmpty()) {
 			message = "필수 값이 누락되었습니다.";
 
 		}else {
-			if(loginId == createNm) {
+			if(loginId.equals(createNm)) {
 				message = calendarService.cancleSchedule(calendarDTO);							
 			}else {
 				message = "예약 당사자의 로그인정보와 맞지 않아 취소 할 수 없습니다.";
