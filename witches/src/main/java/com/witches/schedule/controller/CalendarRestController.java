@@ -32,15 +32,16 @@ public class CalendarRestController {
 
 	// 월별 조회 (jsp에서 해당 달력이 몇월인지 보내면 db에서 확인후 일정 보냄)
 	@RequestMapping("/FindScheduleList")
-	public List<ScheduleVO> FindScheduleList (@RequestParam int month) {
+	public List<ScheduleVO> FindScheduleList (@RequestParam int year, @RequestParam int month  ) {
 		System.out.println("rest컨트롤러 실행");
 		System.out.println("month 확인"+month);
 		ScheduleVO schedule =new ScheduleVO();
 		
+		schedule.setYear(year);
 		schedule.setMonth(month);
 		
 		System.out.println("엔티티 속 month확인"+schedule.getMonth());
-		List<ScheduleVO> data  =calendarService.showScheduleList(schedule.getMonth());
+		List<ScheduleVO> data  =calendarService.showScheduleList(schedule);
 
 		
 		return data;
@@ -96,11 +97,17 @@ public class CalendarRestController {
 		String createNm = calendarDTO.getCreateNm();
 		String cancleName = calendarDTO.getCancleName();
 		String cancleReason = calendarDTO.getCancleReason();
+		String loginId = calendarDTO.getLoginId();
 		String message =null;
 		if(id == 0 || createNm == null || createNm.isEmpty() || cancleName == null || cancleName.isEmpty()) {
 			message = "필수 값이 누락되었습니다.";
+
 		}else {
-			message = calendarService.cancleSchedule(calendarDTO);			
+			if(loginId == createNm) {
+				message = calendarService.cancleSchedule(calendarDTO);							
+			}else {
+				message = "예약 당사자의 로그인정보와 맞지 않아 취소 할 수 없습니다.";
+			}
 		}
 		
 		return message;

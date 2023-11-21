@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpSessionContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -42,7 +43,13 @@ public class UserController {
 
 	@Autowired
 	private UserService userService;
+	
+	@Value("${kakao.rest-api-key}")
+	private String kakaoRestApiKey;
 
+	@Value("${kakao.redirect-url}")
+	private String kakaoRedirectUrl;
+	
 	/**
 	 * 로그인
 	 * 
@@ -71,8 +78,9 @@ public class UserController {
 	@RequestMapping("/api/kakaoLogin")
 	public ModelAndView kakaoLogin(@RequestParam String code, HttpSession session, Model model, HttpServletResponse response) {
 		System.out.println("rest카카오로그인 컨트롤러 실행");
-		String restApiKey = "02b86e71e0895cda12a9361c1cdb773a";
-		String redirectUri = "http://localhost:8449/api/kakaoLogin";
+		String restApiKey =  kakaoRestApiKey;	
+		String redirectUri = kakaoRedirectUrl;
+
 
 		// WebClient 인스턴스 생성
 		WebClient webClient = WebClient.create();
@@ -144,9 +152,8 @@ public class UserController {
     @RequestMapping("/api/kakaoLoginApp")
     public ResponseEntity<Map<String, String>> kakaoLogin(@RequestParam String code, HttpSession session) {
 		System.out.println("rest카카오로그인 컨트롤러 실행");
-		String restApiKey = "02b86e71e0895cda12a9361c1cdb773a";
-		String redirectUri = "http://localhost:8449/api/kakaoLoginApp";
-
+		String restApiKey = kakaoRestApiKey;
+		String redirectUri = kakaoRedirectUrl+"App"; // 배포 할떄
 		// WebClient 인스턴스 생성
 		WebClient webClient = WebClient.create();
 

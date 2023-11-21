@@ -60,17 +60,17 @@
 
 <script type="text/javascript">
 	function kakao() {
-		const restApiKey = "02b86e71e0895cda12a9361c1cdb773a";
-		const redirectUri = "http://localhost:8449/api/kakaoLogin";
 
+		const restApiKey = "${kakaoRestApiKey}";
+		const redirectUri = "${kakaoRedirectUrl}";
+		console.log('apikey env용', restApiKey2)
+		console.log('apikey env용', redirectUri2)
 		//인가 코드 요청
 		const codeUrl = 'https://kauth.kakao.com/oauth/authorize?response_type=code&client_id='
 				+ restApiKey + '&redirect_uri=' + redirectUri;
 		window.location.href = codeUrl;
 
 	};
-	
-
 </script>
 
 <script type="text/javascript">
@@ -130,6 +130,7 @@ window.onload = function() {
     var loginBtn = document.getElementById('kakao-login-btn');
     var logoutBtn = document.getElementById('logout-btn');
 
+
 }
 </script>
 
@@ -179,6 +180,7 @@ window.onload = function() {
 String loginId = (String)session.getAttribute("createNm");
 %>
 
+
 <div>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -203,6 +205,7 @@ String loginId = (String)session.getAttribute("createNm");
         <img alt="로그아웃" src="/img/kakao_logout2.png">
     </button>
 </div>
+
 
 	<h3 id="pageTit">회의실 사용</h3>
 	<div id="content">

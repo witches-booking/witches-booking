@@ -10,6 +10,7 @@ import java.util.Map;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -39,8 +40,12 @@ public class ScheduleController {
 	@Autowired
 	private UserDTO userDto;
 	
-	
+	@Value("${kakao.redirect-url}")
+	private String kakaoRedirectUrl;
 
+	@Value("${kakao.rest-api-key}")
+	private String kakaoRestApiKey;
+	
 	// 날짜 클릭시 작성페이지 이동
 	@RequestMapping("/scheduleWrite")
 	public String scheduleWrite(@ModelAttribute ScheduleVO scheduleVo, 
@@ -88,19 +93,27 @@ public class ScheduleController {
 		model.addAttribute("month", currentMonth);
 		model.addAttribute("currentDate", currentDate);
 		model.addAttribute("daysOfMonth", daysOfMonth); // 달력에 출력할 날짜 리스트 추가
+		model.addAttribute("kakaoRedirectUrl", kakaoRedirectUrl); // 카카오 로그인 용 리다이렉트 url
+		model.addAttribute("kakaoRestApiKey", kakaoRestApiKey); // 카카오 로그인용 key
 
 		LocalDate today = LocalDate.now();
 	    int todayNumber = today.getYear() * 10000 + today.getMonthValue() * 100 + today.getDayOfMonth();
 	    model.addAttribute("today", todayNumber);
 		System.out.println("몇월? "+month);
 		
+		ScheduleVO schedulevo = new ScheduleVO();
+		
 		List<ScheduleVO> data ;
 		
 		if(month==0) {
-			data = calendarService.showScheduleList(currentMonth);
+			schedulevo.setMonth(currentMonth);
+			schedulevo.setYear(currentYear);
+			data = calendarService.showScheduleList(schedulevo);
 			
 		}else {
-			data = calendarService.showScheduleList(month);
+			schedulevo.setMonth(month);
+			schedulevo.setYear(year);
+			data = calendarService.showScheduleList(schedulevo);
 			
 		}
 		
@@ -149,19 +162,27 @@ public class ScheduleController {
 		model.addAttribute("month", currentMonth);
 		model.addAttribute("currentDate", currentDate);
 		model.addAttribute("daysOfMonth", daysOfMonth); // 달력에 출력할 날짜 리스트 추가
+		model.addAttribute("kakaoRedirectUrl", kakaoRedirectUrl);
+		model.addAttribute("kakaoRestApiKey", kakaoRestApiKey);
 
 		LocalDate today = LocalDate.now();
 	    int todayNumber = today.getYear() * 10000 + today.getMonthValue() * 100 + today.getDayOfMonth();
 	    model.addAttribute("today", todayNumber);
 		System.out.println("몇월? "+month);
 		
+		ScheduleVO schedulevo = new ScheduleVO();
+		
 		List<ScheduleVO> data ;
 		
 		if(month==0) {
-			data = calendarService.showScheduleList(currentMonth);
+			schedulevo.setMonth(currentMonth);
+			schedulevo.setYear(currentYear);
+			data = calendarService.showScheduleList(schedulevo);
 			
 		}else {
-			data = calendarService.showScheduleList(month);
+			schedulevo.setMonth(month);
+			schedulevo.setYear(year);
+			data = calendarService.showScheduleList(schedulevo);
 			
 		}
 		

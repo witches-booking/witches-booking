@@ -10,6 +10,7 @@ import com.witches.schedule.dto.CalendarDTO;
 import com.witches.schedule.mapper.ScheduleMapper;
 import com.witches.schedule.vo.ResultVO;
 import com.witches.schedule.vo.ScheduleVO;
+import com.witches.user.vo.UserVO;
 
 import lombok.RequiredArgsConstructor;
 
@@ -22,11 +23,12 @@ public class CalendarService {
 	
 	@Autowired
 	private ScheduleMapper scheduleMapper;
+
 	
-	public List<ScheduleVO> showScheduleList(int month){
+	public List<ScheduleVO> showScheduleList(ScheduleVO schedulevo){
 		
 		
-		return scheduleMapper.showScheduleList(month);
+		return scheduleMapper.showScheduleList(schedulevo);
 		
 		
 	}
@@ -44,6 +46,8 @@ public class CalendarService {
 	public void insertSchedule(CalendarDTO calendarDTO) {
 	
 		ScheduleVO schedulevo = new ScheduleVO();
+		UserVO uservo = new UserVO();
+		
 		schedulevo.setStart(calendarDTO.getStart());
 		schedulevo.setEnd(calendarDTO.getEnd());
 		schedulevo.setPeopleNum(calendarDTO.getPeopleNum());
@@ -55,6 +59,7 @@ public class CalendarService {
 		schedulevo.setMonth(calendarDTO.getMonth());
 		schedulevo.setDay(calendarDTO.getDay());
 		schedulevo.setCreateNm(calendarDTO.getCreateNm());
+
 		
 		ScheduleVO scheduleVo = new ScheduleVO();
 		

@@ -16,15 +16,14 @@ public interface ScheduleMapper {
 	@Select("select * from schedule")
 	public List<ScheduleVO> showSchedule();
 
-	@Select("SELECT id, year, month, day, DATE_FORMAT(start, '%H:%i') as start, DATE_FORMAT(end, '%H:%i') as end, people_num, name, department, contents, is_delete, cancle_reason, cancle_name, create_nm FROM schedule WHERE month=#{month} AND is_delete='N' ORDER BY start ASC")
-	public List<ScheduleVO> showScheduleList(int month);	
+	@Select("SELECT id, year, month, day, DATE_FORMAT(start, '%H:%i') as start, DATE_FORMAT(end, '%H:%i') as end, people_num, name, department, contents, is_delete, cancle_reason, cancle_name, create_nm FROM schedule WHERE year=#{year} AND month=#{month} AND is_delete='N' ORDER BY start ASC")
+	public List<ScheduleVO> showScheduleList(ScheduleVO schedulevo);	
 	
 	@Select("SELECT id, year, month, day, DATE_FORMAT(start, '%H:%i') as start, DATE_FORMAT(end, '%H:%i') as end, people_num, name, department, contents, is_delete, cancle_reason, cancle_name, create_nm FROM schedule WHERE is_delete='N'")
 	public List<ScheduleVO> showSchduleAll();
 
 	@Insert("INSERT INTO schedule (start, end, people_num, name, department, is_delete, contents, year, month, day, create_nm) VALUES (#{start}, #{end}, #{peopleNum}, #{name}, #{department}, #{isDelete}, #{contents}, #{year}, #{month}, #{day}, #{createNm})")
 	public void insertSchedule(ScheduleVO schedulevo);
-
 
 	@Select("SELECT COUNT(*) from USER where id= #{createNm}")
 	public int checkCreateNm(String createNm);
