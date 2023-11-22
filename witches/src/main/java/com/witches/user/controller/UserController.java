@@ -115,7 +115,11 @@ public class UserController {
 		String id = userJson.get("id").getAsString();
 		System.out.println("id 값 확인 : "+ id);
 		session.setAttribute("createNm", id);
-
+		Cookie cookie2 = new Cookie("loginId", id);
+	    cookie2.setMaxAge(60 * 60 * 24); // 쿠키의 유효 기간 1일로 설정
+	    cookie2.setPath("/"); // 쿠키의 경로 설정
+		response.addCookie(cookie2);
+		
 		//DB에서 사용자 데이터 확인 및 저장
 		UserVO userVo =new UserVO();
 		

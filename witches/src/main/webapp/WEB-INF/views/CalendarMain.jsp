@@ -48,10 +48,11 @@
 	if (message === "fail") {
 		alert("로그인에 실패하셨습니다.");
 
-		// 값이 존재하는 경우에만 sessionStorage에 저장
+		// 값이 존재하는 경우에만 Storage에 저장
 	} else {
 		if (accessToken) {
-				localStorage.setItem('createNm', createNm);
+				const loginId = getCookie('loginId');
+				localStorage.setItem('createNm', loginId);
 				console.log("로컬스토리지 값확인용" + localStorage.getItem('createNm'));
 
 		}
