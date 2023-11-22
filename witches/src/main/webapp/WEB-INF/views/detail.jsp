@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,6 +19,13 @@
 <%
 String loginId = (String)session.getAttribute("createNm");
 %>
+<c:set var="today" value="<%=new java.util.Date()%>" />
+<!-- 현재날짜 -->
+<c:set var="date"><fmt:formatDate value="${today}" pattern="yyyy-MM-dd hh:mm:ss" /></c:set> 
+<!-- 현재년도 -->
+<c:set var="year"><fmt:formatDate value="${today}" pattern="yyyy" /></c:set> 
+<!-- 현재월 -->
+<c:set var="month"><fmt:formatDate value="${today}" pattern="MM" /></c:set> 
 			<h3 id="pageTit">회의실 사용</h3>
             <div id="content">
                 <div class="contentWrap">                  
@@ -138,7 +146,7 @@ String loginId = (String)session.getAttribute("createNm");
                     }
 						
 						function fnList() {
-							history.go(-1);
+							window.location.href = "/?year=" + "${year}" + "&month=" + "${month}";
 						}
                     </script>
                 </div>

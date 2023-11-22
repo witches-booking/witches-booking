@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.witches.schedule.dao.ScheduleDAO;
+import com.witches.schedule.mapper.ScheduleMapper;
 import com.witches.schedule.vo.ResultVO;
 import com.witches.schedule.vo.ScheduleVO;
 
@@ -15,6 +16,9 @@ public class ScheduleServiceImp implements ScheduleService {
 
 	@Autowired
 	private ScheduleDAO scheduleDao;
+	
+	@Autowired
+	private ScheduleMapper scheduleMapper;
 
 	// 예약 등록
 	@Override
@@ -51,7 +55,8 @@ public class ScheduleServiceImp implements ScheduleService {
 					if (scheduleDao.scheduleCheck(scheduleVo) == 0) {
 						scheduleDao.scheduleInsert(scheduleVo);
 						System.out.println(scheduleVo);
-						return new ResultVO("00");
+						int showId = scheduleMapper.showScheduleId();
+						return new ResultVO("00", showId, "성공");
 					} else {
 						return new ResultVO("01");
 					}

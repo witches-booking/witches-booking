@@ -14,7 +14,11 @@
 	    		WHERE year = #{year}
 	        	AND month = #{month}
 	        	AND day = #{day}
-	        	AND ((start <= #{start} AND end > #{start}) OR (start < #{end} AND end >= #{end}))
+	        	AND (
+			            (start <= #{start} AND end > #{start}) OR 
+			            (start < #{end} AND end >= #{end}) OR 
+			            (start > #{start} AND end < #{end})
+			        )
 	        	AND is_delete = 'N'
 			)
 		]]>
