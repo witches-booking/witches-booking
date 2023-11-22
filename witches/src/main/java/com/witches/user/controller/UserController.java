@@ -147,16 +147,22 @@ public class UserController {
 		return mav; 
 	} // kakaoLogin함수 끝
 
+
+	
+	
+	
 	
 	// 카카오 로그인 restapi 앱이든 다른 웹이든 가능하게 설계
     @RequestMapping("/api/kakaoLoginApp")
-    public ResponseEntity<Map<String, String>> kakaoLogin(@RequestParam String code, HttpSession session) {
+    public ResponseEntity<Map<String, String>> kakaoLogin(@RequestParam String code, HttpSession session) {//@RequestParam String code,
 		System.out.println("rest카카오로그인 컨트롤러 실행");
 		String restApiKey = kakaoRestApiKey;
 		String redirectUri = kakaoRedirectUrl+"App"; // 배포 할떄
+		
 		// WebClient 인스턴스 생성
 		WebClient webClient = WebClient.create();
 
+		
 		// 토큰 받아오기
 		String tokenUrl = "https://kauth.kakao.com/oauth/token?grant_type=authorization_code&client_id=" + restApiKey
 				+ "&redirect_uri=" + redirectUri + "&code=" + code;

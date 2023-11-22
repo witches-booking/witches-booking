@@ -14,8 +14,8 @@
 	    		WHERE year = #{year}
 	        	AND month = #{month}
 	        	AND day = #{day}
-	        	AND start <= #{start}
-            	AND end >= #{end}
+	        	AND start <= #{end} 
+            	AND end >= #{start} 
 	        	AND is_delete = 'N'
 			)
 		]]>
