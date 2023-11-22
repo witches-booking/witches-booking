@@ -52,6 +52,9 @@ public class ScheduleController {
 			@RequestParam int year, int month, int day, Model model) {
 		System.out.println("날짜 확인" + year + month + day);
 		model.addAttribute("date", scheduleVo);
+		
+		List<ScheduleVO> dayData  =calendarService.showScheduleListDay(scheduleVo);
+		model.addAttribute("dayData", dayData);
 		return "/schedule";
 	}
 

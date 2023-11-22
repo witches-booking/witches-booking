@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@page import="com.witches.schedule.vo.ScheduleVO"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -70,6 +72,13 @@
                                     <li>다음 이용자를 위해 반드시 자리를 정리해 주세요.</li>
                                 </ul>
                             </div>  
+                            <div class="msgBox">
+                                <ul><p>예약 일정</p>
+									<c:forEach var="item" items="${dayData}">
+										<li  style="font-size:1rem;" class='state01'>${item.start} ~ <em>${item.end}</em></li>
+									</c:forEach>
+								</ul>
+							</div>
                             <table>
                                 <caption>회의실 예약 입력 - 예약일, 예약시간, 사용인원, 내선번호, 신청인 이름의 정보를 입력하는 표</caption>
                                 <tbody>
@@ -197,7 +206,10 @@
                                 } else if (message === "관리자 확인 필요"){
                                 	alert("예약 등록에 실패했습니다.");
                                 }
+<<<<<<< HEAD
+=======
                                 window.location.href = "/?year=" + year + "&month=" + month;
+>>>>>>> branch 'master' of https://github.com/witches-booking/witches-booking.git
                             },
                             error: function () {
                                 alert("예약 등록에 실패했습니다.");

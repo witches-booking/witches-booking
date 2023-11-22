@@ -17,6 +17,86 @@
 <link rel="stylesheet" type="text/css" href="/food/food.css" />
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	
+	<script>
+        function sortTable(n) {
+            // 테이블과 행, 전환 여부 등을 관리하는 변수들 선언
+            var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+            
+            // 테이블 엘리먼트를 가져옴
+            table = document.getElementById("dataTable");
+            // 전환을 계속할지 여부를 나타내는 변수를 true로 초기화
+            switching = true;
+            // 정렬 방향을 오름차순으로 설정
+            dir = "asc";
+
+            // 전환이 없을 때까지 반복
+            while (switching) {
+                // 전환 여부를 false로 초기화
+                switching = false;
+                // 테이블의 행들을 가져옴
+                rows = table.rows;
+
+                // 첫 번째 행을 제외한 모든 행에 대해 반복
+                for (i = 1; i < (rows.length - 1); i++) {
+                    // 전환 여부를 false로 초기화
+                    shouldSwitch = false;
+                    // 현재 행과 다음 행에서 비교할 두 엘리먼트를 가져옴
+                    x = rows[i].getElementsByTagName("td")[n];
+                    y = rows[i + 1].getElementsByTagName("td")[n];
+
+                    // 정렬 방향에 따라 두 엘리먼트를 비교하고 전환 여부 결정
+                    if (dir == "asc") {
+                        if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                            // 전환되어야 한다면 전환 여부를 true로 설정하고 반복문 종료
+                            shouldSwitch = true;
+                            break;
+                        }
+                    } else if (dir == "desc") {
+                        if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+                            // 전환되어야 한다면 전환 여부를 true로 설정하고 반복문 종료
+                            shouldSwitch = true;
+                            break;
+                        }
+                    }
+                }
+
+                // 전환 여부가 true일 경우 전환을 수행하고 전환 횟수를 증가
+                if (shouldSwitch) {
+                    rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                    switching = true;
+                    switchcount++;
+                } else {
+                    // 전환 여부가 없고 정렬 방향이 "asc"일 경우 방향을 "desc"로 설정하고 다시 반복
+                    if (switchcount == 0 && dir == "asc") {
+                        dir = "desc";
+                        switching = true;
+                    }
+                }
+            }
+        }
+
+        function deleteSelectedRows() {
+            // 테이블 엘리먼트를 가져옴
+            var table = document.getElementById("dataTable");
+            // 테이블의 행 개수를 가져옴
+            var rowCount = table.rows.length;
+
+            // 테이블의 마지막 행부터 첫 번째 행까지 역순으로 반복
+            for (var i = rowCount - 1; i > 0; i--) {
+                // 현재 행을 가져옴
+                var row = table.rows[i];
+                // 현재 행의 첫 번째 셀에서 체크박스 엘리먼트를 가져옴
+                var checkBox = row.cells[0].getElementsByTagName("input")[0];
+
+                // 체크박스가 체크되어 있으면 해당 행을 삭제
+                if (checkBox.checked) {
+                    table.deleteRow(i);
+                }
+            }
+        }
+    </script>
+	
 
 </head>
 <body>
@@ -34,13 +114,14 @@
 							onclick="moveMonth(${year}, ${month + 1})">다음</button>
 					</div>
 				</div>
-				<table>
+				<table id="dataTable">
 					<caption>회의실 사용 - 일 별 회의실 사용 관련 예약 현황의 정보를 제공하는 달력</caption>
 					<colgroup>
 						<!-- 열 정보 추가 -->
 					</colgroup>
 					<thead>
 						<tr>
+							<th><input type="checkbox" id="selectAll" onclick="selectAllRows(this)"/></th>
 							<th scope="col"></th>
 							<th scope="col">날짜</th>
 							<th scope="col">시간</th>
@@ -55,19 +136,21 @@
 
 					<tbody>
 						<c:forEach var="item" items="${listMap }">
-							<tr>
-								<td>${item.id }</td>
-								<td>${item.year }-${item.month }-${item.day }</td>
-								<td>${item.start } ~ ${item.end }</td>
-								<td>${item.peopleNum }</td>
-								<td>${item.name }</td>
-								<td>${item.department }</td>
-								<td>${item.contents }</td>
-								<td><button>삭제</button></td>
+							<tr style="font-size:1rem;">
+								<td style="padding:5px; text-align: center;"><input type="checkbox" class="selectRow"/></td>
+								<td style="padding:5px;">${item.id }</td>
+								<td style="padding:5px;">${item.year }-${item.month }-${item.day }</td>
+								<td style="padding:5px;">${item.start } ~ ${item.end }</td>
+								<td style="padding:5px;">${item.peopleNum }</td>
+								<td style="padding:5px;">${item.name }</td>
+								<td style="padding:5px;">${item.department }</td>
+								<td style="padding:5px;">${item.contents }</td>
+								<td style="padding:5px; text-align: center;"><button onclick=adminDel()>삭제</button></td>
 							</tr>
 						</c:forEach>
 					</tbody>
 				</table>
+				<button onclick="deleteSelectedRows()">선택된 행 삭제</button>
 			</article>
 		</div>
 	</div>
@@ -83,6 +166,27 @@
     	  }
          location.href = '/CalendarMain?year=' + year + '&month='+ month;
       }
+   </script>
+   
+   <script type="text/javascript">
+   function adminDel() {
+	    var id = "${dayData.getId()}";
+	    var data = [{"id": id}]; // 데이터를 배열로 감싸서 보냄
+	    $.ajax({
+	        url: "/admin/DeleteTableData?tableNum=1",
+	        data: JSON.stringify(data),
+	        type: "DELETE",
+	        contentType: "application/json",
+	        dataType: "json",
+	        success: function(result) {
+	            alert("삭제 성공");
+	            window.location.href = "/admin/main";
+	        },
+	        error: function() {
+	            alert("삭제 실패");
+	        }
+	    });
+	}
    </script>
 
 </body>
