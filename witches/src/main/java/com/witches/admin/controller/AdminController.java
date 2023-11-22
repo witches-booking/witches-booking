@@ -1,5 +1,6 @@
 package com.witches.admin.controller;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,7 @@ import com.witches.admin.dto.AdminDTO;
 import com.witches.admin.service.AdminService;
 import com.witches.admin.service.AdministratorService;
 import com.witches.admin.vo.AdminVO;
+import com.witches.schedule.service.CalendarService;
 import com.witches.schedule.service.ScheduleService;
 import com.witches.schedule.vo.ScheduleVO;
 import com.witches.user.vo.UserVO;
@@ -30,9 +32,36 @@ public class AdminController {
 	@Autowired
 	private AdministratorService adminService2;
 	
+	@Autowired
+	private CalendarService calendarService;
+	
 	@RequestMapping("/main")
-	public String adminSelect(@ModelAttribute AdminVO adminVo, Model model) {
-		List<AdminVO> listMap = adminService2.adminSelect(adminVo);
+	public String adminSelect(@ModelAttribute AdminVO adminVo, Model model,
+			@RequestParam(name = "year", defaultValue = "0") int year, @RequestParam(name = "month", defaultValue = "0") int month) {
+		ScheduleVO scheduleVo = new ScheduleVO();
+		
+		LocalDate currentDate;
+
+		if (year == 0 || month == 0) {
+			currentDate = LocalDate.now();
+		} else {
+			currentDate = LocalDate.of(year, month, 1);
+		}
+
+		int currentYear = currentDate.getYear();
+		int currentMonth = currentDate.getMonthValue();
+		
+		scheduleVo.setYear(currentYear);
+		scheduleVo.setMonth(currentMonth);
+		
+		model.addAttribute("year", currentYear);
+		model.addAttribute("month", currentMonth);
+		model.addAttribute("currentDate", currentDate);
+		
+		
+		System.out.println("엔티티 속 month확인"+scheduleVo.getMonth());
+		List<ScheduleVO> listMap  =calendarService.showScheduleList(scheduleVo);
+
 		model.addAttribute("listMap", listMap);
 		return "/admin";
 	}
