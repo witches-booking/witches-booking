@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -28,6 +29,7 @@ public class AdminController {
 	// 관리자 페이지 테이블 데이터 조회 
 	
 	@RequestMapping("/showTable")
+	@ResponseBody
 	public List<AdminDTO> showTable(@RequestParam int tableNum){ // 테이블의 번호를 보내면 그에 맞는 테이블의 데이터를 반환함 
 		
 
@@ -43,7 +45,8 @@ public class AdminController {
 		return data;
 	}
 	
-	@RequestMapping("/DeleteTableData")
+	// db 데이터 삭제 메소드 - 복수 삭제 가능 ( 필수 
+	@RequestMapping(value="/DeleteTableData", method = RequestMethod.DELETE)
 	@ResponseBody
 	public String DeleteTableData (@RequestBody List<AdminDTO> data, @RequestParam  int tableNum) {
 		System.out.println("delete 컨트롤러 도착");

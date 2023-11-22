@@ -29,6 +29,21 @@ public class CalendarRestController {
 	@Autowired
 	private CalendarService calendarService;
 	
+	// 일별 조회
+	@RequestMapping("/FindScheduleListDay")
+	public List<ScheduleVO> FindScheduleListDay (@RequestParam int year, @RequestParam int month, @RequestParam int day  ) {
+		ScheduleVO schedule =new ScheduleVO();
+		
+		schedule.setYear(year);
+		schedule.setMonth(month);
+		schedule.setDay(day);
+		
+		System.out.println("엔티티 속 month확인"+schedule.getMonth());
+		List<ScheduleVO> data  =calendarService.showScheduleListDay(schedule);
+
+		
+		return data;
+	}
 
 	// 월별 조회 (jsp에서 해당 달력이 몇월인지 보내면 db에서 확인후 일정 보냄)
 	@RequestMapping("/FindScheduleList")
@@ -47,7 +62,7 @@ public class CalendarRestController {
 		return data;
 	}
 	
-	
+	// 전체 조회
 	@RequestMapping("/FindScheduleListAll")
 	public List<ScheduleVO> FindScheduleListAll () {
 		System.out.println("rest컨트롤러 실행");
