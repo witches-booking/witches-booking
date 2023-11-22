@@ -32,11 +32,16 @@ public class ScheduleServiceImp implements ScheduleService {
 			int people = Integer.parseInt(scheduleVo.getPeopleNum());
 			int start = Integer.parseInt(scheduleVo.getStart().substring(0, 2));
 			int end = Integer.parseInt(scheduleVo.getEnd().substring(0, 2));
+			int sminute = Integer.parseInt(scheduleVo.getStart().substring(scheduleVo.getStart().length() - 2));
+			int eminute = Integer.parseInt(scheduleVo.getEnd().substring(scheduleVo.getEnd().length() - 2));
 			System.out.println(hour+":::"+start);
 			
-			if (scheduleVo.getName() != null && scheduleVo.getYear() != 0 && scheduleVo.getStart() != null
-					&& scheduleVo.getEnd() != null && people > 0 && start < end
-					&& scheduleVo.getCreateNm() != null) {
+			if ((scheduleVo.getName() != null && scheduleVo.getYear() != 0 && scheduleVo.getStart() != null
+					&& scheduleVo.getEnd() != null && people > 0 && start < end 
+					&& scheduleVo.getCreateNm() != null)
+					|| (scheduleVo.getName() != null && scheduleVo.getYear() != 0 && scheduleVo.getStart() != null
+					&& scheduleVo.getEnd() != null && people > 0 && start == end && sminute < eminute
+					&& scheduleVo.getCreateNm() != null)) {
 
 				if ((nowYear <= scheduleVo.getYear() && nowMonth <= scheduleVo.getMonth()
 						&& nowDay < scheduleVo.getDay())

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.witches.admin.dao.AdminDAO">
+
+	<!-- 예약 조회 -->
+	<select id="adminSelect" parameterType="com.witches.admin.vo.AdminVO" resultType="com.witches.admin.vo.AdminVO">
+		SELECT id
+		, DATE_FORMAT(start, '%H:%i') as start
+		, DATE_FORMAT(end, '%H:%i') as end
+		, people_num
+		, name
+		, department
+		, contents
+		, is_delete
+		, cancle_reason
+		, cancle_name
+		, year
+		, month
+		, day
+		, create_nm
+		FROM schedule
+	</select>
+	
+</mapper>
