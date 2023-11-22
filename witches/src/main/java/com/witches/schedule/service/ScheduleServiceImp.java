@@ -34,7 +34,7 @@ public class ScheduleServiceImp implements ScheduleService {
 			int end = Integer.parseInt(scheduleVo.getEnd().substring(0, 2));
 			
 			if (scheduleVo.getName() != null && scheduleVo.getYear() != 0 && scheduleVo.getStart() != null
-					&& scheduleVo.getEnd() != null && people > 0 && start <= end
+					&& scheduleVo.getEnd() != null && people > 0 && start < end
 					&& scheduleVo.getCreateNm() != null) {
 
 				if ((nowYear <= scheduleVo.getYear() && nowMonth <= scheduleVo.getMonth()
