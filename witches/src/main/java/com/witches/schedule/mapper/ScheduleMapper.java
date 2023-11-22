@@ -30,5 +30,8 @@ public interface ScheduleMapper {
 	
 	@Update("UPDATE schedule SET is_delete = 'Y', cancle_name=#{cancelNm}, cancle_reason=#{cancelReason} WHERE id = #{id} ")
 	public void cancleSchedule(ScheduleVO scheduleVO);
+
+	@Select("SELECT id, year, month, day, DATE_FORMAT(start, '%H:%i') as start, DATE_FORMAT(end, '%H:%i') as end, people_num, name, department, contents, is_delete, cancle_reason, cancle_name, create_nm FROM schedule WHERE year=#{year} AND month=#{month} AND day =#{day} AND is_delete='N' ORDER BY start ASC")
+	public List<ScheduleVO> showScheduleListDay(ScheduleVO schedulevo);
 	
 }

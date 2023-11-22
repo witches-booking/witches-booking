@@ -91,6 +91,11 @@ public class CalendarService {
 		
 	}
 
+	public List<ScheduleVO> showScheduleListDay(ScheduleVO schedulevo) {
+		
+		return scheduleMapper.showScheduleListDay(schedulevo);
+	}
+
 	
 	
 	
