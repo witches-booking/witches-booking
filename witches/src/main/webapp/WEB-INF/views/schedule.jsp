@@ -197,11 +197,11 @@
                                 } else if (message === "관리자 확인 필요"){
                                 	alert("예약 등록에 실패했습니다.");
                                 }
-                                window.location.href = "/?year="year"&month="month;
+                                window.location.href = "/?year=" + year + "&month=" + month;
                             },
                             error: function () {
                                 alert("예약 등록에 실패했습니다.");
-                                window.location.href = "/?year="year"&month="month;;
+                                window.location.href = "/?year=" + year + "&month=" + month;
                             }
                         });
                     }
