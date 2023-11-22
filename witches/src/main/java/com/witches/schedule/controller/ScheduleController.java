@@ -55,6 +55,15 @@ public class ScheduleController {
 		return "/schedule";
 	}
 
+	// 로그인 페이지 이동
+	@RequestMapping("/login")
+	public String moveLoginPage(Model model) {
+		model.addAttribute("kakaoRedirectUrl", kakaoRedirectUrl); // 카카오 로그인 용 리다이렉트 url
+		model.addAttribute("kakaoRestApiKey", kakaoRestApiKey); // 카카오 로그인용 key
+		return "/login";
+		
+	}
+	
 	// 캘린더 일정 띄우기
 	@RequestMapping("/")
 	public String CalendarMain(Model model, @RequestParam(name = "year", defaultValue = "0") int year,

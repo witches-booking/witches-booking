@@ -356,7 +356,7 @@ String loginId = (String)session.getAttribute("createNm");
 	                window.location.href = "/scheduleWrite?year="+year+"&month="+month+"&day="+day;
 	            } else if (message === "실패") {
 	                alert("로그인 후 이용해주세요.");
-	                location.reload();
+	                window.location.href= "/login";
 	            }
 	        },
 	         
