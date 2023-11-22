@@ -206,10 +206,14 @@
                                 } else if (message === "관리자 확인 필요"){
                                 	alert("예약 등록에 실패했습니다.");
                                 }
+<<<<<<< HEAD
+=======
+                                window.location.href = "/?year=" + year + "&month=" + month;
+>>>>>>> branch 'master' of https://github.com/witches-booking/witches-booking.git
                             },
                             error: function () {
                                 alert("예약 등록에 실패했습니다.");
-                                window.location.href = "/";
+                                window.location.href = "/?year=" + year + "&month=" + month;
                             }
                         });
                     }
