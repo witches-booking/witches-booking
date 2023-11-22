@@ -191,25 +191,24 @@
                             type: "POST",
                             contentType: "application/json",
                             dataType: "json",
-                            success: function (result) {
-                                var parsedData = JSON.parse(result.reData);
+                            success: function (response) {
+                            	var parsedData = response.result;
                                 var message = parsedData.reMsg;
-                                console.log(result.msg);
+                                var showId = response.showId;
+                                console.log(message);
                                 if (message === "실패") {
                                     alert("이미 예약된 시간입니다.");
                                 } else if (message === "성공") {
                                     alert("예약 등록에 성공했습니다."); 
+                                    window.location.href = "/api/detail?id="+showId;
                                 } else if (message === "지난 날짜"){
                                 	alert("지난 날짜는 예약이 불가능합니다.");
                                 } else if (message === "필수값 오류"){
                                 	alert("예약 등록에 실패했습니다.");
                                 } else if (message === "관리자 확인 필요"){
                                 	alert("예약 등록에 실패했습니다.");
+                                	window.location.href = "/?year=" + year + "&month=" + month;
                                 }
-<<<<<<< HEAD
-=======
-                                window.location.href = "/?year=" + year + "&month=" + month;
->>>>>>> branch 'master' of https://github.com/witches-booking/witches-booking.git
                             },
                             error: function () {
                                 alert("예약 등록에 실패했습니다.");

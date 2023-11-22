@@ -9,8 +9,16 @@ import lombok.ToString;
 @ToString
 public class ResultVO {
 	
+	private int showId;
+	
 	private String reMsg;
 	private String reCode;
+	
+	public ResultVO(String reCode, int showId, String reMsg) {
+        this.reCode = reCode;
+        this.showId = showId;
+        this.reMsg = reMsg;
+    }
 	
     public ResultVO(String reCode) {
         this.reCode = reCode;

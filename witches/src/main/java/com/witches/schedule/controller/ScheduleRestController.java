@@ -61,11 +61,17 @@ public class ScheduleRestController {
 	* 2023.11.13 / 정윤지 / 최초 적용
 	*/
 	@PostMapping("/success")
-	public ResponseEntity<Object> scheduleInsert(@RequestBody ScheduleVO scheduleVo, HttpSession session) {
+	public ResponseEntity<Object> scheduleInsert(@RequestBody ScheduleVO scheduleVo, HttpSession session, Model model) {
 	    Map<String, Object> response = new HashMap<>();
 	    Gson gson = new GsonBuilder().create();
 	    ResultVO resultVo = scheduleService.scheduleInsert(scheduleVo);
-	    return ResponseEntity.ok(new resultResponse(gson.toJson(resultVo)));
+	    if (resultVo.getReCode().equals("00")) {
+	        int showId = resultVo.getShowId();
+	        response.put("showId", showId);
+	    }
+	    response.put("result", resultVo); 
+	    System.out.println(response);
+	    return ResponseEntity.ok(response);
 	}
 
 	/**
