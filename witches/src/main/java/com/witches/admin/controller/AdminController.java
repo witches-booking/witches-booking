@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -12,6 +14,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.witches.admin.dto.AdminDTO;
 import com.witches.admin.service.AdminService;
+import com.witches.admin.service.AdministratorService;
+import com.witches.admin.vo.AdminVO;
+import com.witches.schedule.service.ScheduleService;
 import com.witches.schedule.vo.ScheduleVO;
 import com.witches.user.vo.UserVO;
 
@@ -21,6 +26,16 @@ public class AdminController {
 
 	@Autowired
 	private AdminService adminService;
+	
+	@Autowired
+	private AdministratorService adminService2;
+	
+	@RequestMapping("/main")
+	public String adminSelect(@ModelAttribute AdminVO adminVo, Model model) {
+		List<AdminVO> listMap = adminService2.adminSelect(adminVo);
+		model.addAttribute("listMap", listMap);
+		return "/admin";
+	}
 	
 	/* 테이블 분류 번호 확인  */
 	int scheduleNum = 1; // 회의실 예약 관련 테이블
