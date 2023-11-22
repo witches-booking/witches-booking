@@ -36,8 +36,11 @@ public class AdminController {
 	private CalendarService calendarService;
 	
 	@RequestMapping("/main")
-	public String adminSelect(@ModelAttribute AdminVO adminVo, Model model,
+	public String adminSelect(@ModelAttribute AdminVO adminVo, Model model, @RequestParam(required = false) String pw,
 			@RequestParam(name = "year", defaultValue = "0") int year, @RequestParam(name = "month", defaultValue = "0") int month) {
+		
+		if(pw != null) {
+		if(pw.equals(1234)) {
 		ScheduleVO scheduleVo = new ScheduleVO();
 		
 		LocalDate currentDate;
@@ -64,6 +67,12 @@ public class AdminController {
 
 		model.addAttribute("listMap", listMap);
 		return "/admin";
+		}else {
+			return "redirect:/";
+		}
+		}else {
+			return "redirect:/";
+		}
 	}
 	
 	/* 테이블 분류 번호 확인  */
