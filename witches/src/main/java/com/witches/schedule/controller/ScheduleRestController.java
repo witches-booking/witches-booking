@@ -61,7 +61,7 @@ public class ScheduleRestController {
 	* 2023.11.13 / 정윤지 / 최초 적용
 	*/
 	@PostMapping("/success")
-	public ResponseEntity<Object> scheduleInsert(@RequestBody ScheduleVO scheduleVo) {
+	public ResponseEntity<Object> scheduleInsert(@RequestBody ScheduleVO scheduleVo, HttpSession session) {
 	    Map<String, Object> response = new HashMap<>();
 	    Gson gson = new GsonBuilder().create();
 	    ResultVO resultVo = scheduleService.scheduleInsert(scheduleVo);
