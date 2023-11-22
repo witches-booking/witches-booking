@@ -66,8 +66,7 @@ public class ScheduleServiceImp implements ScheduleService {
 	// 예약 조회
 	@Override
 	public ScheduleVO scheduleSelect(Integer id) {
-		ScheduleVO scheduleVo = scheduleDao.scheduleSelect(id);
-		return scheduleVo;
+		return scheduleDao.scheduleSelect(id);
 	}
 
 	// 예약 취소

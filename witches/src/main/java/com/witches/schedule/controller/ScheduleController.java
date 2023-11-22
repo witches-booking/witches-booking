@@ -211,7 +211,9 @@ public class ScheduleController {
 	 */
 	@RequestMapping(value="/api/detail", method = { RequestMethod.GET, RequestMethod.POST })
 	public String scheduleSelect(@ModelAttribute ScheduleVO scheduleVo, Model model,
-			@RequestParam Integer id) {
+			@RequestParam Integer id, HttpSession session) {
+		String loginId2 = session.getAttribute("createNm").toString();
+		model.addAttribute("loginId2", loginId2);
 		ScheduleVO detailMap = scheduleService.scheduleSelect(id);
 		model.addAttribute("detailMap", detailMap);
 		System.out.println(detailMap);
