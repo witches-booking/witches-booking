@@ -76,7 +76,8 @@
                 }
             }
         }
-
+/*
+  
         function deleteSelectedRows() {
             // 테이블 엘리먼트를 가져옴
             var table = document.getElementById("dataTable");
@@ -94,6 +95,72 @@
                 if (checkBox.checked) {
                     table.deleteRow(i);
                 }
+            }
+        }
+ */
+        function selectAllRows(element) {
+            var checkboxes = document.getElementsByClassName('selectRow');
+            for (var i = 0; i < checkboxes.length; i++) {
+                checkboxes[i].checked = element.checked;
+            }
+        }
+        
+ function getSelectedRowIds() {
+	    var checkboxes = document.getElementsByClassName('selectRow');
+	    var ids = [];
+	    for (var i = 0; i < checkboxes.length; i++) {
+	        if (checkboxes[i].checked) {
+	            ids.push({id: checkboxes[i].value});
+	        }
+	    }
+	    return ids;
+	}
+        
+ 
+ function getSelectedRowIdOne(button) {
+	    return [{id: button.value}];
+	}
+
+	function deleteSelectedRowOne(button) {
+	    var ids = getSelectedRowIdOne(button);
+	    if (ids.length > 0) {
+            $.ajax({
+                url: '/admin/DeleteTableData?tableNum=1', // 예시로 1로 고정, 실제로는 상황에 따라 동적으로 처리
+                type: 'DELETE',
+                contentType: 'application/json',
+                data: JSON.stringify(ids),
+                success: function() {
+                    // 요청이 성공하면 페이지를 새로 고침
+                    location.reload();
+                },
+                error: function() {
+                    // 요청이 실패하면 오류 메시지를 표시
+                    alert('행을 삭제하는 데 실패했습니다.');
+                }
+            });
+        } else {
+            alert('삭제할 행을 선택하세요.');
+        }
+	}
+        function deleteSelectedRows() {
+            var ids = getSelectedRowIds();
+            if (ids.length > 0) {
+                $.ajax({
+                    url: '/admin/DeleteTableData?tableNum=1', // 예시로 1로 고정, 실제로는 상황에 따라 동적으로 처리
+                    type: 'DELETE',
+                    contentType: 'application/json',
+                    data: JSON.stringify(ids),
+                    success: function() {
+                        // 요청이 성공하면 페이지를 새로 고침
+                        location.reload();
+                    },
+                    error: function() {
+                        // 요청이 실패하면 오류 메시지를 표시
+                        alert('행을 삭제하는 데 실패했습니다.');
+                    }
+                });
+            } else {
+                alert('삭제할 행을 선택하세요.');
             }
         }
     </script>
@@ -137,14 +204,14 @@
 					<tbody>
 						<c:forEach var="item" items="${listMap }">
 							<tr style="font-size:1rem;">
-								<td style="padding:5px; text-align: center;"><input type="checkbox" class="selectRow"/></td>
+								<td style="padding:5px; text-align: center;"><input type="checkbox" class="selectRow" value="${item.id}"/></td>
 								<td style="padding:5px;">${item.year }-${item.month }-${item.day }</td>
 								<td style="padding:5px;">${item.start } ~ ${item.end }</td>
 								<td style="padding:5px;">${item.peopleNum }</td>
 								<td style="padding:5px;">${item.name }</td>
 								<td style="padding:5px;">${item.department }</td>
 								<td style="padding:5px;">${item.contents }</td>
-								<td style="padding:5px; text-align: center;"><button onclick=adminDel()>삭제</button></td>
+								<td style="padding:5px; text-align: center;"><button class="selectButton" value="${item.id}" onclick="deleteSelectedRowOne(this)">삭제</button>
 							</tr>
 						</c:forEach>
 					</tbody>
