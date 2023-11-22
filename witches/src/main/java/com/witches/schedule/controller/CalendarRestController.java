@@ -74,6 +74,8 @@ public class CalendarRestController {
 		return data;
 	}
 	
+//	@RequestMapping("FindScheduleOneId")
+//	public String 
 	
 
 	// 회의실 예약 rest 버전
