@@ -5,6 +5,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -122,7 +123,6 @@
 					<thead>
 						<tr>
 							<th><input type="checkbox" id="selectAll" onclick="selectAllRows(this)"/></th>
-							<th scope="col"></th>
 							<th scope="col">날짜</th>
 							<th scope="col">시간</th>
 							<th scope="col">인원수</th>
@@ -138,7 +138,6 @@
 						<c:forEach var="item" items="${listMap }">
 							<tr style="font-size:1rem;">
 								<td style="padding:5px; text-align: center;"><input type="checkbox" class="selectRow"/></td>
-								<td style="padding:5px;">${item.id }</td>
 								<td style="padding:5px;">${item.year }-${item.month }-${item.day }</td>
 								<td style="padding:5px;">${item.start } ~ ${item.end }</td>
 								<td style="padding:5px;">${item.peopleNum }</td>
@@ -164,7 +163,7 @@
     		  month =12;
     		  year= year-1
     	  }
-         location.href = '/CalendarMain?year=' + year + '&month='+ month;
+         location.href = '/admin/main?year=' + year + '&month='+ month;
       }
    </script>
    
