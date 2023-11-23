@@ -63,7 +63,7 @@ public class AdminController {
 		
 		
 		System.out.println("엔티티 속 month확인"+scheduleVo.getMonth());
-		List<ScheduleVO> listMap  =calendarService.showScheduleList(scheduleVo);
+		List<ScheduleVO> listMap  =calendarService.adminScheduleList(scheduleVo);
 
 		model.addAttribute("listMap", listMap);
 		return "/admin";

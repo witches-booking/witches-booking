@@ -33,6 +33,15 @@ public class CalendarService {
 		
 	}
 
+	// admin
+	public List<ScheduleVO> adminScheduleList(ScheduleVO schedulevo){
+		
+		
+		return scheduleMapper.adminScheduleList(schedulevo);
+		
+		
+	}
+
 	public List<ScheduleVO> showSchedule() {
 		return scheduleMapper.showSchedule();
 		
