@@ -11,4 +11,6 @@ public interface AdminDAO {
 
 	List<AdminVO> adminSelect(AdminVO adminVo);
 
+	int adminLogin(AdminVO adminVo);
+
 }

@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<link rel="stylesheet" type="text/css" href="/Join.module.css">
 <!DOCTYPE html>
 <html>
 <head>
@@ -17,20 +16,26 @@
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-	height: calc(100vh - 300px);
+	height: calc(100vh - 150px);
 	font-size: 50px;
 	border: 1px solid lightgray;
 	border-radius: 10px;
 	width: 20cm;
-	 margin-top: -50px; 
 }
 
 .kakao-login-btn {
 	padding: 10px 20px;
 	border: none;
 	background: none;
-	margin-top: 200px;
 	background: none;
+}
+.admin-login-btn {
+	width : 183px;
+	height : 45px;
+	border-radius : 5px;
+	background-color : lightblue;
+	font-weight : bold;
+	border : none;
 }
 </style>
 <script
@@ -95,12 +100,72 @@
 	<div class="container">
 		<div class="center">
 			<h4>LOGIN</h4>
-			<p style="font-size:1.5rem;">회의 예약을 하려면 로그인을 해주세요!</p>
-			<button type="button" class="kakao-login-btn" onclick="kakao()">
-				<img src="/img/kakao_login_medium_narrow.png" alt="Kakao Login">
-			</button>
+			<div id="adminLogin" style="display:none; flex-direction: column; align-items: center; height:200px;">
+				 <span style="font-size:1rem;  margin: auto;">ID&nbsp;:&nbsp;
+					<input type="text" id="adminId" placeholder="관리자 아이디" style="height:30px; margin: auto;">
+				</span>
+				<span style="font-size:1rem;  margin: auto;">PW : 
+					<input type="password" id="adminPw" placeholder="관리자 비밀번호" style="height:30px; margin: auto;">
+				</span>
+				<button type="button" class="admin-login-btn" onclick="adminLogin()" style="margin: auto;">관리자 로그인</button>
+				<button type="button" class="admin-login-btn" onclick="back()" style="margin: auto;">돌아가기</button>
+			</div>
+			<div id="normalLogin" style="display:flex; flex-direction: column; justify-content: space-between; align-items: center;">
+				<p style="font-size:1.5rem;">회의 예약을 하려면 로그인을 해주세요!</p>
+				<button type="button" class="kakao-login-btn" onclick="kakao()">
+					<img src="/img/kakao_login_medium_narrow.png" alt="Kakao Login">
+				</button>
+				<button type="button" class="admin-login-btn" onclick="admin()" value="">관리자 로그인</button>
+			</div>
 		</div>
 	</div>
-</body>
+	
+	<script type="text/javascript">
+		function admin() {
+		    var adminLoginForm = document.getElementById('adminLogin');
+		    var normalLoginForm = document.getElementById('normalLogin');
+		    adminLoginForm.style.display = 'flex';
+		    normalLoginForm.style.display ='none';
+		}
+		
+		function back() {
+		    var adminLoginForm = document.getElementById('adminLogin');
+		    var normalLoginForm = document.getElementById('normalLogin');
+		    adminLoginForm.style.display = 'none';
+		    normalLoginForm.style.display ='flex';
+		}
+		
+	</script>
+	
+	<script type="text/javascript">
+	function adminLogin(){
+		var adminId = $("#adminId").val();
+		var adminPw = $("#adminPw").val();
+		$.ajax({
+			url : "/admin/login",
+			data : JSON.stringify({
+				"adminId" : adminId,
+				"adminPw" : adminPw
+			}),
+			contentType: "application/json",
+            dataType: "json",
+			type : "POST",
+			success : function(result){
+				var parsedData = JSON.parse(result.reData);
+                var message = parsedData.reMsg;
+                console.log(result.msg);
+                if (message === "실패") {
+                    alert("아이디/비밀번호가 불일치합니다.");
+                } else if (message === "성공") {
+                    window.location.href = "/admin/main"
+                } else if (message === "필수값 오류")
+					alert("아이디/비밀번호를 입력해주세요.")
+			},
+			error : function(){
+				alert("로그인에 실패했습니다.")
+			}
+		});
+	}
+	</script>
 </body>
 </html>

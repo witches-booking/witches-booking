@@ -165,6 +165,12 @@
         }
     </script>
 	
+<style>
+    .adminTableLineThrough {
+        text-decoration: line-through;
+        text-decoration-color: red;
+    }
+</style>
 
 </head>
 <body>
@@ -190,21 +196,21 @@
 					<thead>
 						<tr>
 							<th><input type="checkbox" id="selectAll" onclick="selectAllRows(this)"/></th>
-							<th scope="col">날짜</th>
-							<th scope="col">시간</th>
+							<th scope="col" style="width:130px;">날짜</th>
+							<th scope="col" style="width:130px;">시간</th>
 							<th scope="col">인원수</th>
-							<th scope="col">신청자</th>
-							<th scope="col">부서</th>
+							<th scope="col" style="width:80px;">신청자</th>
+							<th scope="col" style="width:100px;">부서</th>
 							<th scope="col">회의내용</th>
-							<th></th>
+							<th style="width:50px;"></th>
 						</tr>
 					</thead>
 
 
 					<tbody>
 						<c:forEach var="item" items="${listMap }">
-							<tr style="font-size:1rem;">
-								<td style="padding:5px; text-align: center;"><input type="checkbox" class="selectRow" value="${item.id}"/></td>
+							<tr style="font-size:1rem;" class="<c:if test='${item.isDelete eq "Y"}'>adminTableLineThrough</c:if>">
+            					<td style="padding:5px; text-align: center;"><input type="checkbox" class="selectRow" value="${item.id}"/></td>
 								<td style="padding:5px;">${item.year }-${item.month }-${item.day }</td>
 								<td style="padding:5px;">${item.start } ~ ${item.end }</td>
 								<td style="padding:5px;">${item.peopleNum }</td>

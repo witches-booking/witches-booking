@@ -31,6 +31,8 @@ public class ScheduleServiceImp implements ScheduleService {
 
 		LocalTime time = LocalTime.now();
 		int hour = time.getHour();
+		
+		System.out.println(scheduleVo.getYear()+scheduleVo.getMonth()+scheduleVo.getDay());
 
 		try {
 			int people = Integer.parseInt(scheduleVo.getPeopleNum());
@@ -48,9 +50,10 @@ public class ScheduleServiceImp implements ScheduleService {
 
 				if ((nowYear <= scheduleVo.getYear() && nowMonth <= scheduleVo.getMonth()
 						&& nowDay < scheduleVo.getDay())
-						|| (nowYear <= scheduleVo.getYear() && nowMonth < scheduleVo.getMonth())
+						|| (nowYear == scheduleVo.getYear() && nowMonth < scheduleVo.getMonth())
 						|| (nowYear == scheduleVo.getYear() && nowMonth == scheduleVo.getMonth()
-						&& nowDay == scheduleVo.getDay() && hour <= start)) {
+						&& nowDay == scheduleVo.getDay() && hour <= start)
+						|| (nowYear < scheduleVo.getYear())) {
 					
 					if (scheduleDao.scheduleCheck(scheduleVo) == 0) {
 						scheduleDao.scheduleInsert(scheduleVo);

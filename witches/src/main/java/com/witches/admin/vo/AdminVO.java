@@ -11,6 +11,9 @@ import lombok.NoArgsConstructor;
 @Data
 public class AdminVO {
 	
+	private String adminId;
+	private String adminPw;
+	
 	private Integer id;
 	private String start;
 	private String end;

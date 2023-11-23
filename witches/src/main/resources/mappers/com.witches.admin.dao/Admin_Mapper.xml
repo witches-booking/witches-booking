@@ -3,6 +3,13 @@
 
 <mapper namespace="com.witches.admin.dao.AdminDAO">
 
+	<!-- 관리자 로그인 -->
+	<select id="adminLogin" parameterType="com.witches.admin.vo.AdminVO">
+		SELECT COUNT(*)
+		FROM admin
+		WHERE admin_id = #{adminId} AND admin_pw = #{adminPw}
+	</select>
+
 	<!-- 예약 조회 -->
 	<select id="adminSelect" parameterType="com.witches.admin.vo.AdminVO" resultType="com.witches.admin.vo.AdminVO">
 		SELECT id

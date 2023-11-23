@@ -1,9 +1,14 @@
 package com.witches.admin.controller;
 
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -13,13 +18,17 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.witches.admin.dto.AdminDTO;
 import com.witches.admin.service.AdminService;
 import com.witches.admin.service.AdministratorService;
 import com.witches.admin.vo.AdminVO;
 import com.witches.schedule.service.CalendarService;
 import com.witches.schedule.service.ScheduleService;
+import com.witches.schedule.vo.ResultVO;
 import com.witches.schedule.vo.ScheduleVO;
+import com.witches.schedule.vo.resultResponse;
 import com.witches.user.vo.UserVO;
 
 @Controller
@@ -35,45 +44,49 @@ public class AdminController {
 	@Autowired
 	private CalendarService calendarService;
 	
+	@RequestMapping("/login")
+	public ResponseEntity<Object> adminLogin(@RequestBody AdminVO adminVo, HttpSession session) {
+		Gson gson = new GsonBuilder().create();
+		ResultVO resultVo = adminService2.adminLogin(adminVo);
+		session.setAttribute("adminId", adminVo.getAdminId());
+		session.setMaxInactiveInterval(3600);
+		return ResponseEntity.ok(new resultResponse(gson.toJson(resultVo)));
+	}
+	
 	@RequestMapping("/main")
-	public String adminSelect(@ModelAttribute AdminVO adminVo, Model model, @RequestParam(required = false) String pw,
+	public String adminSelect(@ModelAttribute AdminVO adminVo, Model model, HttpSession session, @RequestParam(required = false) String pw,
 			@RequestParam(name = "year", defaultValue = "0") int year, @RequestParam(name = "month", defaultValue = "0") int month) {
 		
-		if(pw != null) {
-		if(pw.equals("1234")) {
-		ScheduleVO scheduleVo = new ScheduleVO();
-		
-		LocalDate currentDate;
-
-		if (year == 0 || month == 0) {
-			currentDate = LocalDate.now();
-		} else {
-			currentDate = LocalDate.of(year, month, 1);
-		}
-
-		int currentYear = currentDate.getYear();
-		int currentMonth = currentDate.getMonthValue();
-		
-		scheduleVo.setYear(currentYear);
-		scheduleVo.setMonth(currentMonth);
-		
-		model.addAttribute("year", currentYear);
-		model.addAttribute("month", currentMonth);
-		model.addAttribute("currentDate", currentDate);
-		
-		
-		System.out.println("엔티티 속 month확인"+scheduleVo.getMonth());
-		List<ScheduleVO> listMap  =calendarService.adminScheduleList(scheduleVo);
-
-		model.addAttribute("listMap", listMap);
-		return "/admin";
-		}else {
+		if(session.getAttribute("adminId") != null) {
+			ScheduleVO scheduleVo = new ScheduleVO();
+			
+			LocalDate currentDate;
+	
+			if (year == 0 || month == 0) {
+				currentDate = LocalDate.now();
+			} else {
+				currentDate = LocalDate.of(year, month, 1);
+			}
+	
+			int currentYear = currentDate.getYear();
+			int currentMonth = currentDate.getMonthValue();
+			
+			scheduleVo.setYear(currentYear);
+			scheduleVo.setMonth(currentMonth);
+			
+			model.addAttribute("year", currentYear);
+			model.addAttribute("month", currentMonth);
+			model.addAttribute("currentDate", currentDate);
+			
+			
+			System.out.println("엔티티 속 month확인"+scheduleVo.getMonth());
+			List<ScheduleVO> listMap  =calendarService.adminScheduleList(scheduleVo);
+	
+			model.addAttribute("listMap", listMap);
+			return "/admin";
+			}
 			return "redirect:/";
 		}
-		}else {
-			return "redirect:/";
-		}
-	}
 	
 	/* 테이블 분류 번호 확인  */
 	int scheduleNum = 1; // 회의실 예약 관련 테이블
