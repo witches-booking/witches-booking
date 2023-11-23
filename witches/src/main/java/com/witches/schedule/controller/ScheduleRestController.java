@@ -65,13 +65,8 @@ public class ScheduleRestController {
 	    Map<String, Object> response = new HashMap<>();
 	    Gson gson = new GsonBuilder().create();
 	    ResultVO resultVo = scheduleService.scheduleInsert(scheduleVo);
-	    if (resultVo.getReCode().equals("00")) {
-	        int showId = resultVo.getShowId();
-	        response.put("showId", showId);
-	    }
-	    response.put("result", resultVo); 
 	    System.out.println(response);
-	    return ResponseEntity.ok(response);
+	    return ResponseEntity.ok(new resultResponse(gson.toJson(resultVo)));
 	}
 
 	/**
