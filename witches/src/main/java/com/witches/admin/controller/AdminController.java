@@ -40,7 +40,7 @@ public class AdminController {
 			@RequestParam(name = "year", defaultValue = "0") int year, @RequestParam(name = "month", defaultValue = "0") int month) {
 		
 		if(pw != null) {
-		if(pw.equals(1234)) {
+		if(pw.equals("1234")) {
 		ScheduleVO scheduleVo = new ScheduleVO();
 		
 		LocalDate currentDate;
