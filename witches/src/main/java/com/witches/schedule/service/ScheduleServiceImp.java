@@ -52,7 +52,7 @@ public class ScheduleServiceImp implements ScheduleService {
 						&& nowDay < scheduleVo.getDay())
 						|| (nowYear == scheduleVo.getYear() && nowMonth < scheduleVo.getMonth())
 						|| (nowYear == scheduleVo.getYear() && nowMonth == scheduleVo.getMonth()
-						&& nowDay == scheduleVo.getDay() && hour <= start)
+						&& (nowDay == scheduleVo.getDay() && hour <= start))
 						|| (nowYear < scheduleVo.getYear())) {
 					
 					if (scheduleDao.scheduleCheck(scheduleVo) == 0) {
