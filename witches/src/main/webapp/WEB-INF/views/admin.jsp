@@ -230,7 +230,7 @@
     		  month =12;
     		  year= year-1
     	  }
-         location.href = '/admin/main?year=' + year + '&month='+ month;
+         location.href = '/admin/main?year=' + year + '&month='+ month+"&pw=1234";
       }
    </script>
    
