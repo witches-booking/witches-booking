@@ -56,7 +56,7 @@ public class ScheduleServiceImp implements ScheduleService {
 						scheduleDao.scheduleInsert(scheduleVo);
 						System.out.println(scheduleVo);
 						int showId = scheduleMapper.showScheduleId();
-						return new ResultVO("00");
+						return new ResultVO("00", showId, "성공");
 					} else {
 						return new ResultVO("01");
 					}

@@ -29,3 +29,8 @@ kakao:
   rest-api-key : 02b86e71e0895cda12a9361c1cdb773a
   redirect-url: http://meet.witches.co.kr/api/kakaoLogin
 #  redirect-url: http://localhost:8449/api/kakaoLogin
+
+
+message:
+  success: 성공
+  fail: 실패
